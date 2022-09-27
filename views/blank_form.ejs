@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <form method="post" id='form_checkout' action="/shop/create-checkout-session">
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="field-label">First name <sup>*</sup></div>
+                <input type="text" name="field-name"  id='tb_item_firsname' value="test_firstname" placeholder="First Name">
+            </div>
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="field-label">Last name <sup>*</sup></div>
+                <input type="text" name="field-name"  id='tb_item_lastname' value="test_lastname" placeholder="Last Name">
+            </div>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                <div class="field-label">Company name </div>
+                <input type="text" name="field-name" value="test_company"  id='tb_item_company' placeholder="Company name">
+            </div>
+            <button type="submit" class="theme-btn btn-style-three"><span class="txt">Place Order</span></button>
+        </form>
+        <script src="/js/jquery.js"></script>
+        <script src="/js/biz_scriptz/base.js"></script>
+        <script src="/js/biz_scriptz/shop.js"></script>
+        <script>
+            $( document ).ready(function() {
+                            $("#form_checkout").submit(function(event) {
+                                            first_name=$('#tb_item_firsname').val();
+                                            last_name=$('#tb_item_lastname').val();
+                                            company=$('#tb_item_company').val();
+                                            if(!validate_email(email)){
+                                                            alert('Please enter a valid email.');
+                                                            return false;
+                                                        }else{
+                                                                        return true;
+                                                                    }
+                                            alert('Please login to purchase this item.');
+
+                                            return false;
+                                        });
+                        });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include ('_head') %>
+    </head>
+    <body>
+        <%- include ('_header') %>
+        <section>
+
+            <%- include ('_header_nav_menu') %>
+            <article>
+                <h1>BiZ9 Email Form</h1>
+                <p>
+                <form id='biz9form' action="#">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
+
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name.." required>
+
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="australia">Australia</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                    </select>
+
+                    <label for="lname">Message</label>
+                    <input type="text" id="message" name="message" placeholder="message..">
+
+                    <input type="submit" id='btn_submit' value="Submit">
+                </form>
+
+                </p>
+            </article>
+        </section>
+
+        <div>
+            <%- include ('_footer') %>
+        </div>
+        <%- include ('_footer_file') %>
+        <script>
+            $(document).ready(function() {
+                            $('#btn_submit').click(function(e){
+                                            e.preventDefault();
+                                            form_title= 'BiZ9 Email Form Test';
+                                            fname= $('#fname').val();
+                                            lname= $('#lname').val();
+                                            country= $('#country').val();
+                                            message= $('#message').val();
+
+                                            if(!fname){
+                                                            alert('First name required.');
+                                                        }else if(!lname){
+                                                                        alert('Last name required.');
+                                                                    }else if(!message){
+                                                                                    alert('Message required.');
+                                                                                }
+                                            else{
+
+                                                            $.ajax({
+                                                                            type: "POST",
+                                                                            url: "/cloud/mail/sendmailform",
+                                                                            enctype: 'multipart/form-data',
+                                                                            data: {form_title:form_title,_fname:fname,_lname:lname,_country:country,_message:message},
+                                                                            success: function(data){
+                                                                                            alert(data.helper.validation_message);
+                                                                                        }
+                                                                        });
+                                                        }
+                                            return false;
+                                        });
+                        });
+        </script>
+    </body>
+</html>

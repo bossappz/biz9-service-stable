@@ -1,0 +1,25 @@
+{
+  "name": "biz9-core",
+  "version": "3.5.0",
+  "description": "The core engine of the Biz9 Framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Certified CoderZ",
+  "license": "ISC",
+  "dependencies": {
+    "array-sort": "^1.0.0",
+    "async": "^3.2.4",
+    "aws": "^0.0.3-2",
+    "aws-sdk": "^2.1218.0",
+    "exec": "^0.2.1",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mongodb": "^4.9.1",
+    "pretty-date": "^0.2.0",
+    "prettydate": "^0.0.1",
+    "redis": "^4.3.1",
+    "sharp": "^0.31.0"
+  }
+}

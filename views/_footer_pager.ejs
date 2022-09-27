@@ -1,0 +1,24 @@
+<ul>
+    <% if(helper.page_current<=1){ %>
+    <li>
+        <% }else{ %>
+        <li class="prev">
+            <a href="<%=helper.render_list %>/<%=parseInt(helper.page_current)-1%>">
+                <span class="fa fa-angle-left"></span>
+            </a>
+            <% } %>
+        </li>
+        <% for(var a=1;a<helper.page_page_total+1;a++){ %>
+        <% if(helper.page_current==a) {%>
+        <li class='active'><a href="<%=helper.render_list %>/<%=a%>"><%=a%></a></li>
+        <% }else{ %>
+        <li><a href="<%=helper.render_list %>/<%=a%>"><%=a%></a></li>
+        <% } %>
+        <% } %>
+        <% if(helper.page_current>=helper.page_page_total){ %>
+        <% }else{ %>
+        <li><a href="<%=helper.render_list %>/<%=parseInt(helper.page_current)+1%>"><span class="fa fa-angle-right"></span> </a></li>
+        <% } %>
+    </li>
+</ul>
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include ('_head') %>
+    </head>
+    <body>
+        <header>
+            <%- include ('_header') %>
+        </header>
+        <div>
+            <%- include ('_side_bar') %>
+        </div>
+        <footer>
+            <%- include ('_footer') %>
+        </footer>
+        </div>
+        <%- include ('_footer_file') %>
+        <script>
+            $(document).ready(function() {
+                $('#li_home').attr('class','current');
+            });
+        </script>
+    </body>
+</html>
