@@ -49,9 +49,6 @@ fi
 if [ "$REPO_URL" != "" ]; then
     echo "REPO URL : ${REPO_URL}"
 fi
-if [ "$BRANCH" != "" ]; then
-    echo "BRANCH : ${BRANCH}"
-fi
 echo "#################"
 echo "------------------------------------------------------------------------------------------"
 
