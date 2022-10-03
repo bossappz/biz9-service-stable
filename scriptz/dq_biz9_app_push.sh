@@ -21,10 +21,10 @@ read branch
 : '
 app_id=19;
 app_title='Cool 339'
-app_type='mobile'
+app_type='website'
 app_title_id='cool339'
-folder_id='mobile'
-branch='unstable'
+folder_id='website'
+branch='stable'
 '
 # test end #
 G_BIZ_APP_NEW_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
@@ -48,7 +48,7 @@ if [ "${app_type}" = "service" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
-    git pull ${BIZ9_GIT_URL}${BIZ9_SERVICE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git pull ${BIZ9_GIT_URL}/${BIZ9_SERVICE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
     git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
     sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
@@ -57,7 +57,7 @@ if [ "${app_type}" = "website" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
-    git pull ${BIZ9_GIT_URL}${BIZ9_WEBSITE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git pull ${BIZ9_GIT_URL}/${BIZ9_WEBSITE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
     git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
     sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${BIZ9_WEBSITE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
@@ -77,7 +77,7 @@ if [ "${app_type}" = "mobile" ]; then
     read app_vendor
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
-    git pull ${BIZ9_GIT_URL}${BIZ9_MOBILE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git pull ${BIZ9_GIT_URL}/${BIZ9_MOBILE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
     git checkout -b ${GIT_BRANCH}
     #sed
     #.biz9_config
@@ -99,9 +99,9 @@ sed -i "s/APP_ID=.*/APP_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_title_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/REPO_URL=.*/REPO_URL='github.com'/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
-if [ "${app_type}" != "mobile" ]; then
-sed -i "s/EC2_KEY_FILE=.*/EC2_KEY_FILE='other/aws/ec2_key/${app_id}.pem'/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
-fi
+#if [ "${app_type}" != "mobile" ]; then
+    #sed -i "s/EC2_KEY_FILE=.*/EC2_KEY_FILE=other/aws/ec2_key/${app_id}.pem/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh #bug
+#fi
 if [ "${G_HAS_APP}" = true ]; then
     #app.js
     sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/app.js
@@ -109,5 +109,5 @@ if [ "${G_HAS_APP}" = true ]; then
     sed -i "s/APP_ID=.*/APP_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/app.js
     sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_title_id}';/" ${G_BIZ_APP_NEW_DIR}/app.js
 fi
-    echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
-    exit 1
+echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
+exit 1

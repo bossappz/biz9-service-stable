@@ -1,125 +1,166 @@
+source ./.biz9_config.sh
 echo "#################"
 echo "BiZ9 Framework Update"
 echo "#################"
-G_PROJECT_FOLDER="$HOME/www/projectz/"
-# prod start #
-: '
-echo "Enter APP Type [website, service, cms, mobile, core]"
+bash ./scriptz/dq_header.sh
+#prod-start
+echo "Enter Framework Tool: [cms, core, docz, mobile, scriptz, service, test, website]"
 read app_type
-echo "Enter Source Branch [unstable, testing, stable]"
-read source_branch
-echo "Enter Destination Branch [unstable, testing, stable]"
-read destination_branch
+echo "Enter Source Branch: [unstable, testing, stable]"
+read source_dir
+echo "Enter Destination Branch: [unstable, testing, stable]"
+read destination_dir
+#prod-end
+##test-start##
+: '
+app_type='scriptz'
+source_dir='unstable'
+destination_dir='stable'
 '
-# prod end #
-# test start #
-app_type='service'
-source_branch='unstable'
-destination_branch='testing'
-# test end #
-G_HAS_APP=false;
-if [ "${app_type}" = "service" ]; then
-    G_HAS_APP=true;
-    G_BIZ_APP_DIR="${BIZ9_HOME}/biz9-service/src/${destination_branch}"
-    cd ${G_BIZ_APP_DIR}
-    #backup
-    rm -rf .biz9_update_bk
-    mkdir .biz9_update_bk
-    cp -rf app.js  .biz9_update_bk/
-    cp -rf .biz9_config.sh .biz9_update_bk/
-    #git pull
-    echo ".biz9_update_bk" > .gitignore
-    echo ${BIZ9_GIT_URL}/${BIZ9_SERVICE_TITLE,,}-${source_branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    git add .
-    git stash
-    git pull ${BIZ9_GIT_URL}/${BIZ9_SERVICE_TITLE,,}-${source_branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    echo ".biz9_update_bk" > .gitignore
-    #get latest version
-    source .biz9_config.sh
-    biz9_service_version=${BIZ9_SERVICE_VERSION}
-    echo 'aaaaaa'
-    echo ${biz9_service_version}
-    echo 'bbbbbbbb'
-    : '
-    #backup cp
-    cp -rf .biz9_update_bk/app.js ${G_BIZ_APP_DIR}/
-    cp -rf .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
-    source ${G_BIZ_APP_DIR}/.biz9_config.sh
-    echo 'ccccccc'
-    echo ${biz9_service_version}
-    echo 'ddddddd'
-
-    #app.js
-    sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}';/" app.js
-    sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION}';/" app.js
-    sed -i "s/APP_ID=.*/APP_ID='${APP_ID}';/" app.js
-    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}';/" app.js
-    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" app.js
-    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" .biz9_config.sh
-    rm -rf .biz9_update_bk
-    '
+##test-end##
+if [ -z "${source_dir}" ]
+then
+    source_dir='unstable'
 fi
-if [ "${app_type}" = "core" ]; then
-    G_HAS_APP=true;
-    G_BIZ_APP_DIR="${BIZ9_HOME}/biz9-core/src/${destination_branch}"
-    cd ${G_BIZ_APP_DIR}
+if [ -z "${destination_dir}" ]
+then
+    destination_dir='testing'
+fi
+if [ "${app_type}" = "docz" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_DOCZ_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_DOCZ_TITLE,,}/src/
+    echo ".biz9_backup" > .gitignore
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-DocZ';
+    echo Destination ${destination_dir}: Version: ${BIZ9_DOCZ_VERSION};
     #backup
-    rm -rf .biz9_update_bk
-    mkdir .biz9_update_bk
-    cp -rf .biz9_config.sh .biz9_update_bk/
-    #git pull
-    echo ".biz9_update_bk" > .gitignore
-    echo ${BIZ9_GIT_URL}/${BIZ9_CORE_TITLE,,}-${source_branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    git add .
-    git stash
-    git pull ${BIZ9_GIT_URL}/${BIZ9_CORE_TITLE,,}-${source_branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    echo ".biz9_update_bk" > .gitignore
-    : '
-    #get latest version
-    source .biz9_config.sh
-    biz9_core_version=${BIZ9_CORE_VERSION}
-    echo ${biz9_core_version}
-    #backup cp
-    cp -rf .biz9_update_bk/app.js ${G_BIZ_APP_DIR}/
-    cp -rf .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
-    source ${G_BIZ_APP_DIR}/.biz9_config.sh
-    #app.js
-    sed -i "s/BIZ9_CORE_VERSION=.*/BIZ9_CORE_VERSION='${biz9_service_version}';/" .biz9_config.sh
-    rm -rf .biz9_update_bk
-    '
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_DOCZ_VERSION=.*/BIZ9_DOCZ_VERSION='${BIZ9_DOCZ_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_DOCZ_VERSION};
+fi
+if [ "${app_type}" = "website" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_WEBSITE_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_WEBSITE_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Website';
+    echo Destination ${destination_dir}: Version: ${BIZ9_WEBSITE_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${BIZ9_WEBSITE_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_WEBSITE_VERSION};
+fi
+if [ "${app_type}" = "service" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_SERVICE_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_SERVICE_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Service';
+    echo Destination ${destination_dir}: Version: ${BIZ9_SERVICE_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_SERVICE_VERSION};
+fi
+if [ "${app_type}" = "cms" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_CMS_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_CMS_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-CMS';
+    echo Destination ${destination_dir}: Version: ${BIZ9_CMS_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_CMS_VERSION=.*/BIZ9_CMS_VERSION='${BIZ9_CMS_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_CMS_VERSION};
 fi
 if [ "${app_type}" = "mobile" ]; then
-    G_HAS_APP=true;
-    G_BIZ_APP_DIR="${BIZ9_HOME}/biz9-mobile/src/${destination_branch}"
-    cd ${G_BIZ_APP_DIR}
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_MOBILE_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_MOBILE_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Mobile';
+    echo Destination ${destination_dir}: Version: ${BIZ9_MOBILE_VERSION};
     #backup
-    rm -rf .biz9_update_bk
-    mkdir .biz9_update_bk
-    cp -rf .biz9_config.sh .biz9_update_bk/
-    cp -rf www/scripts/biz_scriptz/config.js .biz9_update_bk/
-    #git pull
-    echo ".biz9_update_bk" > .gitignore
-    git add .
-    git stash
-    git pull ${BIZ9_GIT_URL}/${BIZ9_MOBILE_TITLE,,}-${source_branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    echo ".biz9_update_bk" > .gitignore
-    #get latest version
-    source .biz9_config.sh
-    biz9_mobile_version=${BIZ9_MOBILE_VERSION}
-    #backup cp
-    cp -rf .biz9_update_bk/config.js ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/
-    cp -rf .biz9_update_bk/.biz9_config.sh  ${G_BIZ_APP_DIR}/
-    source ${G_BIZ_APP_DIR}/.biz9_config.sh
-    #config.js
-    sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_ID=.*/APP_ID='${APP_ID}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VENDOR=.*/APP_VENDOR='${APP_VENDOR}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VENDOR_WEBSITE=.*/APP_VENDOR_WEBSITE='${APP_VENDOR_WEBSITE}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${biz9_mobile_version}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${biz9_mobile_version}';/" .biz9_config.sh
-    rm -rf .biz9_update_bk
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_MOBILE_VERSION};
 fi
-echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
-exit 1
+if [ "${app_type}" = "scriptz" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_SCRIPTZ_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_SCRIPTZ_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Scriptz';
+    echo Destination ${destination_dir}: Version: ${BIZ9_SCRIPTZ_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    sed -i "s/BIZ9_SCRIPTZ_VERSION=.*/BIZ9_SCRIPTZ_VERSION='${BIZ9_SCRIPTZ_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_SCRIPTZ_VERSION};
+fi
+if [ "${app_type}" = "core" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_CORE_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_CORE_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Core';
+    echo Destination ${destination_dir}: Version: ${BIZ9_CORE_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_CORE_VERSION=.*/BIZ9_CORE_VERSION='${BIZ9_CORE_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_CORE_VERSION};
+fi
+if [ "${app_type}" = "test" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_TEST_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_TEST_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Test';
+    echo Destination ${destination_dir}: Version: ${BIZ9_TEST_VERSION};
+    #backup
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
+    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_TEST_VERSION=.*/BIZ9_TEST_VERSION='${BIZ9_TEST_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    echo Source ${source_dir}: Version: ${BIZ9_TEST_VERSION};
+fi
+bash ./scriptz/dq_footer.sh
+exit

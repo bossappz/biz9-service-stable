@@ -1,14 +1,13 @@
 /* --- APP REQUIRE START -- */
-express = require("express");
-path = require("path");
 async=require("async");
+busboy=require("busboy");
+cors=require("cors")
+detect=require('detect-file-type');
+express=require("express");
+fs=require('fs-extra')
+mp3Duration=require('mp3-duration');
+path=require("path");
 session=require("express-session");
-busboy = require("busboy");
-cors = require("cors")
-fs = require('fs')
-path = require('path');
-detect = require('detect-file-type');
-mp3Duration = require('mp3-duration');
 /* --- APP REQUIRE END --- */
 /* --- APP DEFAULT START --- */
 G_ENV=process.env.NODE_ENV;
