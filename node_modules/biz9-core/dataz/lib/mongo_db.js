@@ -69,7 +69,7 @@ module.exports = function(){
                 }else {
                     db.collection(data_type).find(sql_obj,{tbl_id:1,data_type:1}).sort(sort_by)
                         .skip(current_page>0?((current_page-1)*page_size):0)
-                        .limit(page_size)
+                        .limit(page_size).collation({locale:"en_US",numericOrdering:true})
                         .toArray(function(error,_data) {
                             callback(error,total_count,_data);
                         });

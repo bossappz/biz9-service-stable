@@ -12,6 +12,7 @@ module.exports = function(){
         aws.config.update({ accessKeyId: G_AWS_KEY, secretAccessKey: G_AWS_SECRET, region:G_AWS_REGION});
         var s3 = new aws.S3();
         var r_data='';
+        var error=null;
         if(key){
             var params = {
                 Bucket:String(bucket),
@@ -19,6 +20,7 @@ module.exports = function(){
                 ACL: "public-read"
             };
             s3.getObject(params,function(error,data){
+                error=error;
                 if(data){
                     if(data.Body){
                         r_data = data.Body.toString('utf-8');
@@ -28,6 +30,7 @@ module.exports = function(){
             });
         }
         else{
+            error='bucket data key not found';
             callback(error,r_data);
         }
     }
@@ -35,6 +38,7 @@ module.exports = function(){
         aws.config.update({accessKeyId:G_AWS_KEY,secretAccessKey:G_AWS_SECRET,region:G_AWS_REGION});
         const REGION = G_AWS_REGION;
         s3 = new aws.S3();
+        error=null;
         var params = {
             Bucket:title
         };
@@ -48,6 +52,7 @@ module.exports = function(){
         async.series([
             function(call){
                 utilityz.get_file_buffer(file_path,function(error,data){
+                    error=error;
                     p_buffer=data;
                     call();
                 });
@@ -63,6 +68,9 @@ module.exports = function(){
                         ACL: "public-read"
                     };
                     s3.putObject(params,function(error,data){
+                        if(error){
+                            error=error;
+                        }
                         call();
                     });
                 }

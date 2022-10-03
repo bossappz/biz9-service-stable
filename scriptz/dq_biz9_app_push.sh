@@ -21,7 +21,7 @@ read branch
 : '
 app_id=19;
 app_title='Cool 339'
-app_type='website'
+app_type='cms'
 app_title_id='cool339'
 folder_id='website'
 branch='stable'
@@ -66,7 +66,7 @@ if [ "${app_type}" = "cms" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
-    git pull ${BIZ9_GIT_URL}${BIZ9_CMS_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git pull ${BIZ9_GIT_URL}/${BIZ9_CMS_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
     git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
     sed -i "s/BIZ9_CMS_VERSION=.*/BIZ9_CMS_VERSION='${BIZ9_CMS_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js

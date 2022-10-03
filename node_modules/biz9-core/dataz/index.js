@@ -14,7 +14,7 @@ module.exports = function(){
         var error=null;
         mongo_client.connect(G_MONGO_FULL_URL,function(error,client){
             if(error){
-                dir = exec("sudo mongod --fork --config /etc/mongod.conf", function(error,stdout,stderr){
+                dir = exec("mongod --fork --config /etc/mongod.conf", function(error,stdout,stderr){
                 });
                 dir.on('exit', function (code) {
                     callback(error,null);

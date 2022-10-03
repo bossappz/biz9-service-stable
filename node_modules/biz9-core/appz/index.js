@@ -1094,8 +1094,10 @@ module.exports = function(){
             item.pretty_date_save=utilityz.get_date_pretty(item.date_save);
             item.full_date_create=utilityz.get_datetime_full(item.date_create);
             item.full_date_save=utilityz.get_datetime_full(item.date_save);
+            item.date_obj={short_date:utilityz.get_date_full_obj(item.date_create).date()
+,short_month:utilityz.get_month_title_short(utilityz.get_date_full_obj(item.date_create).month()+1)};
         }
-        if(app_config.biz_map=='true'){
+        if(app_config.biz_map==true){
             if(item.field_1){
                 item[item.field_1]=item.value_1;
             }
@@ -2952,7 +2954,6 @@ module.get_service=function(db,title_url,callback){
             callback(error,service);
         });
 }
-
 module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback) {
     var service_list=[];
     var full_photo_list=[];

@@ -277,7 +277,6 @@ module.exports = function(){
         })
     }
     module.get_mp3_duration=function(secs){
-        var format = require('format-duration');
         millisec = secs * 1000;
         duration = format(millisec);
         return duration;

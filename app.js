@@ -13,11 +13,11 @@ session=require("express-session");
 G_ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.4.4';
+BIZ9_SERVICE_VERSION='3.6.6'
 APP_ID='19';
 APP_TITLE_ID='ser19';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.6.4'
+APP_VERSION='1.6.8'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 G_APP_PORT="1901";
@@ -34,7 +34,7 @@ G_EMAIL_FROM="contact@bossappz.com";
 /* --- ENV EMAILZ START --- */
 /* --- ENV FILE START --- */
 //G_FILE_SAVE_PATH="/uploads/";//local
-G_FILE_SAVE_PATH='/home/admin/www/service-19/public/uploads/';//aws_box
+G_FILE_SAVE_PATH=__dirname+"/public/uploads/";
 //G_FILE_URL="/uploads/"; //box_url
 //G_FILE_URL="http://localhost:1901/uploads/"; //mobile_box_url
 G_FILE_URL="https://"+G_S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url

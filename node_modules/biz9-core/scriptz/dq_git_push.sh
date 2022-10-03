@@ -8,7 +8,7 @@ read n
 yes=$(echo $n | tr -s '[:upper:]' '[:lower:]')
 if [[  "$n" = "yes"  ]] ; then
     ##
-    git push -f ${REPO_URL} ${BRANCH}
+    git push -f ${REPO_URL} ${GIT_BRANCH}
     else
     echo "exit"
 fi
