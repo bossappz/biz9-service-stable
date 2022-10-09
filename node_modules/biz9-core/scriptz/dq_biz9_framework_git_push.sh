@@ -5,7 +5,7 @@ bash ./scriptz/dq_header.sh
 #prod-start
 echo "Enter APP Type: [cms, core, docz, mobile, scriptz, service, test, website]"
 read app_type
-echo "Enter Source Branch: [unstable, testing, stable]"
+echo "Enter Branch: [unstable, testing, stable]"
 read branch_dir
 #prod-end
 ##test-start##
@@ -44,7 +44,7 @@ if [ "${app_type}" = "service" ]&& [ "${g_push}" == true ] ; then
     cd ${G_PROJECT_DIR}
     source .biz9_config.sh
     git push -f ${REPO_URL} ${GIT_BRANCH}
-    echo "Tool: BiZ9-Website";
+    echo "Tool: BiZ9-Service";
     echo "Version: ${BIZ9_SERVICE_VERSION}";
     echo "Repo URL:${REPO_URL}"
 fi
@@ -90,7 +90,7 @@ if [ "${app_type}" = "scriptz" ]&& [ "${g_push}" == true ] ; then
     source .biz9_config.sh
     git push -f ${REPO_URL} ${GIT_BRANCH}
     echo "Tool: BiZ9-Scriptz";
-    echo "Version: ${BIZ9_SCRIPTZ_VERSION}";
+   echo "Version: ${BIZ9_SCRIPTZ_VERSION}";
     echo "Repo URL:${REPO_URL}"
 fi
 if [ "${app_type}" = "core" ]&& [ "${g_push}" == true ] ; then

@@ -59,6 +59,7 @@ if [ "${app_type}" = "website" ]; then
     #sed
     source ${source_dir}/.biz9_config.sh
     sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${BIZ9_WEBSITE_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${BIZ9_WEBSITE_VERSION}';/" ${destination_dir}/app.js
     echo Source ${source_dir}: Version: ${BIZ9_WEBSITE_VERSION};
 fi
 if [ "${app_type}" = "service" ]; then

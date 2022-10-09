@@ -19,31 +19,21 @@ INCREMENT_VERSION ()
         echo -e "${new// /.}"
 }
 APP_VERSION_NEW=$(INCREMENT_VERSION $APP_VERSION);
-# config
+# config.xml
 rm -rf config.xml
 cp -rf ${CONFIG_FILE} config.xml
 sed -i "s/CONFIG_ID/${CONFIG_ID}/g" config.xml
 sed -i "s/CONFIG_VERSION/${APP_VERSION_NEW}/g" config.xml
-
-sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION_NEW}'/" .biz9_config.sh
-sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION_NEW}'/" www/scripts/biz_scriptz/config.js
-
-sed -i "s/APP_ID=.*/APP_VENDOR='${APP_ID}'/" .biz9_config.sh
-sed -i "s/APP_ID=.*/APP_VENDOR='${APP_ID}'/" www/scripts/biz_scriptz/config.js
-
-sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}'/" .biz9_config.sh
-sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}'/" www/scripts/biz_scriptz/config.js
-
-sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}'/" .biz9_config.sh
-sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}'/" www/scripts/biz_scriptz/config.js
-
-sed -i "s/APP_VENDOR=.*/APP_VENDOR='${APP_VENDOR}'/" .biz9_config.sh
-sed -i "s/APP_VENDOR=.*/APP_VENDOR='${APP_VENDOR}'/" www/scripts/biz_scriptz/config.js
-
-sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}'/" .biz9_config.sh
-sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}'/" www/scripts/biz_scriptz/config.js
-
 sed -i "s/APP_TITLE/${APP_TITLE}/g" config.xml
+#config.js
+sed -i "s/APP_ID=.*/APP_ID='${APP_ID}'/" www/scripts/biz_scriptz/config.js
+#sed -i "s/CLOUD_URL=.*/CLOUD_URL='${CLOUD_URL}'/" www/scripts/biz_scriptz/config.js
+sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION_NEW}'/" www/scripts/biz_scriptz/config.js
+sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}'/" www/scripts/biz_scriptz/config.js
+sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}'/" www/scripts/biz_scriptz/config.js
+sed -i "s/APP_VENDOR=.*/APP_VENDOR='${APP_VENDOR}'/" www/scripts/biz_scriptz/config.js
+sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}'/" www/scripts/biz_scriptz/config.js
+#build
 echo "BiZ9 MOBILE COPY CONFIG OK..."
 cordova prepare
 echo "BiZ9 MOBILE PREPARE OK...."
@@ -103,6 +93,9 @@ fi
 if [ "$CONFIG_ID" != "" ]; then
     echo "CONFIG ID : ${CONFIG_ID}"
 fi
+#if [ "$CLOUD_URL" != "" ]; then
+#    echo "CLOUD_URL : ${CLOUD_URL}"
+#fi
 if [ "$REPO_URL" != "" ]; then
     echo "REPO URL : ${REPO_URL}"
 fi

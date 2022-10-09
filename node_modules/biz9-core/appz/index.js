@@ -1082,7 +1082,7 @@ module.exports = function(){
             item.large_photo_url=G_FILE_URL+_photo_size_large+item.photofilename;
         }
         if(no_photo){
-            str='images/no_image.png';
+            str='/images/no_image.png';
             item.album_photo_url=str;
             item.thumb_photo_url=str;
             item.mid_photo_url=str;

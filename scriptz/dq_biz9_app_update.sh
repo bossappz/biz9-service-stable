@@ -10,12 +10,14 @@ echo "Enter APP Type [website, service, cms, mobile]"
 read app_type
 echo "Enter Web Folder ID"
 read folder_id
+echo "Enter Branch"
+read unstable
 '
 # prod end #
 # test start #
 app_id=19
-app_type='website'
-folder_id='website'
+app_type='service'
+folder_id='service'
 branch='unstable'
 # test end #
 
@@ -137,6 +139,47 @@ if [ "${app_type}" = "website" ]; then
     sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${biz9_website_version}';/" .biz9_config.sh
     rm -rf .biz9_update_bk
 fi
+
+if [ "${app_type}" = "service" ]; then
+    G_HAS_APP=true;
+    cd ${G_BIZ_APP_DIR}/
+    #backup
+    rm -rf .biz9_update_bk
+    mkdir .biz9_update_bk
+    mkdir .biz9_update_bk/other
+    mkdir .biz9_update_bk/other/blank
+    mkdir .biz9_update_bk/public
+    mkdir .biz9_update_bk/public/uploads
+    cp -rf app.js  .biz9_update_bk/
+    cp -rf .biz9_config.sh .biz9_update_bk/
+    cp -rf other .biz9_update_bk/
+    cp -rf public/uploads .biz9_update_bk/
+    #git pull
+    echo ".biz9_update_bk" > .gitignore
+    git add .
+    git stash
+    git pull -f ${BIZ9_GIT_URL}/${BIZ9_SERVICE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    echo ".biz9_update_bk" > .gitignore
+    #get latest version
+    source .biz9_config.sh
+    biz9_service_version=${BIZ9_SERVICE_VERSION}
+    #backup cp
+    cp -rf .biz9_update_bk/app.js ${G_BIZ_APP_DIR}/
+    cp -rf .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    cp -rf .biz9_update_bk/other/*  ${G_BIZ_APP_DIR}/other/
+    cp -rf .biz9_update_bk/public/uploads ${G_BIZ_APP_DIR}/public/uploads
+    source ${G_BIZ_APP_DIR}/.biz9_config.sh
+    #app.js
+    sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}';/" app.js
+    sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION}';/" app.js
+    sed -i "s/APP_ID=.*/APP_ID='${APP_ID}';/" app.js
+    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}';/" app.js
+    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" app.js
+    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" .biz9_config.sh
+    rm -rf .biz9_update_bk
+fi
+
+
 echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
 exit 1
 
