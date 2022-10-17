@@ -7,7 +7,7 @@ router.get('/ping',function(req, res) {
 //9_blog_post_detail//9_detail
 router.get('/get_blog_post/:title_url',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -37,7 +37,7 @@ router.get('/get_blog_post/:title_url',function(req, res) {
 //9_blog_post_category
 router.get('/get_blog_post_category_list',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -55,7 +55,7 @@ router.get('/get_blog_post_category_list',function(req, res) {
 		function(call){
 			sql = {type:'blog_post'};
 			sort={title:1};
-			biz9.get_sql(db,G_DT_CATEGORY,sql,sort,function(error,data_list) {
+			biz9.get_sql(db,DT_CATEGORY,sql,sort,function(error,data_list) {
 				helper.blog_post_category_list=data_list;
 				call();
 			});
@@ -68,7 +68,7 @@ router.get('/get_blog_post_category_list',function(req, res) {
 });
 router.get('/get_blog_post_list',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -103,7 +103,7 @@ router.get('/get_blog_post_list',function(req, res) {
 //9_blog_post_detail//9_detail
 router.get('/get_blog_post/:title_url',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){

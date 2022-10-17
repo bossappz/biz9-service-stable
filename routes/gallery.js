@@ -7,7 +7,7 @@ router.get('/ping',function(req, res, next) {
 //9_gallery_category
 router.get('/get_gallery_category_list',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -25,7 +25,7 @@ router.get('/get_gallery_category_list',function(req, res) {
 		function(call){
 			sql = {type:'gallery'};
 			sort={title:1};
-			biz9.get_sql(db,G_DT_CATEGORY,sql,sort,function(error,data_list) {
+			biz9.get_sql(db,DT_CATEGORY,sql,sort,function(error,data_list) {
 				helper.gallery_category_list=data_list;
 				call();
 			});
@@ -39,7 +39,7 @@ router.get('/get_gallery_category_list',function(req, res) {
 //9_gallery_list
 router.get('/get_gallery_list/:category',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -73,7 +73,7 @@ router.get('/get_gallery_list/:category',function(req, res) {
 //9_gallery_detail//9_detail
 router.get('/get_gallery/:title_url',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -103,7 +103,7 @@ router.get('/get_gallery/:title_url',function(req, res) {
 //9_gallery_checkout_send
 router.post('/send_gallery_checkout',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -114,8 +114,8 @@ router.post('/send_gallery_checkout',function(req, res) {
 		function(call){
 			mail={};
 			mail.subject='Gallery Checkout Success';
-			mail.from = G_EMAIL_FROM;
-			mail.to = G_EMAIL_TO;
+			mail.from = EMAIL_FROM;
+			mail.to = EMAIL_TO;
 			str="";
 			str = "First Name: "+helper.first_name+
 				" Last Name: "+helper.last_name  +"<br/>"+

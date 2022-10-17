@@ -10,83 +10,88 @@ path=require("path");
 session=require("express-session");
 /* --- APP REQUIRE END --- */
 /* --- APP DEFAULT START --- */
-G_ENV=process.env.NODE_ENV;
+ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.6.8'
+BIZ9_SERVICE_VERSION='3.7.2'
 APP_ID='19';
 APP_TITLE_ID='ser19';
 APP_TITLE='BiZ9-Service';
 APP_VERSION='1.6.8'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
-G_APP_PORT="1901";
+APP_PORT="1901";
 /* --- ENV CONFIG END --- */
+/* --- MONGO START --- */
+MONGO_IP="34.205.146.54";
+MONGO_PORT="27019";
+//MONGO_URL="mongodb://ban:1234567@"+MONGO_IP+":"+MONGO_PORT; //remote
+MONGO_URL="mongodb://localhost:"+MONGO_PORT; //local
+/* --- MONGO END --- */
 /* --- ENV AWS START --- */
-G_S3_SAVE=false;
-G_S3_BUCKET="biz9-service-91sep25a";
-G_AWS_KEY="AKIAYTRK2L34AZSMYKOY";
-G_AWS_SECRET="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";
+S3_SAVE=false;
+S3_BUCKET="biz9-test-cool1";
+AWS_KEY="AKIAYTRK2L34AZSMYKOY";
+AWS_SECRET="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";
 /* --- ENV AWS END --- */
 /* --- ENV EMAILZ START --- */
-G_EMAIL_TO="contact@bossappz.com";
-G_EMAIL_FROM="contact@bossappz.com";
+EMAIL_TO="contact@bossappz.com";
+EMAIL_FROM="contact@bossappz.com";
 /* --- ENV EMAILZ START --- */
 /* --- ENV FILE START --- */
-//G_FILE_SAVE_PATH="/uploads/";//local
-G_FILE_SAVE_PATH=__dirname+"/public/uploads/";
-//G_FILE_URL="/uploads/"; //box_url
-//G_FILE_URL="http://localhost:1901/uploads/"; //mobile_box_url
-G_FILE_URL="https://"+G_S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
-//G_FILE_URL="https://bossappz.com/uploads/" //web_prod_url
+//FILE_SAVE_PATH="/uploads/";//local
+FILE_SAVE_PATH=__dirname+"/public/uploads/";
+//FILE_URL="/uploads/"; //box_url
+//FILE_URL="http://localhost:1901/uploads/"; //mobile_box_url
+FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
+//FILE_URL="https://bossappz.com/uploads/" //web_prod_url
 /* --- ENV FILE END --- */
 /* --- ENV CONFIG END -- */
 /* --- DATA_TYPE-START --- */
-G_DT_ITEM_MAP="item_map_biz";
-G_DT_USER="user_biz";
-G_DT_COMMENT="comment_biz";
-G_DT_BLANK="blank_biz";
-G_DT_PHOTO="photo_biz";
-G_DT_BLOG_POST="blog_post_biz";
-G_DT_GALLERY="gallery_biz";
-G_DT_PRODUCT="product_biz";
-G_DT_SERVICE="service_biz";
-G_DT_PRODUCT_CART="product_cart_biz";
-G_DT_SERVICE_CART="service_cart_biz";
-G_DT_PRODUCT_CHECKOUT="product_checkout_biz";
-G_DT_PRODUCT_ORDER="product_order_biz";
-G_DT_SERVICE_ORDER="service_order_biz";
-G_DT_SERVICE="service_biz";
-G_DT_TEAM="team_biz";
-G_DT_DOCUMENT="document_biz";
-G_DT_CATEGORY="category_biz";
+DT_ITEM_MAP="item_map_biz";
+DT_USER="user_biz";
+DT_COMMENT="comment_biz";
+DT_BLANK="blank_biz";
+DT_PHOTO="photo_biz";
+DT_BLOG_POST="blog_post_biz";
+DT_GALLERY="gallery_biz";
+DT_PRODUCT="product_biz";
+DT_SERVICE="service_biz";
+DT_PRODUCT_CART="product_cart_biz";
+DT_SERVICE_CART="service_cart_biz";
+DT_PRODUCT_CHECKOUT="product_checkout_biz";
+DT_PRODUCT_ORDER="product_order_biz";
+DT_SERVICE_ORDER="service_order_biz";
+DT_SERVICE="service_biz";
+DT_TEAM="team_biz";
+DT_DOCUMENT="document_biz";
+DT_CATEGORY="category_biz";
 /* --- DATA_TYPE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
 data_config={
-    mongo_url:"mongodb://localhost",
-    mongo_port:"27019",
-    mongo_name:APP_TITLE_ID,
+    mongo_url:MONGO_URL,
     redis_url:"127.0.0.1",
-    redis_port:6379};
+    redis_port:6379,
+    remote_restart_url:"http://102.bossappz.com/cloud/test/uptime"
+};
 app_config={
     app_title_id:APP_TITLE_ID,
     app_version:APP_VERSION,
     app_title:APP_TITLE,
     app_id:APP_ID,
-    file_path:G_FILE_SAVE_PATH,
-    g_file_url:G_FILE_URL
+    file_url:FILE_URL
 };
 aws_config={
-    aws_key:G_AWS_KEY,
-    aws_secret:G_AWS_SECRET,
+    aws_key:AWS_KEY,
+    aws_secret:AWS_SECRET,
     aws_region:'us-east-1',
-    aws_s3_bucket:G_S3_BUCKET
 };
+/* --- BiZ9_CORE_CONFIG-END --- */
 /* --- PHOTO-SIZE-START --- */
-G_PHOTO_SIZE_ALBUM={title_url:"",size:0};
-G_PHOTO_SIZE_THUMB={title_url:"thumb_size_",size:500};
-G_PHOTO_SIZE_MID={title_url:"mid_size_",size:720};
-G_PHOTO_SIZE_LARGE={title_url:"large_size_",size:1000};
+PHOTO_SIZE_ALBUM={title_url:"",size:0};
+PHOTO_SIZE_THUMB={title_url:"thumb_size_",size:500};
+PHOTO_SIZE_MID={title_url:"mid_size_",size:720};
+PHOTO_SIZE_LARGE={title_url:"large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
 biz9=require("/home/mama/www/opz/productz/biz9/biz9-core/src/unstable/")(app_config,aws_config,data_config);

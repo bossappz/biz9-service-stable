@@ -13,8 +13,8 @@ router.post('/sendmailform', function(req, res, next) {
         function(call){
             mail={};
             mail.subject=helper.form_title;
-            mail.from = G_EMAIL_FROM;
-            mail.to = G_EMAIL_TO;
+            mail.from = EMAIL_FROM;
+            mail.to = EMAIL_TO;
 
             str='';
             for(item in helper){
@@ -46,7 +46,7 @@ router.get('/forgotpassword',function(req,res){
     var helper = biz9.get_helper(req);
     helper.render='forgot_password';
     helper.page_title = APP_TITLE +': Forgot Password';
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(_db){
@@ -69,7 +69,7 @@ router.get('/forgotpassword',function(req,res){
 });
 router.post('/forgotpasswordsend',function(req,res){
     var helper = biz9.get_helper(req);
-    helper.item = biz9.set_item_data(G_DT_USER,0,req.body);
+    helper.item = biz9.set_item_data(DT_USER,0,req.body);
     helper.validation_message =null;
     async.series([
         function(call){
@@ -80,7 +80,7 @@ router.post('/forgotpasswordsend',function(req,res){
         },
         function(call){
             sql_obj = {email:helper.item.email};
-            biz9.get_sql(db,G_DT_USER, sql_obj,{}, function(data_list) {
+            biz9.get_sql(db,DT_USER, sql_obj,{}, function(data_list) {
                 if(data_list.length>0) {
                     helper.item = data_list[0];
                     call();
@@ -95,7 +95,7 @@ router.post('/forgotpasswordsend',function(req,res){
             if(!helper.validation_message){
                 mail={};
                 mail.subject=APP_TITLE+' Forgot password';
-                mail.from = G_EMAIL_FROM;
+                mail.from = EMAIL_FROM;
                 mail.to = helper.item.email;
                 biz9.send_mail(mail,function(_data) {
                     helper.validation_message='Email and password found. Please check your email found at '+helper.item.email + " for futher instructions.";
@@ -114,7 +114,7 @@ router.post('/forgotpasswordsend',function(req,res){
 });
 router.post('/update_email_list',function(req,res){
     var helper = biz9.get_helper(req);
-    helper.item = biz9.set_item_data(G_DT_EMAIL,0,req.body);
+    helper.item = biz9.set_item_data(DT_EMAIL,0,req.body);
     helper.validation_message =null;
     async.series([
         function(call){
@@ -126,7 +126,7 @@ router.post('/update_email_list',function(req,res){
         function(call){
             helper.email_add='true';
             sql_obj = {email:helper.item.email};
-            biz9.get_sql(db,G_DT_EMAIL, sql_obj,{}, function(data_list) {
+            biz9.get_sql(db,DT_EMAIL, sql_obj,{}, function(data_list) {
                 if(data_list.length>0) {
                     helper.email_add='false';
                     helper.validation_message='Email Already Added';
@@ -148,8 +148,8 @@ router.post('/update_email_list',function(req,res){
         function(call){
             mail={};
             mail.subject=APP_TITLE + ' Email List Update';
-            mail.from = G_EMAIL_FROM;
-            mail.to = G_EMAIL_TO;
+            mail.from = EMAIL_FROM;
+            mail.to = EMAIL_TO;
             str='<b>Email:</b> '+helper.email;
             str=str+'<br/><b>Added To List:</b> '+helper.email_add;
             mail.body = str;

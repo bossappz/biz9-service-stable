@@ -8,7 +8,7 @@ router.get('/ping', function(req, res, next) {
 });
 router.get('/report', function(req, res, next) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -20,14 +20,14 @@ router.get('/report', function(req, res, next) {
             helper.item.field_1=biz9.get_id();
             helper.item.field_2=biz9.get_id();
             helper.item.field_3=biz9.get_id();
-            biz9.update_item(db,G_DT_BLANK,helper.item,function(error,data) {
+            biz9.update_item(db,DT_BLANK,helper.item,function(error,data) {
                 helper.item=data;
                 biz9.o('DB_FIELD_BLANK_SET',helper.item);
                 call();
             });
         },
         function(call){
-            biz9.get_item(db,G_DT_BLANK,helper.item.tbl_id,function(error,data) {
+            biz9.get_item(db,DT_BLANK,helper.item.tbl_id,function(error,data) {
                 helper.item=data;
                 biz9.o('DB_FIELD_BLANK_GET',helper.item);
                 call();
@@ -41,7 +41,7 @@ router.get('/report', function(req, res, next) {
 });
 router.post('/bucket_update', function(req, res, next) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.update_bucket(helper.title,function(error, data) {
@@ -59,7 +59,7 @@ router.post('/bucket_update', function(req, res, next) {
 });
 router.post('/bucket_file_update', function(req, res, next) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     test_file=path.join(__dirname,'../../public/images/no_image.png');;
     re_test_file='re_test_file.png'
    async.series([
@@ -82,7 +82,7 @@ router.post('/bucket_file_update', function(req, res, next) {
 });
 router.post('/bucket_get_data', function(req, res, next) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     helper.re_test_file='re_test_file.png'
    async.series([
         function(call){
@@ -100,7 +100,7 @@ router.post('/bucket_get_data', function(req, res, next) {
 });
 router.post('/write_file', function(req, res, next) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     test_file=path.join(__dirname,'../../public/images/no_image.png');;
     re_test_file=path.join(__dirname,'../../public/images/no_image_test.png');;
    async.series([
@@ -124,7 +124,7 @@ router.post('/send_mail', function(req, res, next) {
         function(call){
             mail={};
             mail.subject ='Test Server Send Email';
-            mail.from = G_EMAIL_FROM;
+            mail.from = EMAIL_FROM;
             mail.to = helper.email;
             str = "<b>Test Email</b>: "+helper.email+"<br/>";
             mail.body = str;
@@ -146,7 +146,7 @@ router.post('/send_mail', function(req, res, next) {
 router.get('/uptime', function(req, res, next) {
     var helper = biz9.get_helper(req);
     var exec = require('child_process').exec;
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){

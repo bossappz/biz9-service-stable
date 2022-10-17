@@ -7,7 +7,7 @@ router.get('/ping',function(req, res, next) {
 //9_product_category
 router.get('/get_product_category_list',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -25,7 +25,7 @@ router.get('/get_product_category_list',function(req, res) {
 		function(call){
 			sql = {type:'product'};
 			sort={title:1};
-			biz9.get_sql(db,G_DT_CATEGORY,sql,sort,function(error,data_list) {
+			biz9.get_sql(db,DT_CATEGORY,sql,sort,function(error,data_list) {
 				helper.product_category_list=data_list;
 				call();
 			});
@@ -39,7 +39,7 @@ router.get('/get_product_category_list',function(req, res) {
 //9_product_list
 router.get('/get_product_list/:category',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -73,7 +73,7 @@ router.get('/get_product_list/:category',function(req, res) {
 //9_product_store_links
 router.get('/get_product_store_links',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -105,7 +105,7 @@ router.get('/get_product_store_links',function(req, res) {
 //9_product_detail//9_detail
 router.get('/get_product/:title_url',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -135,7 +135,7 @@ router.get('/get_product/:title_url',function(req, res) {
 //9_service_checkout_send
 router.post("/send_service_checkout",async (req, res) => {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -187,7 +187,7 @@ router.post("/send_service_checkout",async (req, res) => {
             helper.order_id=biz9.get_id();
             for(a=0;a<helper.service_cart_list.length;a++){
                 helper.service_cart_list[a].tbl_id=0;
-                helper.service_cart_list[a].data_type=G_DT_SERVICE_ORDER;
+                helper.service_cart_list[a].data_type=DT_SERVICE_ORDER;
                 helper.service_cart_list[a].order_id=helper.order_id;
             }
             call();
@@ -200,7 +200,7 @@ router.post("/send_service_checkout",async (req, res) => {
         function(call){
             sql={user_shopping_cart_id:helper.user_shopping_cart_id};
             sort={};
-            biz9.delete_sql(db,G_DT_SERVICE_CART,sql,function(error,data_list) {
+            biz9.delete_sql(db,DT_SERVICE_CART,sql,function(error,data_list) {
                 helper.del_service_list=data_list;
                 call();
             });
@@ -241,7 +241,7 @@ router.post("/send_service_checkout",async (req, res) => {
         },
         function(call){
             mail={};
-            mail.from = G_EMAIL_FROM;
+            mail.from = EMAIL_FROM;
             mail.to = helper.primary.billing_notification_email;
             mail.subject='New Order Confirmed';
             mail.body = helper.str;
@@ -254,8 +254,8 @@ router.post("/send_service_checkout",async (req, res) => {
         },
         function(call){
             mail={};
-            mail.from = G_EMAIL_FROM;
-            //mail.to = G_EMAIL_TO;
+            mail.from = EMAIL_FROM;
+            //mail.to = EMAIL_TO;
             mail.to = helper.email;
             mail.subject='Order Confirmed';
             mail.body = helper.str;
@@ -276,7 +276,7 @@ router.post("/send_service_checkout",async (req, res) => {
 //9_product_checkout_send
 router.post("/send_product_checkout",async (req, res) => {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -329,7 +329,7 @@ router.post("/send_product_checkout",async (req, res) => {
             helper.order_id=biz9.get_id();
             for(a=0;a<helper.product_cart_list.length;a++){
                 helper.product_cart_list[a].tbl_id=0;
-                helper.product_cart_list[a].data_type=G_DT_PRODUCT_ORDER;
+                helper.product_cart_list[a].data_type=DT_PRODUCT_ORDER;
                 helper.product_cart_list[a].order_id=helper.order_id;
             }
             call();
@@ -342,7 +342,7 @@ router.post("/send_product_checkout",async (req, res) => {
         function(call){
             sql={user_shopping_cart_id:helper.user_shopping_cart_id};
             sort={};
-            biz9.delete_sql(db,G_DT_PRODUCT_CART,sql,function(error,data_list) {
+            biz9.delete_sql(db,DT_PRODUCT_CART,sql,function(error,data_list) {
                 helper.del_product_list=data_list;
                 call();
             });
@@ -383,7 +383,7 @@ router.post("/send_product_checkout",async (req, res) => {
         },
         function(call){
             mail={};
-            mail.from = G_EMAIL_FROM;
+            mail.from = EMAIL_FROM;
             mail.to = helper.primary.billing_notification_email;
             mail.subject='New Order Confirmed';
             mail.body = helper.str;
@@ -396,8 +396,8 @@ router.post("/send_product_checkout",async (req, res) => {
         },
         function(call){
             mail={};
-            mail.from = G_EMAIL_FROM;
-            //mail.to = G_EMAIL_TO;
+            mail.from = EMAIL_FROM;
+            //mail.to = EMAIL_TO;
             mail.to = helper.email;
             mail.subject='Order Confirmed';
             mail.body = helper.str;
@@ -418,7 +418,7 @@ router.post("/send_product_checkout",async (req, res) => {
 //9_product_checkout_send
 router.post('/send_product_checkout',function(req, res) {
 	var helper = biz9.get_helper(req);
-	helper.item = biz9.get_new_item(G_DT_BLANK,0);
+	helper.item = biz9.get_new_item(DT_BLANK,0);
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -453,7 +453,7 @@ router.post('/send_product_checkout',function(req, res) {
 			helper.order_id=biz9.get_id();
 			for(a=0;a<helper.product_cart_list.length;a++){
 				helper.product_cart_list[a].tbl_id=0;
-				helper.product_cart_list[a].data_type=G_DT_PRODUCT_ORDER;
+				helper.product_cart_list[a].data_type=DT_PRODUCT_ORDER;
 				helper.product_cart_list[a].order_id=helper.order_id;
 			}
 			call();
@@ -466,7 +466,7 @@ router.post('/send_product_checkout',function(req, res) {
 		function(call){
 			sql={user_shopping_cart_id:helper.user_shopping_cart_id};
 			sort={};
-			biz9.delete_sql(db,G_DT_PRODUCT_CART,sql,function(error,data_list) {
+			biz9.delete_sql(db,DT_PRODUCT_CART,sql,function(error,data_list) {
 				helper.del_product_list=data_list;
 				call();
 			});
@@ -505,9 +505,9 @@ router.post('/send_product_checkout',function(req, res) {
 		function(call){
 			mail={};
 			mail.subject='New Order Confirmed';
-			mail.from = G_EMAIL_FROM;
+			mail.from = EMAIL_FROM;
 			//mail.to = helper.primary.billing_notification_email;
-			mail.to = G_EMAIL_TO;
+			mail.to = EMAIL_TO;
 			mail.body = helper.str;
 			call();
 		},
@@ -519,8 +519,8 @@ router.post('/send_product_checkout',function(req, res) {
 		function(call){
 			mail={};
 			mail.subject='Order Confirmed';
-			mail.from = G_EMAIL_FROM;
-			mail.to = G_EMAIL_TO;
+			mail.from = EMAIL_FROM;
+			mail.to = EMAIL_TO;
 			//mail.to = helper.email;
 			mail.body = helper.str;
 			call();
@@ -575,8 +575,8 @@ router.post("/stripe-create-checkout-token",async (req, res) => {
 							'card',
 						],
 						mode: 'payment',
-						success_url: G_URL+"/shop/checkout/success"+helper.form_url,
-						cancel_url: G_URL+"/shop/checkout"+helper.form_url,
+						success_url: URL+"/shop/checkout/success"+helper.form_url,
+						cancel_url: URL+"/shop/checkout"+helper.form_url,
 					});
 					helper.checkout_redirect_url = session.url;
 					call();
@@ -668,8 +668,8 @@ router.post("/create-checkout-session",async (req, res) => {
 							'card',
 						],
 						mode: 'payment',
-						success_url: G_URL+"/shop/checkout/success"+helper.form_url,
-						cancel_url: G_URL+"/shop/checkout"+helper.form_url,
+						success_url: URL+"/shop/checkout/success"+helper.form_url,
+						cancel_url: URL+"/shop/checkout"+helper.form_url,
 					});
 					helper.checkout_redirect_url = session.url;
 					call();

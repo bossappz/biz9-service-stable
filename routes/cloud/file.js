@@ -8,7 +8,7 @@ router.get('/ping', function(req, res, next) {
 });
 router.post("/update_photo", function(req, res) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK, 0);
+    helper.item = biz9.get_new_item(DT_BLANK, 0);
     helper.error=null;
     async.series([
         //get file name
@@ -21,7 +21,7 @@ router.post("/update_photo", function(req, res) {
             const bb = busboy({ headers: req.headers });
             const run = async function(a, b) {
                 bb.on('file', (name, file, info) => {
-                    const saveTo = path.join(G_FILE_SAVE_PATH,helper.item.photofilename);
+                    const saveTo = path.join(FILE_SAVE_PATH,helper.item.photofilename);
                     file.pipe(fs.createWriteStream(saveTo));
                 });
                 req.pipe(bb);
@@ -33,7 +33,7 @@ router.post("/update_photo", function(req, res) {
         },
         //check if valid photo
         function(call){
-            detect.fromFile(G_FILE_SAVE_PATH+helper.item.photofilename, function(err, data) {
+            detect.fromFile(FILE_SAVE_PATH+helper.item.photofilename, function(err, data) {
                 if (err) {
                     helper.error='error: detect-file-type-error: '+err;
                     call();
@@ -48,7 +48,7 @@ router.post("/update_photo", function(req, res) {
         //save with new filename size thumb_size
         function(call){
             if(helper.error==null){
-                biz9.set_resize_photo_file(G_PHOTO_SIZE_THUMB.size,G_FILE_SAVE_PATH,helper.item.photofilename,G_PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,function(error,data) {
+                biz9.set_resize_photo_file(PHOTO_SIZE_THUMB.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -58,7 +58,7 @@ router.post("/update_photo", function(req, res) {
         //save with new filename size mid
         function(call){
             if(helper.error==null){
-                biz9.set_resize_photo_file(G_PHOTO_SIZE_MID.size,G_FILE_SAVE_PATH,helper.item.photofilename,G_PHOTO_SIZE_MID.title_url+helper.item.photofilename,function(error,data) {
+                biz9.set_resize_photo_file(PHOTO_SIZE_MID.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_MID.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -68,7 +68,7 @@ router.post("/update_photo", function(req, res) {
         //save with new filename size large
         function(call){
             if(helper.error==null){
-                biz9.set_resize_photo_file(G_PHOTO_SIZE_LARGE.size,G_FILE_SAVE_PATH,helper.item.photofilename,G_PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,function(error,data) {
+                biz9.set_resize_photo_file(PHOTO_SIZE_LARGE.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -78,8 +78,8 @@ router.post("/update_photo", function(req, res) {
         //update_s3_org
         function(call){
             if(helper.error==null){
-                if(G_S3_SAVE){
-                    biz9.update_bucket_file(G_S3_BUCKET,G_FILE_SAVE_PATH+helper.item.photofilename,helper.item.photofilename,function(error,data) {
+                if(S3_SAVE){
+                    biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.photofilename,helper.item.photofilename,function(error,data) {
                         call();
                     });
 
@@ -92,8 +92,8 @@ router.post("/update_photo", function(req, res) {
         },
         //update_s3_thumb
         function(call){
-            if(G_S3_SAVE){
-                biz9.update_bucket_file(G_S3_BUCKET,G_FILE_SAVE_PATH+G_PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,G_PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,function(error,data) {
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -102,8 +102,8 @@ router.post("/update_photo", function(req, res) {
         },
          //update_s3_mid
         function(call){
-            if(G_S3_SAVE){
-                biz9.update_bucket_file(G_S3_BUCKET,G_FILE_SAVE_PATH+G_PHOTO_SIZE_MID.title_url+helper.item.photofilename,G_PHOTO_SIZE_MID.title_url+helper.item.photofilename,function(error,data) {
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_MID.title_url+helper.item.photofilename,PHOTO_SIZE_MID.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -112,8 +112,8 @@ router.post("/update_photo", function(req, res) {
         },
         //update_s3_large
         function(call){
-            if(G_S3_SAVE){
-                biz9.update_bucket_file(G_S3_BUCKET,G_FILE_SAVE_PATH+G_PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,G_PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,function(error,data) {
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,function(error,data) {
                     call();
                 });
             }else{
@@ -124,9 +124,9 @@ router.post("/update_photo", function(req, res) {
         /*
         function(call){
             if(helper.error==null){
-                if(G_S3_SAVE){
+                if(S3_SAVE){
                     try {
-                        fs.unlinkSync(G_FILE_SAVE_PATH+G_PHOTO_SIZE_LARGE.title_url+helper.item.photofilename)
+                        fs.unlinkSync(FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename)
                         call();
                     } catch(err) {
                         helper.error='error: org could not delete file '+err;
@@ -152,7 +152,7 @@ router.post("/update_photo", function(req, res) {
 });
 router.post("/update_mp3", function(req, res) {
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(G_DT_BLANK, 0);
+    helper.item = biz9.get_new_item(DT_BLANK, 0);
     helper.error=null;
     async.series([
         //get file name
@@ -165,7 +165,7 @@ router.post("/update_mp3", function(req, res) {
             const bb = busboy({ headers: req.headers });
             const run = async function(a, b) {
                 bb.on('file', (name, file, info) => {
-                const saveTo = path.join(G_FILE_SAVE_PATH,helper.item.mp3filename);
+                const saveTo = path.join(FILE_SAVE_PATH,helper.item.mp3filename);
                     file.pipe(fs.createWriteStream(saveTo));
                 });
                 req.pipe(bb);
@@ -178,7 +178,7 @@ router.post("/update_mp3", function(req, res) {
         },
         //check if valid mp3
         function(call){
-            detect.fromFile(G_FILE_SAVE_PATH+helper.item.mp3filename, function(err, data) {
+            detect.fromFile(FILE_SAVE_PATH+helper.item.mp3filename, function(err, data) {
                 if (err) {
                     helper.error='error: detect-file-type-error: '+err;
                     call();
@@ -193,7 +193,7 @@ router.post("/update_mp3", function(req, res) {
         function(call){
             helper.item.mp3duration='0:00';
             if(helper.error==null){
-                mp3Duration(G_FILE_SAVE_PATH+helper.item.mp3filename,function(err,duration){
+                mp3Duration(FILE_SAVE_PATH+helper.item.mp3filename,function(err,duration){
                     if (err)
                         error=err;
                         helper.item.mp3duration=biz9.get_duration(duration);
@@ -205,9 +205,9 @@ router.post("/update_mp3", function(req, res) {
         },
         //upload to s3
         function(call){
-            if(G_S3_SAVE && helper.error==null){
-                biz9.update_bucket_file(G_S3_BUCKET,G_FILE_SAVE_PATH+helper.item.mp3filename,helper.item.mp3filename,function(data,error){
-                    helper.item.mp3_url = G_FILE_URL+helper.item.mp3filename;
+            if(S3_SAVE && helper.error==null){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.mp3filename,helper.item.mp3filename,function(data,error){
+                    helper.item.mp3_url = FILE_URL+helper.item.mp3filename;
                     call();
                 });
             }else{
@@ -219,7 +219,7 @@ router.post("/update_mp3", function(req, res) {
         function(call){
             if(helper.error==null){
                 try {
-                    fs.unlinkSync(G_FILE_SAVE_PATH+helper.item.mp3filename)
+                    fs.unlinkSync(FILE_SAVE_PATH+helper.item.mp3filename)
                     call();
                 } catch(err) {
                     helper.error='error: could not delete mp3';
