@@ -4,33 +4,33 @@
  * BiZ9 Framework
  * Core-AppZ
  */
-module.exports = function(){
-    G_APP_ID=app_config.app_id;
-    G_APP_TITLE_ID=app_config.app_title_id;
-    G_APP_TITLE=app_config.app_title;
-    G_APP_VERSION=app_config.app_version;
-    G_DT_ITEM_MAP='item_map_biz';
-    G_DT_BLANK='blank_biz';
-    G_DT_PHOTO='photo_biz';
-    G_DT_USER='user_biz';
-    G_DT_TEAM='team_biz';
-    G_DT_ADMIN='admin_biz';
-    G_DT_PROJECT='project_biz';
-    G_DT_SUB_PROJECT='sub_project_biz';
-    G_DT_GALLERY='gallery_biz';
-    G_DT_DOCUMENT='document_biz';
-    G_DT_PRODUCT='product_biz';
-    G_DT_GENRE='genre_biz';
-    G_DT_PRODUCT_CART='product_cart_biz';
-    G_DT_SUB_PRODUCT='sub_product_biz';
-    G_DT_BLOG_POST='blog_post_biz';
-    G_DT_SUB_BLOG_POST='sub_blog_post_biz';
-    G_DT_SERVICE='service_biz';
-    G_DT_SUB_SERVICE='sub_service_biz';
-    G_DT_ARTIST='artist_biz';
-    G_DT_ALBUM='album_biz';
-    G_DT_ALBUM_TRACK='album_tack_biz';
-    G_DT_TRACK='track_biz';
+module.exports = function(app_config){
+    APP_ID=app_config.app_id;
+    APP_TITLE_ID=app_config.app_title_id;
+    APP_TITLE=app_config.app_title;
+    APP_VERSION=app_config.app_version;
+    DT_ITEM_MAP='item_map_biz';
+    DT_BLANK='blank_biz';
+    DT_PHOTO='photo_biz';
+    DT_USER='user_biz';
+    DT_TEAM='team_biz';
+    DT_ADMIN='admin_biz';
+    DT_PROJECT='project_biz';
+    DT_SUB_PROJECT='sub_project_biz';
+    DT_GALLERY='gallery_biz';
+    DT_DOCUMENT='document_biz';
+    DT_PRODUCT='product_biz';
+    DT_GENRE='genre_biz';
+    DT_PRODUCT_CART='product_cart_biz';
+    DT_SUB_PRODUCT='sub_product_biz';
+    DT_BLOG_POST='blog_post_biz';
+    DT_SUB_BLOG_POST='sub_blog_post_biz';
+    DT_SERVICE='service_biz';
+    DT_SUB_SERVICE='sub_service_biz';
+    DT_ARTIST='artist_biz';
+    DT_ALBUM='album_biz';
+    DT_ALBUM_TRACK='album_tack_biz';
+    DT_TRACK='track_biz';
     module.set_item_data = function(data_type,tbl_id,item_data){
         var item = {};
         for (key in  item_data) {
@@ -58,7 +58,7 @@ module.exports = function(){
             tbl_id=0;
         }
         if(!data_type){
-            data_type=G_DT_BLANK;
+            data_type=DT_BLANK;
         }
         item=_get_new_item(data_type,tbl_id);
         test_id=utilityz.get_id();
@@ -69,7 +69,7 @@ module.exports = function(){
     }
     function _get_test_user(){
         var test_id = utilityz.get_id();
-        var item = _get_new_item(G_DT_USER,0);;
+        var item = _get_new_item(DT_USER,0);;
         item.email = 'email'+test_id+'@gmail.com';
         item.user_name = 'user_name'+test_id;
         item.first_name = 'firstname'+test_id;
@@ -96,7 +96,7 @@ module.exports = function(){
         var u = _get_user(req);
         check_ok=false;
         if(u.tbl_id!=0){
-            if(u.data_type==G_DT_USER||u.data_type==G_DT_ADMIN){
+            if(u.data_type==DT_USER||u.data_type==DT_ADMIN){
                 check_ok=true;
             }
         }
@@ -111,7 +111,7 @@ module.exports = function(){
         var u = _get_user(req);
         check_ok=false;
         if(u.tbl_id!=0){
-            if(u.data_type==G_DT_CUSTOMER||u.data_type==G_DT_USER||u.data_type==G_DT_ADMIN){
+            if(u.data_type==DT_CUSTOMER||u.data_type==DT_USER||u.data_type==DT_ADMIN){
                 check_ok=true;
             }
         }
@@ -126,7 +126,7 @@ module.exports = function(){
         var u = _get_user(req);
         check_ok=false;
         if(u.tbl_id!=0){
-            if(u.data_type==G_DT_ADMIN){
+            if(u.data_type==DT_ADMIN){
                 check_ok=true;
             }
         }
@@ -144,7 +144,7 @@ module.exports = function(){
         if(req.session.user){
             return _set_biz_item(req.session.user);
         }else{
-            return _set_biz_item({tbl_id:0,data_type:G_DT_USER});
+            return _set_biz_item({tbl_id:0,data_type:DT_USER});
         }
     }
     module.save_user = function(req,user){
@@ -305,11 +305,11 @@ module.exports = function(){
                 helper[key]=req.params[key].trim();
             }
         }
-        helper.app_id=G_APP_ID;
-        helper.app_title=G_APP_TITLE;
-        helper.app_version=G_APP_VERSION;
-        if(G_APP_TITLE_ID){
-            helper.app_title_id=G_APP_TITLE_ID;
+        helper.app_id=app_config.app_id;
+        helper.app_title=app_config.app_title;
+        helper.app_version=app_config.app_version;
+        if(app_config.app_title_id){
+            helper.app_title_id=app_config.app_title_id;
         }else{
             helper.app_title_id=helper.app_title_id;
         }
@@ -338,8 +338,8 @@ module.exports = function(){
                 helper[key]=req.params[key].trim();
             }
         }
-        if(G_APP_TITLE_ID){
-            helper.app_title_id=G_APP_TITLE_ID;
+        if(app_config.app_title_id){
+            helper.app_title_id=app_config.app_title_id;
         }else{
             if(req.subdomains[0]){
                 helper.app_title_id=req.subdomains[0];
@@ -487,7 +487,7 @@ module.exports = function(){
         return _blog_post;
     }
     module.get_blank_artist=function(){
-        var _a = _get_new_item(G_DT_ARTIST,0);
+        var _a = _get_new_item(DT_ARTIST,0);
         _a.artist_name='';
         return _a;
     }
@@ -1076,10 +1076,10 @@ module.exports = function(){
         }
         if(item.photofilename){
             no_photo=false;
-            item.album_photo_url=G_FILE_URL+item.photofilename;
-            item.thumb_photo_url=G_FILE_URL+_photo_size_thumb+item.photofilename;
-            item.mid_photo_url=G_FILE_URL+ _photo_size_mid+item.photofilename;
-            item.large_photo_url=G_FILE_URL+_photo_size_large+item.photofilename;
+            item.album_photo_url=app_config.file_url+item.photofilename;
+            item.thumb_photo_url=app_config.file_url+_photo_size_thumb+item.photofilename;
+            item.mid_photo_url=app_config.file_url+ _photo_size_mid+item.photofilename;
+            item.large_photo_url=app_config.file_url+_photo_size_large+item.photofilename;
         }
         if(no_photo){
             str='/images/no_image.png';
@@ -1184,14 +1184,14 @@ module.exports = function(){
         return str;
     }
     module.get_blog_post=function(db,title_url,callback){
-        var blog_post=appz.get_new_item(G_DT_BLOG_POST,0);
+        var blog_post=appz.get_new_item(DT_BLOG_POST,0);
         var full_photo_list=[];
         var other_list=[];
         async.series([
             function(call){
                 sql = {title_url:title_url};
                 sort={};
-                _get_sql_cache(db,G_DT_BLOG_POST,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_BLOG_POST,sql,sort,function(error,data_list) {
                     error=error;
                     if(data_list.length>0){
                         if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -1210,7 +1210,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1223,7 +1223,7 @@ module.exports = function(){
             function(call){
                 sql={parent_tbl_id:blog_post.tbl_id};
                 sort={order:1};
-                _get_sql_cache(db,G_DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1241,7 +1241,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={order:1};
-                _get_sql_cache(db,G_DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1315,14 +1315,14 @@ module.exports = function(){
             });
     }
     module.get_product=function(db,title_url,callback){
-        var product=appz.get_new_item(G_DT_PRODUCT,0);
+        var product=appz.get_new_item(DT_PRODUCT,0);
         var full_photo_list=[];
         var other_list=[];
         async.series([
             function(call){
                 sql = {title_url:title_url};
                 sort={};
-                _get_sql_cache(db,G_DT_PRODUCT,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PRODUCT,sql,sort,function(error,data_list) {
                     error=error;
                     if(data_list.length>0){
                         if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -1338,7 +1338,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1351,7 +1351,7 @@ module.exports = function(){
             function(call){
                 sql={parent_tbl_id:product.tbl_id};
                 sort={order:1};
-                _get_sql_cache(db,G_DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
                      if(error){
                         error=error;
                     }
@@ -1370,7 +1370,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={order:1};
-                _get_sql_cache(db,G_DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1460,8 +1460,8 @@ module.exports = function(){
     //	paging_return=dt_total;
     //	paging_return=page_page_total;
     module.get_sub_page=function(db,page_title_url,sub_page_title_url,setting,callback){
-        var item_map=appz.get_new_item(G_DT_ITEM_MAP,0);
-        var sub_page=appz.get_new_item(G_DT_BLANK,0);
+        var item_map=appz.get_new_item(DT_ITEM_MAP,0);
+        var sub_page=appz.get_new_item(DT_BLANK,0);
         sub_page.title_url=sub_page_title_url;
         var dt_total=0;
         var page_page_total=0;
@@ -1473,7 +1473,7 @@ module.exports = function(){
             function(call){
                 sql = {title_url:page_title_url};
                 sort={};
-                _get_sql_cache(db,G_DT_ITEM_MAP,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_ITEM_MAP,sql,sort,function(error,data_list) {
                     error=error;
                     if(data_list.length>0){
                         item_map=data_list[0];
@@ -1506,7 +1506,7 @@ module.exports = function(){
                 if(item_map.tbl_id!=0&&sub_page.tbl_id!=0){
                     sql = {item_map_tbl_id:item_map.tbl_id};
                     sort={};
-                    _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                    _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                         if(error){
                             error=error;
                         }
@@ -1720,7 +1720,7 @@ module.exports = function(){
         var error=null;
         async.series([
             function(call){
-                _get_sql_paging_cache(db,G_DT_SERVICE_CART,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+                _get_sql_paging_cache(db,DT_SERVICE_CART,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                     error=error;
                     service_cart_list=_data_list;
                     dt_total=_dt_total;
@@ -1731,7 +1731,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_SUB_SERVICE,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_SERVICE,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1742,7 +1742,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1810,7 +1810,7 @@ module.exports = function(){
         var error=null;
         async.series([
             function(call){
-                _get_sql_paging_cache(db,G_DT_PRODUCT_CART,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+                _get_sql_paging_cache(db,DT_PRODUCT_CART,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                     error=error;
                     product_cart_list=_data_list;
                     dt_total=_dt_total;
@@ -1821,7 +1821,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1832,7 +1832,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1894,14 +1894,14 @@ module.exports = function(){
             });
     }
     module.get_artist=function(db,title_url,callback){
-        var artist=appz.get_new_item(G_DT_ARTIST,0);
+        var artist=appz.get_new_item(DT_ARTIST,0);
         var full_photo_list=[];
         var error=error;
         async.series([
             function(call){
                 sql = {title_url:title_url};
                 sort={};
-                _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                     error=error;
                     if(data_list.length>0){
                         if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -1915,7 +1915,7 @@ module.exports = function(){
             function(call){
                 sql = {parent_tbl_id:artist.tbl_id};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1936,7 +1936,7 @@ module.exports = function(){
         var error=null;
         async.series([
             function(call){
-                _get_sql_paging_cache(db,G_DT_ARTIST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+                _get_sql_paging_cache(db,DT_ARTIST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                     error=error;
                     artist_list=_data_list;
                     dt_total=_dt_total;
@@ -1947,7 +1947,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -1978,7 +1978,7 @@ module.exports = function(){
         var error=null;
         async.series([
             function(call){
-                _get_sql_paging_cache(db,G_DT_EVENT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+                _get_sql_paging_cache(db,DT_EVENT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                     error=error;
                     event_list=_data_list;
                     dt_total=_dt_total;
@@ -1989,7 +1989,7 @@ module.exports = function(){
             function(call){
                 sql = {};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -2017,7 +2017,7 @@ module.exports = function(){
             });
     }
     module.get_event=function(db,title_url,callback){
-        var event=appz.get_new_item(G_DT_EVENT,0);
+        var event=appz.get_new_item(DT_EVENT,0);
         var full_photo_list=[];
         var other_list=[];
         var error=null;
@@ -2025,7 +2025,7 @@ module.exports = function(){
             function(call){
                 sql = {title_url:title_url};
                 sort={};
-                _get_sql_cache(db,G_DT_EVENT,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_EVENT,sql,sort,function(error,data_list) {
                     error=error;
                     if(data_list.length>0){
                         if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2039,7 +2039,7 @@ module.exports = function(){
             function(call){
                 sql = {parent_tbl_id:event.tbl_id};
                 sort={};
-                _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+                _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                     if(error){
                         error=error;
                     }
@@ -2060,7 +2060,7 @@ module.get_podcast_list=function(db,sql,sort_by,page_current,page_size,callback)
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_PODCAST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_PODCAST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 podcast_list=_data_list;
                 dt_total=_dt_total;
@@ -2071,7 +2071,7 @@ module.get_podcast_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2082,7 +2082,7 @@ module.get_podcast_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2117,7 +2117,7 @@ module.get_podcast_list=function(db,sql,sort_by,page_current,page_size,callback)
         });
 }
 module.get_podcast=function(db,title_url,callback){
-    var podcast=appz.get_new_item(G_DT_PODCAST,0);
+    var podcast=appz.get_new_item(DT_PODCAST,0);
     var full_photo_list=[];
     var other_list=[];
     var error=error;
@@ -2125,7 +2125,7 @@ module.get_podcast=function(db,title_url,callback){
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_PODCAST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PODCAST,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2139,7 +2139,7 @@ module.get_podcast=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:podcast.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2152,7 +2152,7 @@ module.get_podcast=function(db,title_url,callback){
         function(call){
             sql = {tbl_id:podcast.artist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2175,7 +2175,7 @@ module.get_video_list=function(db,sql,sort_by,page_current,page_size,callback) {
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_VIDEO,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_VIDEO,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 video_list=_data_list;
                 dt_total=_dt_total;
@@ -2186,7 +2186,7 @@ module.get_video_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2197,7 +2197,7 @@ module.get_video_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2233,7 +2233,7 @@ module.get_video_list=function(db,sql,sort_by,page_current,page_size,callback) {
         });
 }
 module.get_video=function(db,title_url,callback){
-    var video=appz.get_new_item(G_DT_VIDEO,0);
+    var video=appz.get_new_item(DT_VIDEO,0);
     var full_photo_list=[];
     var other_list=[];
     var error=null;
@@ -2241,7 +2241,7 @@ module.get_video=function(db,title_url,callback){
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_VIDEO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_VIDEO,sql,sort,function(error,data_list) {
                 error=null;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2255,7 +2255,7 @@ module.get_video=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:video.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2268,7 +2268,7 @@ module.get_video=function(db,title_url,callback){
         function(call){
             sql = {tbl_id:video.artist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2286,13 +2286,13 @@ module.get_video=function(db,title_url,callback){
         });
 }
 module.get_artist_album_list=function(db,artist_title_url,sort_by,page_current,page_size,callback) {
-    var artist=appz.get_new_item(G_DT_ARTIST,0);
+    var artist=appz.get_new_item(DT_ARTIST,0);
     var error=null;
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2307,7 +2307,7 @@ module.get_artist_album_list=function(db,artist_title_url,sort_by,page_current,p
         function(call){
             sql = {artist_tbl_id:artist.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ALBUM,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ALBUM,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2318,7 +2318,7 @@ module.get_artist_album_list=function(db,artist_title_url,sort_by,page_current,p
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2348,7 +2348,7 @@ module.get_album_list=function(db,sql,sort_by,page_current,page_size,callback) {
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_ALBUM,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_ALBUM,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 album_list=_data_list;
                 dt_total=_dt_total;
@@ -2359,7 +2359,7 @@ module.get_album_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2370,7 +2370,7 @@ module.get_album_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2411,7 +2411,7 @@ module.get_genre_track_list=function(db,sql,sort_by,page_current,page_size,callb
     async.series([
         function(call){
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 error=error;
                 track_list=data_list;
                 dt_total=data_list.length;
@@ -2422,7 +2422,7 @@ module.get_genre_track_list=function(db,sql,sort_by,page_current,page_size,callb
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2454,7 +2454,7 @@ module.get_playlist_trackz=function(db,playlist_tbl_id,sort_by,page_current,page
         function(call){
             sql = {playlist_tbl_id:playlist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 error=error;
                 track_list=data_list;
                 call();
@@ -2463,7 +2463,7 @@ module.get_playlist_trackz=function(db,playlist_tbl_id,sort_by,page_current,page
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2496,7 +2496,7 @@ module.get_artist_trackz=function(db,artist_title_url,sort_by,page_current,page_
         function(call){
             sql = {title_url:artist_title_url};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0&&data_list[0]){
@@ -2510,7 +2510,7 @@ module.get_artist_trackz=function(db,artist_title_url,sort_by,page_current,page_
         function(call){
             sql = {artist_tbl_id:artist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2530,13 +2530,13 @@ module.get_artist_trackz=function(db,artist_title_url,sort_by,page_current,page_
         });
 }
 module.get_album=function(db,title_url,callback){
-    var album=appz.get_new_item(G_DT_ALBUM,0);
+    var album=appz.get_new_item(DT_ALBUM,0);
     var error =null;
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_ALBUM,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ALBUM,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2552,7 +2552,7 @@ module.get_album=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:album.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2565,7 +2565,7 @@ module.get_album=function(db,title_url,callback){
         function(call){
             sql = {tbl_id:album.artist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2581,7 +2581,7 @@ module.get_album=function(db,title_url,callback){
             album_track_list=[];
             sql = {album_tbl_id:album.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ALBUM_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ALBUM_TRACK,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2593,7 +2593,7 @@ module.get_album=function(db,title_url,callback){
             full_track_list=[];
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2623,7 +2623,7 @@ module.get_track_list=function(db,sql,sort_by,page_current,page_size,callback) {
     var error=error;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_TRACK,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_TRACK,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 track_list=_data_list;
                 dt_total=_dt_total;
@@ -2634,7 +2634,7 @@ module.get_track_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2645,7 +2645,7 @@ module.get_track_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2681,14 +2681,14 @@ module.get_track_list=function(db,sql,sort_by,page_current,page_size,callback) {
         });
 }
 module.get_track=function(db,title_url,callback){
-    var track=appz.get_new_item(G_DT_TRACK,0);
+    var track=appz.get_new_item(DT_TRACK,0);
     var full_photo_list=[];
     var other_list=[];
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_TRACK,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TRACK,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2703,7 +2703,7 @@ module.get_track=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:track.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2716,7 +2716,7 @@ module.get_track=function(db,title_url,callback){
         function(call){
             sql = {tbl_id:track.artist_tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_ARTIST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ARTIST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2740,7 +2740,7 @@ module.get_product_list=function(db,sql,sort_by,page_current,page_size,callback)
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_PRODUCT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_PRODUCT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 product_list=_data_list;
                 dt_total=_dt_total;
@@ -2751,7 +2751,7 @@ module.get_product_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_PRODUCT,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2762,7 +2762,7 @@ module.get_product_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2825,14 +2825,14 @@ module.get_product_list=function(db,sql,sort_by,page_current,page_size,callback)
         });
 }
 module.get_service=function(db,title_url,callback){
-    var service=appz.get_new_item(G_DT_SERVICE,0);
+    var service=appz.get_new_item(DT_SERVICE,0);
     var full_photo_list=[];
     var other_list=[];
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_SERVICE,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SERVICE,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -2848,7 +2848,7 @@ module.get_service=function(db,title_url,callback){
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2861,7 +2861,7 @@ module.get_service=function(db,title_url,callback){
         function(call){
             sql={parent_tbl_id:service.tbl_id};
             sort={order:1};
-            _get_sql_cache(db,G_DT_SUB_SERVICE,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_SERVICE,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2880,7 +2880,7 @@ module.get_service=function(db,title_url,callback){
         function(call){
             sql = {};
             sort={order:1};
-            _get_sql_cache(db,G_DT_SUB_SERVICE,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_SERVICE,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2961,7 +2961,7 @@ module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback)
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_SERVICE,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_SERVICE,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 service_list=_data_list;
                 dt_total=_dt_total;
@@ -2972,7 +2972,7 @@ module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_SUB_SERVICE,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_SERVICE,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -2983,7 +2983,7 @@ module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3044,7 +3044,7 @@ module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback)
         });
 }
 module.get_project=function(db,title_url,callback){
-    var project=appz.get_new_item(G_DT_PROJECT,0);
+    var project=appz.get_new_item(DT_PROJECT,0);
     var full_photo_list=[];
     var other_list=[];
     var error=null;
@@ -3052,7 +3052,7 @@ module.get_project=function(db,title_url,callback){
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_PROJECT,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PROJECT,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -3068,7 +3068,7 @@ module.get_project=function(db,title_url,callback){
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3081,7 +3081,7 @@ module.get_project=function(db,title_url,callback){
         function(call){
             sql={parent_tbl_id:project.tbl_id};
             sort={order:1};
-            _get_sql_cache(db,G_DT_SUB_PROJECT,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_PROJECT,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3100,7 +3100,7 @@ module.get_project=function(db,title_url,callback){
         function(call){
             sql = {};
             sort={order:1};
-            _get_sql_cache(db,G_DT_SUB_PROJECT,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_PROJECT,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3181,7 +3181,7 @@ module.get_project_list=function(db,sql,sort_by,page_current,page_size,callback)
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_PROJECT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_PROJECT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 project_list=_data_list;
                 dt_total=_dt_total;
@@ -3192,7 +3192,7 @@ module.get_project_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3218,14 +3218,14 @@ module.get_project_list=function(db,sql,sort_by,page_current,page_size,callback)
         });
 }
 module.get_document=function(db,title_url,callback){
-    var document=appz.get_new_item(G_DT_DOCUMENT,0);
+    var document=appz.get_new_item(DT_DOCUMENT,0);
     var full_photo_list=[];
     var error=null;
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_DOCUMENT,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_DOCUMENT,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -3239,7 +3239,7 @@ module.get_document=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:document.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3261,7 +3261,7 @@ module.get_document_list=function(db,sql,sort_by,page_current,page_size,callback
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_DOCUMENT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_DOCUMENT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 document_list=_data_list;
                 dt_total=_dt_total;
@@ -3272,7 +3272,7 @@ module.get_document_list=function(db,sql,sort_by,page_current,page_size,callback
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3298,14 +3298,14 @@ module.get_document_list=function(db,sql,sort_by,page_current,page_size,callback
         });
 }
 module.get_gallery=function(db,title_url,callback){
-    var gallery=appz.get_new_item(G_DT_GALLERY,0);
+    var gallery=appz.get_new_item(DT_GALLERY,0);
     var full_photo_list=[];
     var error=null;
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_GALLERY,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_GALLERY,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3321,7 +3321,7 @@ module.get_gallery=function(db,title_url,callback){
         function(call){
             sql = {parent_tbl_id:gallery.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3343,7 +3343,7 @@ module.get_gallery_list=function(db,sql,sort_by,page_current,page_size,callback)
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_GALLERY,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_GALLERY,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 gallery_list=_data_list;
                 dt_total=_dt_total;
@@ -3354,7 +3354,7 @@ module.get_gallery_list=function(db,sql,sort_by,page_current,page_size,callback)
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3380,7 +3380,7 @@ module.get_gallery_list=function(db,sql,sort_by,page_current,page_size,callback)
         });
 }
 module.get_page=function(db,title_url,setting,callback){
-    var item_map=appz.get_new_item(G_DT_ITEM_MAP,0);
+    var item_map=appz.get_new_item(DT_ITEM_MAP,0);
     var full_photo_list=[];
     var top_list=[];
     var other_list=[];
@@ -3390,7 +3390,7 @@ module.get_page=function(db,title_url,setting,callback){
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_ITEM_MAP,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_ITEM_MAP,sql,sort,function(error,data_list) {
                 error=error;
                 if(data_list.length>0){
                     if(data_list[0].tbl_id!=0 &&data_list[0]){
@@ -3407,7 +3407,7 @@ module.get_page=function(db,title_url,setting,callback){
         function(call){
             sql = {item_map_tbl_id:item_map.tbl_id};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3559,7 +3559,7 @@ module.get_page_list=function(db,sql,sort_by,page_current,page_size,callback) {
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_PAGE,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_PAGE,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 page_list=_data_list;
                 dt_total=_dt_total;
@@ -3570,7 +3570,7 @@ module.get_page_list=function(db,sql,sort_by,page_current,page_size,callback) {
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3596,14 +3596,14 @@ module.get_page_list=function(db,sql,sort_by,page_current,page_size,callback) {
         });
 }
 module.get_team_member=function(db,title_url,callback){
-    var team_member=appz.get_new_item(G_DT_TEAM,0);
+    var team_member=appz.get_new_item(DT_TEAM,0);
     var other_list=[];
     var error=null;
     async.series([
         function(call){
             sql = {title_url:title_url};
             sort={};
-            _get_sql_cache(db,G_DT_TEAM,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_TEAM,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3625,7 +3625,7 @@ module.get_teamz=function(db,sql,sort_by,page_current,page_size,callback) {
     var error=error;
     async.series([
         function(call){
-            dataz.get_sql_paging_cache(db,G_DT_TEAM,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            dataz.get_sql_paging_cache(db,DT_TEAM,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 team_list=_data_list;
                 dt_total=_dt_total;
@@ -3645,7 +3645,7 @@ module.get_blog_post_list=function(db,sql,sort_by,page_current,page_size,callbac
     var error=null;
     async.series([
         function(call){
-            _get_sql_paging_cache(db,G_DT_BLOG_POST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+            _get_sql_paging_cache(db,DT_BLOG_POST,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
                 error=error;
                 blog_post_list=_data_list;
                 dt_total=_dt_total;
@@ -3656,7 +3656,7 @@ module.get_blog_post_list=function(db,sql,sort_by,page_current,page_size,callbac
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_SUB_BLOG_POST,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }
@@ -3667,7 +3667,7 @@ module.get_blog_post_list=function(db,sql,sort_by,page_current,page_size,callbac
         function(call){
             sql = {};
             sort={};
-            _get_sql_cache(db,G_DT_PHOTO,sql,sort,function(error,data_list) {
+            _get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 if(error){
                     error=error;
                 }

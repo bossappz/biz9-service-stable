@@ -4,12 +4,12 @@
  * BiZ9 Framework
  * Core-AWZ
  */
-module.exports = function(){
-    G_AWS_REGION = aws_config.aws_region;
-    G_AWS_KEY = aws_config.aws_key;
-    G_AWS_SECRET = aws_config.aws_secret;
+module.exports = function(aws_config){
+    AWS_REGION = aws_config.aws_region;
+    AWS_KEY = aws_config.aws_key;
+    AWS_SECRET = aws_config.aws_secret;
     module.get_bucket_data = function(bucket,key,callback){
-        aws.config.update({ accessKeyId: G_AWS_KEY, secretAccessKey: G_AWS_SECRET, region:G_AWS_REGION});
+        aws.config.update({ accessKeyId: AWS_KEY, secretAccessKey:AWS_SECRET,region:AWS_REGION});
         var s3 = new aws.S3();
         var r_data='';
         var error=null;
@@ -35,8 +35,8 @@ module.exports = function(){
         }
     }
     module.update_bucket=function(title,callback){
-        aws.config.update({accessKeyId:G_AWS_KEY,secretAccessKey:G_AWS_SECRET,region:G_AWS_REGION});
-        const REGION = G_AWS_REGION;
+        aws.config.update({accessKeyId:AWS_KEY,secretAccessKey:AWS_SECRET,region:AWS_REGION});
+        const REGION = AWS_REGION;
         s3 = new aws.S3();
         error=null;
         var params = {
@@ -58,7 +58,7 @@ module.exports = function(){
                 });
             },
             function(call){
-                aws.config.update({accessKeyId:G_AWS_KEY,secretAccessKey:G_AWS_SECRET,region:G_AWS_REGION});
+                aws.config.update({accessKeyId:AWS_KEY,secretAccessKey:AWS_SECRET,region:AWS_REGION});
                 s3 = new aws.S3();
                 if(p_buffer){
                     var params = {
