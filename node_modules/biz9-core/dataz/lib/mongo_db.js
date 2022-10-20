@@ -5,6 +5,7 @@ module.exports = function(){
             item.tbl_id = utilityz.get_guid();
             item.date_create = new moment().toISOString();
             item.date_save = new moment().toISOString();
+            item.db_name = db.db_name;
             db.collection(data_type).insertOne(item,function(error,data){
                 callback(error,item);
             });

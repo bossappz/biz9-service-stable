@@ -13,7 +13,7 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.7.7'
+BIZ9_SERVICE_VERSION='3.7.8'
 APP_ID='19';
 APP_TITLE_ID='ser19';
 APP_TITLE='BiZ9-Service';
@@ -23,7 +23,7 @@ APP_VERSION='1.6.8'
 APP_PORT="1901";
 /* --- ENV CONFIG END --- */
 /* --- MONGO START --- */
-MONGO_IP="34.205.146.54";
+MONGO_IP="0.0.0.0";
 MONGO_PORT="27019";
 //MONGO_URL="mongodb://ban:1234567@"+MONGO_IP+":"+MONGO_PORT; //remote
 MONGO_URL="mongodb://localhost:"+MONGO_PORT; //local
@@ -72,19 +72,20 @@ data_config={
     mongo_url:MONGO_URL,
     redis_url:"127.0.0.1",
     redis_port:6379,
-    remote_restart_url:"http://102.bossappz.com/cloud/test/uptime"
+    remote_restart_url:""
 };
 app_config={
     app_title_id:APP_TITLE_ID,
     app_version:APP_VERSION,
     app_title:APP_TITLE,
     app_id:APP_ID,
-    file_url:FILE_URL
+    file_url:FILE_URL,
+    biz_map:false
 };
 aws_config={
     aws_key:AWS_KEY,
     aws_secret:AWS_SECRET,
-    aws_region:'us-east-1',
+    aws_region:'us-east-1'
 };
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- PHOTO-SIZE-START --- */
@@ -94,8 +95,8 @@ PHOTO_SIZE_MID={title_url:"mid_size_",size:720};
 PHOTO_SIZE_LARGE={title_url:"large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
-biz9=require("/home/mama/www/opz/productz/biz9/biz9-core/src/unstable/")(app_config,aws_config,data_config);
-//biz9=require("biz9-core")(app_config,aws_config,data_config);
+//biz9=require("/home/mama/www/opz/productz/biz9/biz9-core/src/unstable/")(app_config,aws_config,data_config);
+biz9=require("biz9-core")(app_config,aws_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- APP URL START  -- */
 test=require("./routes/cloud/test");
