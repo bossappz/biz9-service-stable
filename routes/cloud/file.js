@@ -13,7 +13,7 @@ router.post("/update_photo", function(req, res) {
     async.series([
         //get file name
         function(call){
-            helper.item.photofilename = biz9.get_guid() + '.jpg';
+            helper.item.photofilename = biz9.get_guid() + '.png';
             call();
         },
         //save file
