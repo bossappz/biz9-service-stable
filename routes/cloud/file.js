@@ -196,7 +196,7 @@ router.post("/update_mp3", function(req, res) {
                 mp3Duration(FILE_SAVE_PATH+helper.item.mp3filename,function(err,duration){
                     if (err)
                         error=err;
-                        helper.item.mp3duration=biz9.get_duration(duration);
+                        helper.item.mp3duration=biz9.get_mp3_duration(duration);
                         call();
                     });
             }else{
