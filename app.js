@@ -17,7 +17,7 @@ BIZ9_SERVICE_VERSION='3.7.9'
 APP_ID='19';
 APP_TITLE_ID='ser19';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.7.0'
+APP_VERSION='1.7.1'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -95,7 +95,6 @@ PHOTO_SIZE_MID={title_url:"mid_size_",size:720};
 PHOTO_SIZE_LARGE={title_url:"large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
-//biz9=require("/home/mama/www/opz/productz/biz9/biz9-core/src/unstable/")(app_config,aws_config,data_config);
 biz9=require("biz9-core")(app_config,aws_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- APP URL START  -- */
