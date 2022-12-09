@@ -79,7 +79,8 @@ router.post("/update_photo", function(req, res) {
         function(call){
             if(helper.error==null){
                 if(S3_SAVE){
-                    biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.photofilename,helper.item.photofilename,function(error,data) {
+                    biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.photofilename,helper.item.photofilename,"image/jpeg",
+function(error,data) {
                         call();
                     });
 
@@ -93,7 +94,7 @@ router.post("/update_photo", function(req, res) {
         //update_s3_thumb
         function(call){
             if(S3_SAVE){
-                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,function(error,data) {
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,PHOTO_SIZE_THUMB.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
                     call();
                 });
             }else{
@@ -103,7 +104,7 @@ router.post("/update_photo", function(req, res) {
          //update_s3_mid
         function(call){
             if(S3_SAVE){
-                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_MID.title_url+helper.item.photofilename,PHOTO_SIZE_MID.title_url+helper.item.photofilename,function(error,data) {
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_MID.title_url+helper.item.photofilename,PHOTO_SIZE_MID.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
                     call();
                 });
             }else{
@@ -113,7 +114,7 @@ router.post("/update_photo", function(req, res) {
         //update_s3_large
         function(call){
             if(S3_SAVE){
-                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,function(error,data) {
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
                     call();
                 });
             }else{
@@ -206,7 +207,8 @@ router.post("/update_mp3", function(req, res) {
         //upload to s3
         function(call){
             if(S3_SAVE && helper.error==null){
-                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.mp3filename,helper.item.mp3filename,function(data,error){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+helper.item.mp3filename,helper.item.mp3filename,"audio/mp3"
+,function(data,error){
                     helper.item.mp3_url = FILE_URL+helper.item.mp3filename;
                     call();
                 });
