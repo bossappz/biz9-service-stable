@@ -58,7 +58,7 @@ module.exports = function(){
         async.series([
             function(call){
                 const run = async function(a,b){
-                   total_count= await db.collection(data_type).countDocuments({});
+                   total_count= await db.collection(data_type).countDocuments(sql_obj);
                     call();
                 }
                 run();

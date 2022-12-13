@@ -16,7 +16,7 @@ module.exports = function(app_config,aws_config,data_config){
     redis = require('redis');
     sharp = require('sharp');
     format = require('format-duration');
-    MONGO_FULL_URL=data_config.mongo_url+"?directConnection=true&"+"maxPoolSize=20&w=majority";
+    MONGO_FULL_URL=data_config.mongo_url;
     mongo_client = require('mongodb').MongoClient;
     data_mon = require('./dataz/lib/mongo_db.js')();
     cache_red = require('./dataz/lib/redis_cache.js')();

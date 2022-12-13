@@ -15,9 +15,9 @@ ENV=process.env.NODE_ENV;
 /* --- APP CONFIG START  --- */
 BIZ9_SERVICE_VERSION='3.8.2'
 APP_ID='19';
-APP_TITLE_ID='ser19';
+APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.7.1'
+APP_VERSION='1.7.2'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
