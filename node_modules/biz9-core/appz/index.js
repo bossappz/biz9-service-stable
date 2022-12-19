@@ -1471,7 +1471,7 @@ module.exports = function(app_config){
         var error=null;
         async.series([
             function(call){
-                sql = {title_url:page_title_url,visible:'true'};
+                sql = {title_url:page_title_url};
                 sort={};
                 _get_sql_cache(db,DT_ITEM_MAP,sql,sort,function(error,data_list) {
                     error=error;
@@ -1485,7 +1485,7 @@ module.exports = function(app_config){
             },
             function(call){
                 if(item_map.tbl_id!=0){
-                    sql = {title_url:sub_page_title_url,visible:'true'};
+                    sql = {title_url:sub_page_title_url};
                     sort={};
                     _get_sql_cache(db,item_map.title_url,sql,sort,function(error,data_list) {
                         if(error){
@@ -3388,7 +3388,7 @@ module.get_page=function(db,title_url,setting,callback){
     var error=null;
     async.series([
         function(call){
-            sql = {title_url:title_url,visible:'true'};
+            sql = {title_url:title_url};
             sort={};
             _get_sql_cache(db,DT_ITEM_MAP,sql,sort,function(error,data_list) {
                 error=error;
@@ -3418,7 +3418,7 @@ module.get_page=function(db,title_url,setting,callback){
             });
         },
         function(call){
-            sql={parent_tbl_id:item_map.tbl_id,visible:'true'};
+            sql={parent_tbl_id:item_map.tbl_id};
             sort={order:1};
             if(setting.count){
                 _get_sql_paging_cache(db,item_map.title_url,sql,sort,1,setting.count,function(error,data_list,dt_total,page_page_total) {
@@ -3446,7 +3446,7 @@ module.get_page=function(db,title_url,setting,callback){
             call();
         },
         function(call){
-            sql = {visible:'true'};
+            sql = {};
             sort={order:1};
             _get_sql_cache(db,item_map.title_url,sql,sort,function(error,data_list) {
                 if(error){

@@ -46,7 +46,7 @@ module.exports = function(aws_config){
             callback(error,data);
         });
     }
-    module.update_bucket_file=function(bucket,file_path,key,callback){
+    module.update_bucket_file=function(bucket,file_path,key,content_type,callback){
         var p_buffer={};
         var error=null;
         async.series([
@@ -61,11 +61,14 @@ module.exports = function(aws_config){
                 aws.config.update({accessKeyId:AWS_KEY,secretAccessKey:AWS_SECRET,region:AWS_REGION});
                 s3 = new aws.S3();
                 if(p_buffer){
+                    //"image/jpeg"
+                    //"audio/mp3"
                     var params = {
                         Body: Buffer.from(p_buffer,'utf-8'),
                         Bucket:String(bucket),
                         Key:String(key),
-                        ACL: "public-read"
+                        ACL: "public-read",
+                        ContentType:content_type
                     };
                     s3.putObject(params,function(error,data){
                         if(error){
@@ -80,5 +83,6 @@ module.exports = function(aws_config){
                 callback(error,0);
             });
     }
+
     return module;
 }

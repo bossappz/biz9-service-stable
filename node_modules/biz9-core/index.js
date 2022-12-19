@@ -135,8 +135,8 @@ module.exports = function(app_config,aws_config,data_config){
                 callback(error,data);
             });
     }
-    module.update_bucket_file=function(bucket,file_path,key,callback){
-        awz.update_bucket_file(bucket,file_path,key,function(error,data)
+    module.update_bucket_file=function(bucket,file_path,key,content_type,callback){
+        awz.update_bucket_file(bucket,file_path,key,content_type,function(error,data)
             {
                 callback(error,data);
             });
