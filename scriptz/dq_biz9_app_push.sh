@@ -2,7 +2,6 @@ echo "#################"
 echo "BiZ9 Framework App Push"
 echo "#################"
 G_PROJECT_FOLDER="$HOME/www/projectz/"
-
 # prod start #
 echo "Enter APP ID"
 read app_id
@@ -10,23 +9,24 @@ echo "Enter APP Title"
 read app_title
 echo "Enter APP Title ID"
 read app_title_id
-echo "Enter APP Type [website, service, cms, mobile]"
+echo "Enter APP Type [cms, mobile, service, vendor, vendor-payment, website]"
 read app_type
 echo "Enter Web Folder ID"
 read folder_id
 echo "Enter Branch"
 read branch
 # prod end #
-# test start #
 : '
+# test start #
 app_id=19;
 app_title='Cool 339'
-app_type='cms'
+app_type='service'
 app_title_id='cool339'
-folder_id='website'
+folder_id='service'
 branch='stable'
-'
 # test end #
+'
+#
 G_BIZ_APP_NEW_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
 if [ -d "${G_BIZ_APP_NEW_DIR}" ];  then
     echo "File exsist. overwrite?"
@@ -58,16 +58,30 @@ if [ "${app_type}" = "website" ]; then
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
     git pull ${BIZ9_GIT_URL}/${BIZ9_WEBSITE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
     sed -i "s/BIZ9_WEBSITE_VERSION=.*/BIZ9_WEBSITE_VERSION='${BIZ9_WEBSITE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
+fi
+if [ "${app_type}" = "vendor" ]; then
+    G_HAS_APP=true;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_VENDOR_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    source .biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_VERSION=.*/BIZ9_VENDOR_VERSION='${BIZ9_VENDOR_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
+fi
+if [ "${app_type}" = "vendor-payment" ]; then
+    G_HAS_APP=true;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_VENDOR_PAYMENT_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    source .biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_PAYMENT_VERSION=.*/BIZ9_VENDOR_PAYMENT_VERSION='${BIZ9_VENDOR_PAYMENT_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
 fi
 if [ "${app_type}" = "cms" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
     git pull ${BIZ9_GIT_URL}/${BIZ9_CMS_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
     sed -i "s/BIZ9_CMS_VERSION=.*/BIZ9_CMS_VERSION='${BIZ9_CMS_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
 fi
@@ -78,7 +92,6 @@ if [ "${app_type}" = "mobile" ]; then
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
     git pull ${BIZ9_GIT_URL}/${BIZ9_MOBILE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
-    git checkout -b ${GIT_BRANCH}
     #sed
     #.biz9_config
     sed -i "s/CONFIG_ID=.*/CONFIG_ID='io.bossappz.mobile${app_id}'/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
@@ -99,9 +112,9 @@ sed -i "s/APP_ID=.*/APP_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_title_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 sed -i "s/REPO_URL=.*/REPO_URL='github.com'/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
-#if [ "${app_type}" != "mobile" ]; then
-    #sed -i "s/EC2_KEY_FILE=.*/EC2_KEY_FILE=other/aws/ec2_key/${app_id}.pem/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh #bug
-#fi
+if [ "${app_type}" != "mobile" ]; then
+sed -i "s/EC2_KEY_FILE=.*/EC2_KEY_FILE='other/aws/ec2_key/${app_id}.pem'/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
+fi
 if [ "${G_HAS_APP}" = true ]; then
     #app.js
     sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/app.js
@@ -109,5 +122,5 @@ if [ "${G_HAS_APP}" = true ]; then
     sed -i "s/APP_ID=.*/APP_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/app.js
     sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_title_id}';/" ${G_BIZ_APP_NEW_DIR}/app.js
 fi
-echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
-exit 1
+    echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
+    exit 1
