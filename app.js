@@ -13,11 +13,11 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.8.2'
+BIZ9_SERVICE_VERSION='3.8.1';
 APP_ID='19';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.7.5'
+APP_VERSION='1.7.6'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -25,12 +25,14 @@ APP_PORT="1901";
 /* --- MONGO START --- */
 MONGO_IP="0.0.0.0";
 MONGO_PORT="27019";
-//MONGO_URL="mongodb://ban:1234567@"+MONGO_IP+":"+MONGO_PORT; //remote
-MONGO_URL="mongodb://localhost:"+MONGO_PORT; //local
+MONGO_URL="mongodb://localhost:"+MONGO_PORT+"?keepAlive=true&socketTimeoutMS=360000&connectTimeoutMS=360000"; //local
+//MONGO_URL="mongodb://ban:1234567@"+MONGO_IP+":"+MONGO_PORT+"?keepAlive=true&socketTimeoutMS=360000&connectTimeoutMS=360000"; //remote
 /* --- MONGO END --- */
 /* --- ENV AWS START --- */
 S3_SAVE=false;
-S3_BUCKET="biz9-test-cool1";
+//S3_BUCKET="biz9-test-cool1";
+S3_BUCKET="ba4-app";
+//S3_BUCKET="biz9-test-cool1";
 AWS_KEY="AKIAYTRK2L34AZSMYKOY";
 AWS_SECRET="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";
 /* --- ENV AWS END --- */
@@ -72,7 +74,6 @@ data_config={
     mongo_url:MONGO_URL,
     redis_url:"127.0.0.1",
     redis_port:6379,
-    remote_restart_url:""
 };
 app_config={
     app_title_id:APP_TITLE_ID,
@@ -80,7 +81,6 @@ app_config={
     app_title:APP_TITLE,
     app_id:APP_ID,
     file_url:FILE_URL,
-    biz_map:false
 };
 aws_config={
     aws_key:AWS_KEY,
