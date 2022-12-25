@@ -13,11 +13,11 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.8.2';
+BIZ9_SERVICE_VERSION='3.8.5'
 APP_ID='19';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.7.9'
+APP_VERSION='1.7.6'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -29,12 +29,10 @@ MONGO_URL="mongodb://localhost:"+MONGO_PORT+"?keepAlive=true&socketTimeoutMS=360
 //MONGO_URL="mongodb://ban:1234567@"+MONGO_IP+":"+MONGO_PORT+"?keepAlive=true&socketTimeoutMS=360000&connectTimeoutMS=360000"; //remote
 /* --- MONGO END --- */
 /* --- ENV AWS START --- */
-S3_SAVE=false;
-//S3_BUCKET="biz9-test-cool1";
-S3_BUCKET="ba4-app";
-//S3_BUCKET="biz9-test-cool1";
-AWS_KEY="AKIAYTRK2L34AZSMYKOY";
-AWS_SECRET="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";
+S3_SAVE=true;
+S3_BUCKET="ba7-app";
+AWS_KEY="AKIA3JQYFN5KARMHJVKJ";
+AWS_SECRET="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";
 /* --- ENV AWS END --- */
 /* --- ENV EMAILZ START --- */
 EMAIL_TO="contact@bossappz.com";
