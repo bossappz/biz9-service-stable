@@ -2,7 +2,6 @@ echo "#################"
 echo "BiZ9 Framework App Push"
 echo "#################"
 G_PROJECT_FOLDER="$HOME/www/projectz/"
-: '
 # prod start #
 echo "Enter APP ID"
 read app_id
@@ -17,7 +16,8 @@ read folder_id
 echo "Enter Branch"
 read branch
 # prod end #
-'
+
+: '
 #
 # test start #
 app_id=19;
@@ -28,6 +28,7 @@ folder_id='service'
 branch='stable'
 # test end #
 #
+'
 G_BIZ_APP_NEW_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
 if [ -d "${G_BIZ_APP_NEW_DIR}" ];  then
     echo "File exsist. overwrite?"
