@@ -13,11 +13,11 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='3.8.7';
+BIZ9_SERVICE_VERSION='3.8.9'
 APP_ID='19';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.8.3'
+APP_VERSION='1.7.9'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -79,6 +79,7 @@ app_config={
     app_title:APP_TITLE,
     app_id:APP_ID,
     file_url:FILE_URL,
+    biz_map:true
 };
 aws_config={
     aws_key:AWS_KEY,
