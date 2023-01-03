@@ -75,6 +75,36 @@ router.post("/update_photo", function(req, res) {
                 call();
             }
         },
+        //save with new filename size square_thumb_size
+        function(call){
+            if(helper.error==null){
+                biz9.set_resize_square_photo_file(PHOTO_SIZE_SQUARE_THUMB.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_SQUARE_THUMB.title_url+helper.item.photofilename,function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+        //save with new filename size square_mid_size
+        function(call){
+            if(helper.error==null){
+                biz9.set_resize_square_photo_file(PHOTO_SIZE_SQUARE_MID.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_SQUARE_MID.title_url+helper.item.photofilename,function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+        //save with new filename size square_large_size
+        function(call){
+            if(helper.error==null){
+                biz9.set_resize_square_photo_file(PHOTO_SIZE_SQUARE_LARGE.size,FILE_SAVE_PATH,helper.item.photofilename,PHOTO_SIZE_SQUARE_LARGE.title_url+helper.item.photofilename,function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
         //update_s3_org
         function(call){
             if(helper.error==null){
@@ -121,6 +151,36 @@ function(error,data) {
                 call();
             }
         },
+        //update_s3_square_thumb
+        function(call){
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_SQUARE_THUMB.title_url+helper.item.photofilename,PHOTO_SIZE_SQUARE_THUMB.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+         //update_s3_square_mid
+        function(call){
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_SQUARE_MID.title_url+helper.item.photofilename,PHOTO_SIZE_SQUARE_MID.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+        //update_s3_square_large
+        function(call){
+            if(S3_SAVE){
+                biz9.update_bucket_file(S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_SQUARE_LARGE.title_url+helper.item.photofilename,PHOTO_SIZE_SQUARE_LARGE.title_url+helper.item.photofilename,"image/jpeg",function(error,data) {
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
         //delete file large
         /*
         function(call){
@@ -147,6 +207,7 @@ function(error,data) {
         },
     ],
         function(err, result){
+            console.log(helper);
             res.send({helper:helper});
             res.end();
         });
