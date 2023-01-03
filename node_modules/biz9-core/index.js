@@ -547,6 +547,12 @@ module.exports = function(app_config,aws_config,data_config){
                 callback(error,data);
             });
     }
+    module.set_resize_square_photo_file=function(new_size,file_path,org_filename,new_filename,callback){
+        utilityz.set_resize_square_photo_file(new_size,file_path,org_filename,new_filename,function(error,data)
+            {
+                callback(error,data);
+            });
+    }
     module.get_file_buffer=function(file_path,filename,callback){
         utilityz.get_file_buffer(file_path,filename,function(error,data)
             {

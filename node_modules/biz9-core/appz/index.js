@@ -1071,6 +1071,12 @@ module.exports = function(app_config){
         _photo_size_thumb='thumb_size_';
         _photo_size_mid='mid_size_';
         _photo_size_large='large_size_';
+
+        _photo_size_square_thumb='square_thumb_size_';
+        _photo_size_square_mid='square_mid_size_';
+        _photo_size_square_large='square_large_size_';
+
+
         if(!item){
             biz9.o('_set_biz_item_not_found',item);
         }
@@ -1080,6 +1086,9 @@ module.exports = function(app_config){
             item.thumb_photo_url=app_config.file_url+_photo_size_thumb+item.photofilename;
             item.mid_photo_url=app_config.file_url+ _photo_size_mid+item.photofilename;
             item.large_photo_url=app_config.file_url+_photo_size_large+item.photofilename;
+            item.square_thumb_photo_url=app_config.file_url+_photo_size_square_thumb+item.photofilename;
+            item.square_mid_photo_url=app_config.file_url+ _photo_size_square_mid+item.photofilename;
+            item.square_large_photo_url=app_config.file_url+_photo_size_square_large+item.photofilename;
         }
         if(no_photo){
             str='/images/no_image.png';
@@ -1087,6 +1096,9 @@ module.exports = function(app_config){
             item.thumb_photo_url=str;
             item.mid_photo_url=str;
             item.large_photo_url=str;
+            item.square_thumb_photo_url=str;
+            item.square_mid_photo_url=str;
+            item.square_large_photo_url=str;
             item.photofilename=null;
         }
         if(item.date_create){

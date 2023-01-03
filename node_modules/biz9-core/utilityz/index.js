@@ -260,6 +260,13 @@ module.exports = function(){
                 callback(error,new_filename);
             });
     }
+    module.set_resize_square_photo_file=function(new_size,file_path,org_filename,new_filename,callback){
+        sharp(file_path+org_filename)
+            .resize({height:new_size,width:new_size,fit:sharp.fit.fill})
+            .toFile(file_path+new_filename, (error,info)=>{
+                callback(error,new_filename);
+            });
+    }
     module.set_photo_file=function(file_path,org_filename,new_filename,callback){
         sharp(file_path+org_filename)
             .toFile(file_path+new_filename, (error, info) => {
