@@ -26,6 +26,7 @@ module.exports = function(app_config){
     DT_BLOG_POST='blog_post_biz';
     DT_SUB_BLOG_POST='sub_blog_post_biz';
     DT_SERVICE='service_biz';
+    DT_COMMENT='comment_biz';
     DT_SUB_SERVICE='sub_service_biz';
     DT_ARTIST='artist_biz';
     DT_ALBUM='album_biz';
@@ -2965,6 +2966,24 @@ module.get_service=function(db,title_url,callback){
     ],
         function(err, result){
             callback(error,service);
+        });
+}
+module.get_comment_list=function(db,sql,sort_by,page_current,page_size,callback) {
+    var comment_list=[];
+    var error=null;
+    async.series([
+        function(call){
+            _get_sql_paging_cache(db,DT_COMMENT,sql,sort_by,page_current,page_size,function(error,_data_list,_dt_total,_page_page_total) {
+                error=error;
+                comment_list=_data_list;
+                dt_total=_dt_total;
+                page_page_total=_page_page_total;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            callback(error,comment_list,dt_total,page_page_total);
         });
 }
 module.get_service_list=function(db,sql,sort_by,page_current,page_size,callback) {

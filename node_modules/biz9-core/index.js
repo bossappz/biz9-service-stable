@@ -372,6 +372,12 @@ module.exports = function(app_config,aws_config,data_config){
                 callback(error,data_list,total_item_count,page_page_count);
             });
     }
+    module.get_commentz=function(db,sql,sort_by,page_current,page_size,callback){
+        appz.get_comment_list(db,sql,sort_by,page_current,page_size,function(error,data_list,total_item_count,page_page_count)
+            {
+                callback(error,data_list,total_item_count,page_page_count);
+            });
+    }
     module.get_servicez=function(db,sql,sort_by,page_current,page_size,callback){
         appz.get_service_list(db,sql,sort_by,page_current,page_size,function(error,data_list,total_item_count,page_page_count)
             {
