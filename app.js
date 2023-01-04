@@ -89,10 +89,10 @@ aws_config={
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- PHOTO-SIZE-START --- */
 PHOTO_SIZE_ALBUM={title_url:"",size:0};
-PHOTO_SIZE_THUMB={title_url:"thumb_size_",size:500};
+PHOTO_SIZE_THUMB={title_url:"thumb_size_",size:250};
 PHOTO_SIZE_MID={title_url:"mid_size_",size:720};
 PHOTO_SIZE_LARGE={title_url:"large_size_",size:1000};
-PHOTO_SIZE_SQUARE_THUMB={title_url:"square_thumb_size_",size:500};
+PHOTO_SIZE_SQUARE_THUMB={title_url:"square_thumb_size_",size:250};
 PHOTO_SIZE_SQUARE_MID={title_url:"square_mid_size_",size:720};
 PHOTO_SIZE_SQUARE_LARGE={title_url:"square_large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
