@@ -41,10 +41,11 @@ router.get('/report', function(req, res, next) {
 });
 router.post('/bucket_update', function(req, res, next) {
     var helper = biz9.get_helper(req);
+    awz_obj={aws_key:AWS_KEY,aws_secret:AWS_SECRET};
     helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.update_bucket(helper.title,function(error, data) {
+            biz9.update_bucket(awz_obj,helper.title,function(error, data) {
                 helper.error=error;
                 helper.item.buket_data=data;
                 helper.item.bucket_title=helper.title;
