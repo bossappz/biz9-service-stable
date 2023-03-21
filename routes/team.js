@@ -12,7 +12,6 @@ router.get('/category_list/:page_current',function(req, res) {
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
     helper.category_list =[];
-    helper.popular_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -38,20 +37,10 @@ router.get('/category_list/:page_current',function(req, res) {
         function(call){
             sort={date_create:1};
             page_size=9;
-            biz9.get_category_biz_list(db,DT_BLOG_POST,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+            biz9.get_category_biz_list(db,DT_TEAM,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
                 helper.category_list = data_list;
                 helper.total_count=total_count;
                 helper.page_page_count=page_page_count;
-                call();
-            });
-        },
-        function(call){
-            sql={};
-            sort={view_count:-1};
-            page_current=1;
-            page_size=9;
-            biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
-                helper.popular_list = data_list;
                 call();
             });
         },
@@ -61,14 +50,15 @@ router.get('/category_list/:page_current',function(req, res) {
             res.end();
         });
 });
+
 //9_list
-router.get('/blog_post_list/:category/:page_current',function(req, res) {
+router.get('/team_list/:category/:page_current',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-    helper.blog_post_list = [];
+    helper.team_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -98,9 +88,9 @@ router.get('/blog_post_list/:category/:page_current',function(req, res) {
                 sql={category:helper.category};
             }
             sort={date_create:-1};
-            page_size=19;
-            biz9.get_blog_postz(db,sql,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
-                helper.blog_post_list = data_list;
+            page_size=2;
+            biz9.get_team_list(db,sql,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                helper.team_list = data_list;
                 helper.total_count=total_count;
                 helper.page_page_count=page_page_count;
                 call();
@@ -112,15 +102,15 @@ router.get('/blog_post_list/:category/:page_current',function(req, res) {
             res.end();
         });
 });
-//9_blog_post_detail
+//9_team_detail
 ////9_detail
-router.get('/blog_post_detail/:title_url',function(req, res) {
+router.get('/team_detail/:title_url',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-   helper.blog_post = biz9.get_new_item(DT_BLOG_POST,0);
+    helper.team = biz9.get_new_item(DT_BLOG_POST,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -144,28 +134,10 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.get_blog_post(db,helper.title_url,function(error,data) {
-                helper.blog_post=data;
+            biz9.get_team(db,helper.title_url,function(error,data) {
+                helper.team=data;
                 call();
             });
-        },
-        function(call){
-            sort={title:-1};
-            page_current=1;
-            page_size=22;
-            biz9.get_categoryz(db,DT_BLOG_POST,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
-                helper.category_list = data_list;
-                call();
-            });
-        },
-        function(call){
-            if(helper.blog_post.title_url){
-            biz9.update_item_view_count(db,DT_BLOG_POST,helper.blog_post.tbl_id,helper.customer_id,function(error,data) {
-                call();
-            });
-            }else{
-                call();
-            }
         },
     ],
         function(err, result){

@@ -13,11 +13,12 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.0.1'
+BIZ9_SERVICE_VERSION='4.5.0'
 APP_ID='19';
+//APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.8.4'
+APP_VERSION='2.3.5'
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -39,34 +40,30 @@ AWS_REGION="us-east-1";
 EMAIL_TO="contact@bossappz.com";
 EMAIL_FROM="contact@bossappz.com";
 /* --- ENV EMAILZ END --- */
-/* --- ENV SEND_IN_BLUE START --- */
-SEND_IN_BLUE_ORDER_CONFIRMATION_TEMPLATE_ID="7";
-SEND_IN_BLUE_ORDER_CONFIRMATION_SUBJECT="Order Confirmation";
-SEND_IN_BLUE_ORDER_CONFIRMATION_ADMIN_NAME="BoSS AppZ";
-SEND_IN_BLUE_ORDER_CONFIRMATION_ADMIN_EMAIL="bossappz6@gmail.com";
-/* --- ENV SEND_IN_BLUE END --- */
 /* --- ENV FILE START --- */
-//FILE_SAVE_PATH="/uploads/";//local
-FILE_SAVE_PATH=__dirname+"/public/uploads/";
+FILE_SAVE_PATH="/uploads/";//local
+//FILE_SAVE_PATH=__dirname+"/public/uploads/";
 //FILE_URL="/uploads/"; //box_url
-//FILE_URL="http://localhost:1901/uploads/"; //mobile_box_url
-FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
+FILE_URL="http://localhost:1900/uploads/"; //mobile_box_url
+//FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
 //FILE_URL="https://bossappz.com/uploads/" //web_prod_url
 /* --- ENV FILE END --- */
 /* --- ENV CONFIG END -- */
 /* --- DATA_TYPE-START --- */
-DT_ITEM_MAP="item_map_biz";
 DT_USER="user_biz";
 DT_BLANK="blank_biz";
 DT_PHOTO="photo_biz";
 DT_BLOG_POST="blog_post_biz";
+DT_MEMBER="blog_post_biz";
+DT_EVENT="event_biz";
+DT_CATEGORY="category_biz";
 DT_GALLERY="gallery_biz";
 DT_PRODUCT="product_biz";
 DT_SERVICE="service_biz";
 DT_CART_ITEM="cart_item_biz";
 DT_ORDER="order_biz";
 DT_ORDER_ITEM="order_item_biz";
-DT_SERVICE="service_biz";
+DT_STAT="stat_biz";
 /* --- DATA_TYPE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
 data_config={
@@ -102,10 +99,15 @@ crud=require("./routes/cloud/crud");
 mail=require("./routes/cloud/mail");
 file=require("./routes/cloud/file");
 index=require("./routes/index");
+admin=require("./routes/admin");
 blog_post=require("./routes/blog_post");
+event=require("./routes/event");
+item=require("./routes/item");
 service=require("./routes/service");
 gallery=require("./routes/gallery");
+category=require("./routes/category");
 product=require("./routes/product");
+photo=require("./routes/photo");
 order=require("./routes/order");
 /* --- APP URL END  -- */
 /* --- APP EXPRESS START --- */
@@ -129,10 +131,15 @@ app.use(express.static(path.join(__dirname, "public")));
 /* --- APP ROUTES START --- */
 app.use("/", index);
 app.use("/product", product);
+app.use("/photo", photo);
+app.use("/admin", admin);
 app.use("/order", order);
 app.use("/blog_post", blog_post);
+app.use("/event", event);
 app.use("/service", service);
+app.use("/item", item);
 app.use("/gallery", gallery);
+app.use("/category", category);
 app.use("/cloud/crud",crud);
 app.use("/cloud/mail",mail);
 app.use("/cloud/file",file);

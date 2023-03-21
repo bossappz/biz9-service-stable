@@ -16,7 +16,6 @@ read folder_id
 echo "Enter Branch"
 read branch
 # prod end #
-
 : '
 #
 # test start #
@@ -47,14 +46,12 @@ else
 fi
 G_HAS_APP=false;
 if [ "${app_type}" = "service" ]; then
-    : '
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
     git init
     git pull ${BIZ9_GIT_URL}/${BIZ9_SERVICE_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
     git checkout -b ${GIT_BRANCH}
     source .biz9_config.sh
-    '
     sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
 fi
 if [ "${app_type}" = "website" ]; then
@@ -113,8 +110,9 @@ fi
     sed -i "s/APP_VERSION=.*/APP_VERSION='1.0.0';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
     sed -i "s/APP_ID=.*/APP_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
     sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
-    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
+    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${app_title_id}';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
     sed -i 's/_app_id_/'${app_id}'/' ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
+    sed -i "s/REPO_URL=.*/REPO_URL='github.com';/" ${G_BIZ_APP_NEW_DIR}/.biz9_config.sh
 if [ "${G_HAS_APP}" = true ]; then
     #app.js
     sed -i "s/APP_TITLE=.*/APP_TITLE='${app_title}';/" ${G_BIZ_APP_NEW_DIR}/app.js
