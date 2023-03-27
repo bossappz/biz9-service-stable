@@ -85,9 +85,9 @@ router.post('/update_system', function(req, res, next) {
             helper.store_info.title_url=biz9.get_title_url(helper.store_info.title);
             helper.store_info.order='1';
             helper.store_info.business_name=biz9.get_id()+"_business_name_";
-            helper.store_info.business_email=biz9.get_id()+"_business_email";
+            helper.store_info.business_email=biz9.get_id()+"_business_email@gmail.com";
             helper.store_info.business_phone=biz9.get_id()+"_business_phone";
-            helper.store_info.business_country='United States of America';
+            helper.store_info.business_country='US';
             helper.store_info.business_address1=biz9.get_id()+"_business_address1";
             helper.store_info.business_address2=biz9.get_id()+"_business_address2";
             helper.store_info.business_city=biz9.get_id()+"_business_city";
@@ -99,7 +99,14 @@ router.post('/update_system', function(req, res, next) {
             helper.store_info.social_instagram=biz9.get_id()+"_social_instagram";
             helper.store_info.social_twitter=biz9.get_id()+"_social_twitter";
             helper.store_info.social_youtube=biz9.get_id()+"_social_youtube";
-			helper.store_info.stripe_key="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
+			helper.store_info.billing_stripe_key="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
+
+			helper.store_info.send_in_blue_name=biz9.get_id()+"_send_in_blue_name";
+   			helper.store_info.send_in_blue_email=biz9.get_id()+"_send_in_blue_email";
+   			helper.store_info.send_in_blue_key=biz9.get_id()+"_send_in_blue_key";
+   			helper.store_info.send_in_blue_sender_order_con_sub=biz9.get_id()+"_send_in_order_con_sub";
+   			helper.store_info.send_in_blue_sender_order_con_template_id=biz9.get_id()+"_send_in_order_con_template_id";
+
             biz9.update_item(db,DT_ITEM,helper.store_info,function(error,data) {
                 helper.store_info=data;
                 call();
@@ -153,34 +160,37 @@ router.post('/update_system', function(req, res, next) {
             helper.primary.top_tbl_id=helper.mobile.tbl_id;
             helper.primary.top_data_type=helper.mobile.data_type;
             helper.primary.app_title=biz9.get_id()+"_app_title";
-            helper.primary=biz9.convert_biz_item(helper.primary,['app_title'])
+            helper.primary.app_color='gradient-4';
+            helper.primary.app_theme='light-mode';
+            helper.primary.button_color='bg-highlight';
+            helper.primary=biz9.convert_biz_item(helper.primary,['app_title','app_color','button-color'])
             biz9.update_item(db,helper.mobile.title_url,helper.primary,function(error,data) {
                 helper.primary=data;
                 call();
             });
         },
         //mobile sub_item
-        //-- left_nav_bar
+        //-- left_nav
         //---
         function(call){
-            helper.left_nav_bar=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.left_nav_bar.title='Left Nav Bar';
-            helper.left_nav_bar.title_url=biz9.get_title_url(helper.left_nav_bar.title);
-            helper.left_nav_bar.visible='true';
-            helper.left_nav_bar.order='1';
-            helper.left_nav_bar.parent_tbl_id=helper.mobile.tbl_id;
-            helper.left_nav_bar.parent_data_type=helper.mobile.data_type;
-            helper.left_nav_bar.top_tbl_id=helper.mobile.tbl_id;
-            helper.left_nav_bar.top_data_type=helper.mobile.data_type;
-            helper.left_nav_bar.header=biz9.get_id()+"_header";
-            helper.left_nav_bar.sub_note=biz9.get_test_sub_note();
-            helper.left_nav_bar.bar_title=biz9.get_id()+"_bar_title";
-            helper.left_nav_bar.bar_social=biz9.get_id()+"_bar_social";
-            helper.left_nav_bar.copyright=biz9.get_id()+"_copyright";
-            helper.left_nav_bar=biz9.convert_biz_item(helper.left_nav_bar,['header','sub_note','bar_title','bar_social,copyright'])
-            biz9.update_item(db,helper.mobile.title_url,helper.left_nav_bar,function(error,data) {
-                helper.left_nav_bar=data;
-                biz9.o('left_nav_bar',helper.left_nav_bar);
+            helper.left_nav=biz9.get_new_item(helper.mobile.title_url,0);
+            helper.left_nav.title='Left Nav';
+            helper.left_nav.title_url=biz9.get_title_url(helper.left_nav.title);
+            helper.left_nav.visible='true';
+            helper.left_nav.order='1';
+            helper.left_nav.parent_tbl_id=helper.mobile.tbl_id;
+            helper.left_nav.parent_data_type=helper.mobile.data_type;
+            helper.left_nav.top_tbl_id=helper.mobile.tbl_id;
+            helper.left_nav.top_data_type=helper.mobile.data_type;
+            helper.left_nav.left_nav_header=biz9.get_id()+"_header";
+            helper.left_nav.left_nav_sub_note=biz9.get_test_sub_note();
+            helper.left_nav.left_nav_bar_title=biz9.get_id()+"_bar_title";
+            helper.left_nav.left_nav_bar_social=biz9.get_id()+"_bar_social";
+            helper.left_nav.left_nav_copyright=biz9.get_id()+"_copyright";
+            helper.left_nav=biz9.convert_biz_item(helper.left_nav,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social,left_nav_copyright'])
+            biz9.update_item(db,helper.mobile.title_url,helper.left_nav,function(error,data) {
+                helper.left_nav=data;
+                biz9.o('left_nav',helper.left_nav);
 
                 call();
             });
@@ -198,25 +208,21 @@ router.post('/update_system', function(req, res, next) {
             helper.home.parent_data_type=helper.mobile.data_type;
             helper.home.top_tbl_id=helper.mobile.tbl_id;
             helper.home.top_data_type=helper.mobile.data_type;
-
-            helper.home.home_card_1_visible='true';
-            helper.home.home_card_1_type='data_type';
-            helper.home.home_card_1_category='Category 1';
-
-			helper.home.home_card_2_visible='true';
-            helper.home.home_card_2_type='data_type';
-            helper.home.home_card_2_category='Category 2';
-
-			helper.home.home_card_3_visible='true';
-            helper.home.home_card_3_type='data_type';
-            helper.home.home_card_3_category='Category 3';
-
-			helper.home.home_card_4_visible='true';
-            helper.home.home_card_4_type='data_type';
-            helper.home.home_card_4_category_title='Category 4';
-
-
-            helper.home=biz9.convert_biz_item(helper.home,['home_card_1_visible','home_card_1_type','home_card_1_category', 'home_card_2_visible','home_card_2_type','home_card_2_category', 'home_card_3_visible','home_card_3_type','home_card_3_category','home_card_4_visible','home_card_4_type','home_card_4_category', ])
+			helper.home.card_banner_visible='true';
+            helper.home.card_banner_data_type=DT_PRODUCT;
+            helper.home.card_banner_order='category';
+            helper.home.card_banner_category=DT_PRODUCT;
+            helper.home.card_popular_visible='true';
+            helper.home.card_popular_data_type=DT_PRODUCT;
+            helper.home.card_category_visible='true';
+            helper.home.card_category_data_type=DT_PRODUCT;
+            helper.home.card_buy_visible='true';
+            helper.home.card_buy_data_type=DT_PRODUCT;
+            helper.home.card_buy_category=DT_PRODUCT;
+            helper.home.card_double_visible='true';
+            helper.home.card_double_data_type=DT_PRODUCT;
+            helper.home.card_double_category=DT_PRODUCT;
+			helper.home.biz_list="card_banner_visible,card_banner_data_type,card_banner_order,card_banner_category,card_popular_visible,card_popular_data_type,card_category_visible,card_category_data_type,                >  \card_buy_visible,card_buy_data_type,card_double_visible,card_double_data_type,card_double_category"
             biz9.update_item(db,helper.mobile.title_url,helper.home,function(error,data) {
                 helper.home=data;
                 call();
@@ -246,28 +252,6 @@ router.post('/update_system', function(req, res, next) {
             });
         },
         //mobile sub_item
-        //-- comment
-        //---
-        function(call){
-            helper.comment=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.comment.title='Comment';
-            helper.comment.title_url=biz9.get_title_url(helper.comment.title);
-            helper.comment.visible='true';
-            helper.comment.order='1';
-            helper.comment.parent_tbl_id=helper.mobile.tbl_id;
-            helper.comment.parent_data_type=helper.mobile.data_type;
-            helper.comment.top_tbl_id=helper.mobile.tbl_id;
-            helper.comment.top_data_type=helper.mobile.data_type;
-            helper.comment.header=biz9.get_id()+"_header";
-            helper.comment.sub_note=biz9.get_test_sub_note();
-            helper.comment.button_color="g-red-dark";
-            helper.comment=biz9.convert_biz_item(helper.comment,['header','sub_note','button_color'])
-            biz9.update_item(db,helper.mobile.title_url,helper.comment,function(error,data) {
-                helper.comment=data;
-                call();
-            });
-        },
-        //mobile sub_item
         //-- contact
         //---
         function(call){
@@ -291,7 +275,9 @@ router.post('/update_system', function(req, res, next) {
                 helper.contact=data;
                 call();
             });
-        }, //mobile sub_item //-- page_list //---
+        },
+		//mobile sub_item
+		//-- page_list //---
         function(call){
             helper.page_list=biz9.get_new_item(helper.mobile.title_url,0);
             helper.page_list.title='Page List';
@@ -322,9 +308,10 @@ router.post('/update_system', function(req, res, next) {
             helper.blog_post.parent_data_type=helper.page_list.data_type;
             helper.blog_post.header=biz9.get_id()+"_header";
             helper.blog_post.sub_note=biz9.get_id()+"_sub_note";
-            helper.blog_post.type='blog_post'
+            helper.blog_post.type=DT_BLOG_POST;
+            helper.blog_post.title_type='Blog Post';
             helper.blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-            helper.blog_post=biz9.convert_biz_item(helper.blog_post,['header','sub_note','type'])
+            helper.blog_post=biz9.convert_biz_item(helper.blog_post,['header','sub_note','type','title_type'])
             biz9.update_item(db,helper.mobile.title_url,helper.blog_post,function(error,data) {
                 helper.blog_post=data;
                 call();
@@ -335,7 +322,7 @@ router.post('/update_system', function(req, res, next) {
         //---
         function(call){
             helper.event=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.event.title='Event';
+            helper.event.title='Events';
             helper.event.title_url=biz9.get_title_url(helper.event.title);
             helper.event.visible='true';
             helper.event.order='1';
@@ -345,9 +332,10 @@ router.post('/update_system', function(req, res, next) {
             helper.event.parent_data_type=helper.page_list.data_type;
             helper.event.header=biz9.get_id()+"_header";
             helper.event.sub_note=biz9.get_test_sub_note();
-            helper.event.type='event'
+			helper.event.type=DT_EVENT;
+            helper.event.title_type='Event';
             helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-            helper.event=biz9.convert_biz_item(helper.event,['header','sub_note','type'])
+            helper.event=biz9.convert_biz_item(helper.event,['header','sub_note','type','title_type'])
             biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
                 helper.event=data;
                 call();
@@ -358,7 +346,7 @@ router.post('/update_system', function(req, res, next) {
         //---
         function(call){
             helper.gallery=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.gallery.title='Gallery';
+            helper.gallery.title='Galleries';
             helper.gallery.title_url=biz9.get_title_url(helper.gallery.title);
             helper.gallery.visible='true';
             helper.gallery.order='1';
@@ -368,9 +356,10 @@ router.post('/update_system', function(req, res, next) {
             helper.gallery.parent_data_type=helper.page_list.data_type;
             helper.gallery.header=biz9.get_id()+"_header";
             helper.gallery.sub_note=biz9.get_test_sub_note();
-            helper.gallery.type='gallery';
+			helper.gallery.type=DT_GALLERY;
+            helper.gallery.title_type='Gallery';
             helper.gallery.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-            helper.gallery=biz9.convert_biz_item(helper.gallery,['header','sub_note','type'])
+            helper.gallery=biz9.convert_biz_item(helper.gallery,['header','sub_note','type','title_type'])
             biz9.update_item(db,helper.mobile.title_url,helper.gallery,function(error,data) {
                 helper.gallery=data;
                 call();
@@ -381,7 +370,7 @@ router.post('/update_system', function(req, res, next) {
         //---
         function(call){
             helper.product=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.product.title='Product';
+            helper.product.title='Products';
             helper.product.title_url=biz9.get_title_url(helper.product.title);
             helper.product.visible='true';
             helper.product.order='1';
@@ -391,17 +380,21 @@ router.post('/update_system', function(req, res, next) {
             helper.product.parent_data_type=helper.page_list.data_type;
             helper.product.header=biz9.get_id()+"_header";
             helper.product.sub_note=biz9.get_test_sub_note();
-            helper.product.type='product';
+			helper.product.type=DT_PRODUCT;
+            helper.product.title_type='Product';
             helper.product.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-            helper.product=biz9.convert_biz_item(helper.product,['header','sub_note','type'])
+            helper.product=biz9.convert_biz_item(helper.product,['header','sub_note','title_type'])
             biz9.update_item(db,helper.mobile.title_url,helper.product,function(error,data) {
                 helper.product=data;
                 call();
             });
         },
+		//mobile sub_item
+        //-- page_list_sub_item_service
+        //---
 		function(call){
             helper.service=biz9.get_new_item(helper.mobile.title_url,0);
-            helper.service.title='Service';
+            helper.service.title='Services';
             helper.service.title_url=biz9.get_title_url(helper.service.title);
             helper.service.visible='true';
             helper.service.order='1';
@@ -411,14 +404,88 @@ router.post('/update_system', function(req, res, next) {
             helper.service.parent_data_type=helper.page_list.data_type;
             helper.service.header=biz9.get_id()+"_header";
             helper.service.sub_note=biz9.get_test_sub_note();
-            helper.service.type='service';
+           	helper.service.type=DT_SERVICE;
+            helper.service.title_type='Service';
             helper.service.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-            helper.service=biz9.convert_biz_item(helper.service,['header','sub_note','type'])
+            helper.service=biz9.convert_biz_item(helper.service,['header','sub_note','type','title_type'])
             biz9.update_item(db,helper.mobile.title_url,helper.service,function(error,data) {
                 helper.service=data;
                 call();
             });
         },
+		//mobile sub_item
+        //-- page_list_sub_item_team
+        //---
+		function(call){
+            helper.team=biz9.get_new_item(helper.mobile.title_url,0);
+            helper.team.title='Team';
+            helper.team.title_url=biz9.get_title_url(helper.team.title);
+            helper.team.visible='true';
+            helper.team.order='1';
+           	helper.team.top_tbl_id=helper.mobile.tbl_id;
+            helper.team.top_data_type=helper.mobile.title_url;
+            helper.team.parent_tbl_id=helper.page_list.tbl_id;
+            helper.team.parent_data_type=helper.page_list.data_type;
+            helper.team.header=biz9.get_id()+"_header";
+            helper.team.sub_note=biz9.get_test_sub_note();
+           	helper.team.type=DT_MEMBER;
+            helper.team.title_type='Member';
+            helper.team.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+            helper.team=biz9.convert_biz_item(helper.team,['header','sub_note','type','title_type'])
+            biz9.update_item(db,helper.mobile.title_url,helper.team,function(error,data) {
+                helper.team=data;
+                call();
+            });
+        },
+	//member_category
+        //-- member_category_list
+        //---
+        function(call){
+            helper.member_category_list=[];
+            len =9;
+            for(a=0;a<len;a++){
+                var member_category=biz9.get_new_item(DT_CATEGORY,0);
+                member_category.title='Team Category Title '+ a;
+                member_category.type=DT_MEMBER;
+                member_category.title_url=biz9.get_title_url(member_category.title);
+                member_category.visible='true';
+                member_category.order=a;
+                member_category.visible='true';
+                member_category.sub_note=biz9.get_test_sub_note();
+                member_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+                helper.member_category_list.push(member_category);
+            }
+            biz9.update_list(db,helper.member_category_list,function(error,data_list) {
+                helper.member_category_list=data_list;
+                call();
+            });
+        },
+        //member
+        //-- member_list
+        //---
+        function(call){
+            helper.member_list=[];
+            len =99;
+            for(a=0;a<len;a++){
+                var member=biz9.get_new_item(DT_MEMBER,0);
+                member.first_name='First Name '+ a;
+                member.last_name='Last Name '+ a;
+                member.title_url=biz9.get_title_url(member.first_name);
+                member.visible='true';
+                member.order=a;
+                member.position='Position '+ biz9.get_id(4444);
+                member.location='Location '+ biz9.get_id(4444);
+                member.bio=biz9.get_test_sub_note();
+                member.category=helper.member_category_list[biz9.get_id(helper.member_category_list.length)-1].title;
+                member.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+                helper.member_list.push(member);
+            }
+            biz9.update_list(db,helper.member_list,function(error,data_list) {
+                helper.member_list=data_list;
+                call();
+            });
+        },
+
         //blog_post
         //gallery
         //product
@@ -460,6 +527,7 @@ router.post('/update_system', function(req, res, next) {
                 blog_post.order=a;
                 blog_post.sub_note=biz9.get_test_sub_note();
                 blog_post.author='Author '+ biz9.get_id(4444);
+                blog_post.youtube_url='https://youtu.be/lXoLJLBPU-Q';
                 blog_post.type='type '+ a;
                 blog_post.note=biz9.get_test_note();
                 blog_post.category=helper.blog_post_category_list[biz9.get_id(helper.blog_post_category_list.length)-1].title;
@@ -483,7 +551,7 @@ router.post('/update_system', function(req, res, next) {
                     var blog_post_photo=biz9.get_new_item(DT_PHOTO,0);
                     blog_post_photo.visible='true';
                     blog_post_photo.order=a;
-                    blog_post_photo.text='text_'+biz9.get_id(999);;
+                    blog_post_photo.text=biz9.get_id(999) + " " + biz9.get_test_sub_note();
                     blog_post =helper.blog_post_list[b];
                     blog_post_photo.parent_tbl_id=blog_post.tbl_id;
                     blog_post_photo.parent_data_type=blog_post.data_type;
@@ -498,7 +566,7 @@ router.post('/update_system', function(req, res, next) {
                 call();
             });
         },
-        //event_category
+	//event_category
         //-- event_category_list
         //---
         function(call){
@@ -544,6 +612,7 @@ router.post('/update_system', function(req, res, next) {
                 event.price=biz9.get_id(99);
                 event.old_price=parseFloat(event.price)+parseFloat(biz9.get_id(99));
                 event.note=biz9.get_test_note();
+				event.youtube_url='https://youtu.be/lXoLJLBPU-Q';
                 event.category=helper.event_category_list[biz9.get_id(helper.event_category_list.length)-1].title;
                event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
                 helper.event_list.push(event);
@@ -774,7 +843,6 @@ router.post('/update_system', function(req, res, next) {
                 call();
             });
         },
-
 	//gallery_category
         //-- gallery_category_list
         //---
@@ -811,6 +879,7 @@ router.post('/update_system', function(req, res, next) {
                 gallery.order=a;
                 gallery.sub_note=biz9.get_test_sub_note();
                 gallery.note=biz9.get_test_note();
+				gallery.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 				gallery.category=helper.gallery_category_list[biz9.get_id(helper.gallery_category_list.length)-1].title;
                 gallery.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
                 helper.gallery_list.push(gallery);
@@ -832,7 +901,7 @@ router.post('/update_system', function(req, res, next) {
                     var gallery_photo=biz9.get_new_item(DT_PHOTO,0);
                     gallery_photo.visible='true';
                     gallery_photo.order=a;
-                    gallery_photo.text='text_'+biz9.get_id(999);;
+                    gallery_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
                     gallery =helper.gallery_list[b];
                     gallery_photo.parent_tbl_id=gallery.tbl_id;
                     gallery_photo.parent_data_type=gallery.data_type;
@@ -856,7 +925,7 @@ router.post('/update_system', function(req, res, next) {
             len =3;
             for(a=0;a<len;a++){
                 var video_category=biz9.get_new_item(DT_CATEGORY,0);
-                video_category.title='Gallery Category Title '+ a;
+                video_category.title='Video Category Title '+ a;
                 video_category.type=DT_VIDEO;
                 video_category.title_url=biz9.get_title_url(video_category.title);
                 video_category.visible='true';
@@ -877,7 +946,7 @@ router.post('/update_system', function(req, res, next) {
             len =3;
             for(a=0;a<len;a++){
                 var video=biz9.get_new_item(DT_VIDEO,0);
-                video.title='Gallery Title '+ a;
+                video.title='Video Title '+ a;
                 video.title_url=biz9.get_title_url(video.title);
                 video.visible='true';
                 video.order=a;
@@ -932,6 +1001,7 @@ router.post('/update_system', function(req, res, next) {
                 product.price=biz9.get_id(99);
                 product.old_price=parseFloat(product.price)+parseFloat(biz9.get_id(99));
                 product.note=biz9.get_test_note();
+				product.youtube_url='https://youtu.be/lXoLJLBPU-Q';
                 product.category=helper.product_category_list[biz9.get_id(helper.product_category_list.length)-1].title;
                 product.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
                 helper.product_list.push(product);
@@ -953,7 +1023,7 @@ router.post('/update_system', function(req, res, next) {
                     var product_photo=biz9.get_new_item(DT_PHOTO,0);
                     product_photo.visible='true';
                     product_photo.order=a;
-                    product_photo.text='text_'+biz9.get_id(999);;
+                    product_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
                     product =helper.product_list[b];
                     product_photo.parent_tbl_id=product.tbl_id;
                     product_photo.parent_data_type=product.data_type;
@@ -1224,6 +1294,7 @@ router.post('/update_system', function(req, res, next) {
                 service.visible=biz9.get_id(3);
                 service.order=a;
                 service.sub_note=biz9.get_test_sub_note();
+				service.youtube_url='https://youtu.be/lXoLJLBPU-Q';
                 service.type='type '+ a;
                 service.sub_type='sub_type '+ a;
                 service.price=biz9.get_id(99);
@@ -1250,7 +1321,7 @@ router.post('/update_system', function(req, res, next) {
                     var service_photo=biz9.get_new_item(DT_PHOTO,0);
                     service_photo.visible='true';
                     service_photo.order=a;
-                    service_photo.text='text_'+biz9.get_id(999);;
+                    service_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
                     service =helper.service_list[b];
                     service_photo.parent_tbl_id=service.tbl_id;
                     service_photo.parent_data_type=service.data_type;

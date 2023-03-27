@@ -166,12 +166,32 @@ router.post("/cart_remove/:customer_id/:cart_item_tbl_id", function(req, res) {
 });
 //9_cart_detail
 router.get('/cart_detail/:customer_id',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
     var helper = biz9.get_helper(req);
     helper.cart = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
                 db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
                 call();
             });
         },
@@ -302,8 +322,8 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
                         helper.validation_message=err;
                         call();
                     }else{
-                    stripe_charge=data;
-                    call();
+                        stripe_charge=data;
+                        call();
                     }
                 });
             }else{
@@ -541,10 +561,11 @@ router.post('/checkout/striperedirecturl/success/:order_id',function(req, res) {
 });
 //9_checkout_success//9_success
 router.get('/checkout/success/:order_id',function(req, res) {
+    /*--default_start */
     var helper = biz9.get_helper(req);
-    helper.primary = biz9.get_new_item(DT_BLANK,0);
-    helper.left_nav_bar = biz9.get_new_item(DT_BLANK,0);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
     helper.order = biz9.get_new_item(DT_ORDER,0);
     async.series([
         function(call){
@@ -556,10 +577,7 @@ router.get('/checkout/success/:order_id',function(req, res) {
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
-                if(page.tbl_id){
-                    helper.primary=page.primary;
-                    helper.left_nav_bar=page.left_nav_bar;
-                }
+                helper.mobile=page;
                 call();
             });
         },
@@ -567,9 +585,7 @@ router.get('/checkout/success/:order_id',function(req, res) {
             sql = {title_url:'info'};
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
-                if(data_list.length>0){
-                    helper.info = data_list[0];
-                }
+                helper.info = data_list[0];
                 call();
             });
         },
@@ -653,10 +669,10 @@ cart_checkout_order_add=function(checkout_form,cart,callback){
                 if(order_item.parent_data_type==DT_EVENT){
                     order_item.cart_note = order_item.cart_note + "<br/>";
                     if(cart.item_list[a].location){
-                          order_item.cart_note = order_item.cart_note + "<b>Location:</b> "+cart.item_list[a].location + "<br/>";
+                        order_item.cart_note = order_item.cart_note + "<b>Location:</b> "+cart.item_list[a].location + "<br/>";
                     }
                     if(cart.item_list[a].meeting_link){
-                          order_item.cart_note = order_item.cart_note + "<b>Meeting Link:</b> "+cart.item_list[a].meeting_link + "<br/>";
+                        order_item.cart_note = order_item.cart_note + "<b>Meeting Link:</b> "+cart.item_list[a].meeting_link + "<br/>";
                     }
                 }
                 order_item_list.push(order_item);
@@ -704,7 +720,7 @@ router.get('/order_list/:page_current',function(req, res) {
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-   helper.order_list = [];
+    helper.order_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -730,11 +746,12 @@ router.get('/order_list/:page_current',function(req, res) {
         function(call){
             sql={};
             sort={date_create:-1};
-            page_size=9;
-            biz9.get_orderz(db,sql,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+            page_current=helper.page_current;
+            page_size=PAGE_SIZE_ITEM_LIST;
+            biz9.get_orderz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                 helper.order_list = data_list;
-                helper.total_count=total_count;
-                helper.page_page_count=page_page_count;
+                helper.item_count=item_count;
+                helper.page_count=page_count;
                 call();
             });
         },

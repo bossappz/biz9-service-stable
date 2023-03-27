@@ -36,11 +36,12 @@ router.get('/category_list/:data_type/:page_current',function(req, res) {
         },
         function(call){
             sort={date_create:1};
-            page_size=19;
-            biz9.get_category_biz_list(db,helper.data_type,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+            page_current=helper.page_current;
+            page_size=PAGE_SIZE_CATEGORY_LIST;
+            biz9.get_category_biz_list(db,helper.data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                 helper.category_list = data_list;
-                helper.total_count=total_count;
-                helper.page_page_count=page_page_count;
+                helper.item_count=item_count;
+                helper.page_count=page_count;
                 call();
             });
         },
@@ -93,7 +94,6 @@ router.get('/category_detail/:title_url',function(req, res) {
                 {value:DT_EVENT,title:'Event'},
                 {value:DT_GALLERY,title:'Gallery'},
                 {value:DT_PRODUCT,title:'Product'},
-                {value:DT_TEAM,title:'Team'},
                 {value:DT_SERVICE,title:'Service'},
             ]
             call();

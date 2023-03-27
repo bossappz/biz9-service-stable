@@ -13,12 +13,16 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.5.0'
+BIZ9_SERVICE_VERSION='4.6.0';
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='2.3.5'
+APP_VERSION='1.8.5'
+PAGE_SIZE_CATEGORY_LIST=19;
+PAGE_SIZE_ITEM_LIST=19;
+PAGE_SIZE_FEATURE_LIST=19;
+PAGE_SIZE_SLIDE_SHOW_LIST=12;
 /* --- APP CONFIG END  --- */
 /* --- ENV CONFIG START --- */
 APP_PORT="1901";
@@ -54,7 +58,7 @@ DT_USER="user_biz";
 DT_BLANK="blank_biz";
 DT_PHOTO="photo_biz";
 DT_BLOG_POST="blog_post_biz";
-DT_MEMBER="blog_post_biz";
+DT_MEMBER="member_biz";
 DT_EVENT="event_biz";
 DT_CATEGORY="category_biz";
 DT_GALLERY="gallery_biz";
@@ -90,8 +94,7 @@ PHOTO_SIZE_SQUARE_MID={title_url:"square_mid_size_",size:720};
 PHOTO_SIZE_SQUARE_LARGE={title_url:"square_large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
-//biz9=require("biz9-core")(app_config,data_config);
-biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
+biz9=require("biz9-core")(app_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- APP URL START  -- */
 test=require("./routes/cloud/test");
@@ -104,6 +107,7 @@ blog_post=require("./routes/blog_post");
 event=require("./routes/event");
 item=require("./routes/item");
 service=require("./routes/service");
+member=require("./routes/member");
 gallery=require("./routes/gallery");
 category=require("./routes/category");
 product=require("./routes/product");
@@ -139,6 +143,7 @@ app.use("/event", event);
 app.use("/service", service);
 app.use("/item", item);
 app.use("/gallery", gallery);
+app.use("/member", member);
 app.use("/category", category);
 app.use("/cloud/crud",crud);
 app.use("/cloud/mail",mail);

@@ -4,12 +4,9 @@
  * BiZ9 Framework
  * Core-AWZ
  */
-module.exports = function(aws_config){
-    AWS_REGION = aws_config.aws_region;
-    AWS_KEY = aws_config.aws_key;
-    AWS_SECRET = aws_config.aws_secret;
-    module.get_bucket_data = function(bucket,key,callback){
-        aws.config.update({ accessKeyId: AWS_KEY, secretAccessKey:AWS_SECRET,region:AWS_REGION});
+module.exports = function(){
+    module.get_bucket_data = function(aws_config,bucket,key,callback){
+       aws.config.update({ accessKeyId: aws_config.aws_key, secretAccessKey:aws_config.aws_secret,region:aws_config.aws_region});
         var s3 = new aws.S3();
         var r_data='';
         var error=null;
@@ -34,9 +31,8 @@ module.exports = function(aws_config){
             callback(error,r_data);
         }
     }
-    module.update_bucket=function(title,callback){
-        aws.config.update({accessKeyId:AWS_KEY,secretAccessKey:AWS_SECRET,region:AWS_REGION});
-        const REGION = AWS_REGION;
+    module.update_bucket=function(aws_obj,title,callback){
+        aws.config.update({ accessKeyId: aws_obj.aws_key, secretAccessKey:aws_obj.aws_secret,region:aws_obj.aws_region});
         s3 = new aws.S3();
         error=null;
         var params = {
@@ -46,8 +42,9 @@ module.exports = function(aws_config){
             callback(error,data);
         });
     }
-    module.update_bucket_file=function(bucket,file_path,key,content_type,callback){
-        var p_buffer={};
+    module.update_bucket_file=function(aws_config,bucket,file_path,key,content_type,callback){
+       aws.config.update({ accessKeyId: aws_config.aws_key, secretAccessKey:aws_config.aws_secret,region:aws_config.aws_region});
+         var p_buffer={};
         var error=null;
         async.series([
             function(call){
@@ -58,7 +55,6 @@ module.exports = function(aws_config){
                 });
             },
             function(call){
-                aws.config.update({accessKeyId:AWS_KEY,secretAccessKey:AWS_SECRET,region:AWS_REGION});
                 s3 = new aws.S3();
                 if(p_buffer){
                     //"image/jpeg"
@@ -72,10 +68,14 @@ module.exports = function(aws_config){
                     };
                     s3.putObject(params,function(error,data){
                         if(error){
-                            error=error;
+                            biz9.o('update_bucket_file_error',error);
+                            biz9.o('update_bucket_file_error_aws_config',aws_config);
+                            error=error.message;
                         }
                         call();
                     });
+                }else{
+                    biz9.o('update_bucket_file','no buffer found');
                 }
         }
         ],
@@ -83,6 +83,5 @@ module.exports = function(aws_config){
                 callback(error,0);
             });
     }
-
     return module;
 }

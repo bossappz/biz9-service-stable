@@ -42,36 +42,36 @@ router.get('/home',function(req, res) {
         function(call){
             helper.card_banner_list=[];
             page_current=1;
-            page_size=19;
+            page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
             sort={date_create:-1};
             if(helper.mobile.home.card_banner_visible=='true'){
                 if(helper.mobile.home.card_banner_order=='category'){
-                    sql={category:helper.home.card_banner_category};
+                    sql={category:helper.mobile.home.card_banner_category};
                 }else{
                         sql={};
                 }
                 if(helper.mobile.home.card_banner_data_type==DT_BLOG_POST){
-                    biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                    biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_banner_data_type==DT_EVENT){
-                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_banner_data_type==DT_PRODUCT){
-                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_banner_data_type==DT_SERVICE){
-                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_banner_data_type==DT_GALLERY){
-                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
@@ -88,29 +88,29 @@ router.get('/home',function(req, res) {
                 sql = {};
                 sort={view_count:-1};
                 page_current=1;
-                page_size=9;
+                page_size=PAGE_SIZE_FEATURE_LIST;
                 if(helper.mobile.home.card_popular_data_type==DT_BLOG_POST){
-                    biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_popular_data_type==DT_SERVICE){
-                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_popular_data_type==DT_EVENT){
-                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_popular_data_type==DT_PRODUCT){
-                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_popular_data_type==DT_GALLERY){
-                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
@@ -131,8 +131,8 @@ router.get('/home',function(req, res) {
                 sql = {};
                 sort={view_count:-1};
                 page_current=1;
-                page_size=9;
-                biz9.get_category_biz_list(db,helper.mobile.home.card_category_data_type,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
+                page_size=PAGE_SIZE_CATEGORY_LIST;
+                biz9.get_category_biz_list(db,helper.mobile.home.card_category_data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_category_list = data_list;
                         call();
                     });
@@ -150,19 +150,19 @@ router.get('/home',function(req, res) {
                 }
                 sort={date_create:-1};
                 page_current=1;
-                page_size=9;
+                page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
                 if(helper.mobile.home.card_buy_data_type==DT_SERVICE){
-                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_buy_data_type==DT_EVENT){
-                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_buy_data_type==DT_PRODUCT){
-                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
                     });
@@ -180,19 +180,19 @@ router.get('/home',function(req, res) {
                 sql={category:helper.mobile.home.card_double_category};
                 sort={date_create:-1};
                 page_current=1;
-                page_size=9;
+                page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
                 if(helper.mobile.home.card_double_data_type==DT_SERVICE){
-                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_double_data_type==DT_EVENT){
-                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
                     });
                 }else if(helper.mobile.home.card_double_data_type==DT_PRODUCT){
-                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+                    biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
                     });
@@ -280,53 +280,6 @@ router.get('/blank',function(req, res) {
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 helper.info = data_list[0];
-                call();
-            });
-        },
-    ],
-        function(err, result){
-            res.send({helper:helper});
-            res.end();
-        });
-});
-//9_comment
-router.get('/review_list/:page_current',function(req, res) {
-    /*--default_start */
-    var helper = biz9.get_helper(req);
-    helper.mobile = biz9.get_new_item(DT_BLANK,0);
-    helper.info = biz9.get_new_item(DT_BLANK,0);
-    /*--default_end */
-    async.series([
-        function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
-                call();
-            });
-        },
-        function(call){
-            title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
-                call();
-            });
-        },
-        function(call){
-            sql = {title_url:'info'};
-            sort={};
-            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
-                helper.info = data_list[0];
-                call();
-            });
-        },
-        function(call){
-            sql = {};
-            sort={date_create:-1};
-            page_current=helper.page_current;
-            page_size=2;
-            biz9.get_sql_paging(db,DT_REVIEW,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
-                helper.review_list=data_list;
-                helper.total_item_count=total_item_count;
-                helper.page_page_count=page_page_count;
                 call();
             });
         },
@@ -439,12 +392,12 @@ router.get('/sql',function(req, res) {
         function(call){
             sql = {};
             sort={date_create:-1};
-            page_current=helper.page_current;
+            page_current=1;
             page_size=12;
-            biz9.get_sql_paging(db,DT_PRODUCT,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+            biz9.get_sql_paging(db,DT_PRODUCT,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                 helper.item_list=data_list;
                 helper.total_item_count=total_item_count;
-                helper.page_page_count=page_page_count;
+                helper.page_count=page_count;
                 call();
             });
         },
@@ -463,9 +416,16 @@ router.get('/sql',function(req, res) {
             res.end();
         });
 });
-router.get('/default',function(req, res) {
+//9_setting
+router.get('/setting',function(req, res) {
+    /*--default_start */
     var helper = biz9.get_helper(req);
-    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    helper.primary = biz9.get_new_item(DT_BLANK,0);
+    helper.left_nav = biz9.get_new_item(DT_BLANK,0);
+      helper.data_type_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -475,69 +435,107 @@ router.get('/default',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,sub_page,{},function(error,page){
-                helper.primary=page;
+            biz9.get_page(db,title_url,{},function(error,page){
+                if(page){
+                helper.mobile=page;
+                helper.primary=page.primary;
+                helper.left_nav=page.left_nav;
+                }
                 call();
-            });
-        },
-
-        function(call){
-            title_url='mobile';
-            biz9.get_item_map_page(db,item_map_title_url,page_title_url,{},function(error,page){
-                helper.primary=page;
-                call();
-            });
-        },
-        function(call){
-            appz.get_item_map_page(db,item_map_title_url,page_title_url,setting,function(error,data){
-                callback(error,data);
             });
         },
         function(call){
             sql = {title_url:'info'};
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
-                if(data_list.length>0){
-                    helper.info = data_list[0];
-                }
+                helper.info = data_list[0];
+                call();
+            });
+        },
+       ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
+
+//9_setting_update
+router.post('/setting_update',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    helper.primary = biz9.get_new_item(DT_BLANK,0);
+    helper.left_nav = biz9.get_new_item(DT_BLANK,0);
+      helper.data_type_list = [];
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
                 call();
             });
         },
         function(call){
             title_url='mobile';
-            sub_page='home';
-            biz9.get_sub_page(db,title_url,sub_page,{},function(error,page){
-                helper.home=page;
+            biz9.get_page(db,title_url,{},function(error,page){
+                if(page){
+                helper.mobile=page;
+                helper.primary=page.primary;
+                helper.left_nav=page.left_nav;
+                }
                 call();
             });
         },
         function(call){
-            sql={};
-            sort={date_create:-1};
-            page_current=1;
-            page_size=8;
-            biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
-                helper.blog_post_list = data_list;
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+
+        function(call){
+            primary_update = biz9.get_new_item(helper.mobile.title_url,helper.primary.tbl_id);
+            primary_update.app_title=helper.primary_app_title;
+            primary_update.app_color=helper.primary_app_color;
+            primary_update.app_theme=helper.primary_app_theme;
+            primary_update.button_color=helper.primary_button_color;
+            primary_update=biz9.convert_biz_item(primary_update,['app_title','app_color','app_theme','button-color'])
+            biz9.update_item(db,helper.mobile.title_url,primary_update,function(error,data) {
+                helper.primary_update=data;
                 call();
             });
         },
         function(call){
-            biz9.get_gallery(db,helper.primary.home_gallery_title,function(error,data) {
-                helper.gallery=data;
+            left_nav_update = biz9.get_new_item(helper.mobile.title_url,helper.left_nav.tbl_id);
+            left_nav_update.left_nav_header=helper.left_nav_header;
+            left_nav_update.left_nav_sub_note=helper.left_nav_sub_note;
+            left_nav_update.left_nav_bar_title=helper.left_nav_bar_title;
+            left_nav_update.left_nav_bar_social=helper.left_nav_bar_social;
+            left_nav_update.left_nav_copyright=helper.left_nav_copyright;
+            left_nav_update=biz9.convert_biz_item(left_nav_update,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social','left_nav_copyright'])
+            biz9.update_item(db,helper.mobile.title_url,left_nav_update,function(error,data) {
+                helper.left_nav_update=data;
                 call();
             });
         },
         function(call){
-            sql={};
-            sort={date_create:-1};
-            page_current=1;
-            page_size=8;
-            biz9.get_commentz(db,sql,sort,page_current,page_size,function(error,data_list,total_count,page_page_count) {
-                helper.comment_list=data_list;
+            info_update = biz9.get_new_item(DT_ITEM,helper.info.tbl_id);
+            info_update.billing_cashapp=helper.billing_cashapp;
+            info_update.billing_stripe_key=helper.billing_stripe_key;
+            info_update.send_in_blue_name=helper.send_in_blue_name;
+   			info_update.send_in_blue_email=helper.send_in_blue_email;
+   			info_update.send_in_blue_key=helper.send_in_blue_key;
+   			info_update.send_in_blue_sender_order_con_sub=helper.send_in_blue_sender_order_con_sub;
+   			info_update.send_in_blue_sender_order_con_template_id=helper.send_in_blue_sender_order_con_template_id;
+            biz9.update_item(db,DT_ITEM,info_update,function(error,data) {
+                helper.info_update=data;
                 call();
             });
         },
-    ],
+       ],
         function(err, result){
             res.send({helper:helper});
             res.end();

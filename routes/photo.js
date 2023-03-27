@@ -5,7 +5,7 @@ router.get('/ping',function(req, res) {
     res.end();
 });
 //9_photo_list
-router.get('/photo_list/:data_type/:tbl_id/:page_current',function(req, res) {
+router.get('/old_photo_list/:data_type/:tbl_id/:page_current',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
@@ -45,10 +45,10 @@ router.get('/photo_list/:data_type/:tbl_id/:page_current',function(req, res) {
             sort={date_create:-1};
             page_current=helper.page_current;
             page_size=3;
-            biz9.get_sql_paging(db,DT_PHOTO,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+            biz9.get_sql_paging(db,DT_PHOTO,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                 helper.photo_list=data_list;
-                helper.total_item_count=total_item_count;
-                helper.page_page_count=page_page_count;
+                helper.item_count=item_count;
+                helper.page_count=page_count;
                 call();
             });
         },
@@ -59,7 +59,7 @@ router.get('/photo_list/:data_type/:tbl_id/:page_current',function(req, res) {
         });
 });
 // 9_photo 9_edit_photo
-router.get('/photo_detail/:parent_data_type/:parent_tbl_id/:tbl_id',function(req, res) {
+router.get('/old_photo_detail/:parent_data_type/:parent_tbl_id/:tbl_id',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);

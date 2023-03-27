@@ -5,10 +5,8 @@
  * Core-Mail
  */
 module.exports = function(){
-    var aws_key =aws_config.aws_key;
-    var aws_secret = aws_config.aws_secret;
     module.send_mail = function(mail,callback){
-        aws.config.update({accessKeyId:aws_key,secretAccessKey:aws_secret, region:aws_config.aws_region});
+        aws.config.update({accessKeyId:mail.aws_key,secretAccessKey:mail.aws_secret, region:mail.aws_region});
         var ses = new aws.SES();
         var params = {
             Destination: {

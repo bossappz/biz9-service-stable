@@ -36,11 +36,12 @@ router.get('/category_list/:page_current',function(req, res) {
         },
         function(call){
             sort={date_create:1};
-            page_size=3;
-            biz9.get_category_biz_list(db,DT_GALLERY,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+            page_current=helper.page_current;
+            page_size=PAGE_SIZE_CATEGORY_LIST;
+            biz9.get_category_biz_list(db,DT_GALLERY,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                 helper.category_list = data_list;
-                helper.total_count=total_count;
-                helper.page_page_count=page_page_count;
+                helper.item_count=item_count;
+                helper.page_count=page_count;
                 call();
             });
         }
@@ -86,12 +87,13 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
             }else{
                 sql={category:helper.category};
             }
-            sort={date_create:1};
-            page_size=19;
-            biz9.get_galleryz(db,sql,sort,helper.page_current,page_size,function(error,data_list,total_count,page_page_count) {
+            sort={date_create:-1};
+            page_current=helper.page_current;
+            page_size=PAGE_SIZE_ITEM_LIST;
+            biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                 helper.gallery_list = data_list;
-                helper.total_count=total_count;
-                helper.page_page_count=page_page_count;
+                helper.item_count=item_count;
+                helper.page_count=page_count;
                 call();
             });
         },
@@ -140,9 +142,9 @@ router.get('/gallery_detail/:title_url',function(req, res) {
         },
         function(call){
             sort={type:-1};
-            page_current=helper.page_current;
-            page_size=22;
-            biz9.get_categoryz(db,DT_GALLERY,sort,page_current,page_size,function(error,data_list,total_item_count,page_page_count){
+            page_current=1;
+            page_size=PAGE_SIZE_CATEGORY_LIST;
+            biz9.get_categoryz(db,DT_GALLERY,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                 helper.category_list = data_list;
                 call();
             });
