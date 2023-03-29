@@ -1,13 +1,13 @@
 {
   "name": "biz9-service",
-  "version": "4.6.0",
+  "version": "4.6.3",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
     "async": "^3.2.4",
-    "biz9-core": "^4.6.5",
+    "biz9-core": "^4.7.1",
     "busboy": "^1.6.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

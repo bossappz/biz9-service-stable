@@ -50,7 +50,7 @@ router.get('/category_list/:page_current',function(req, res) {
             sql={};
             sort={view_count:-1};
             page_current=helper.page_current;
-            page_size=PAGE_SIZE_ITEM_LIST;
+            page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
             biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                 helper.popular_list = data_list;
                 call();
@@ -122,7 +122,7 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-   helper.blog_post = biz9.get_new_item(DT_BLOG_POST,0);
+    helper.blog_post = biz9.get_new_item(DT_BLOG_POST,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -146,10 +146,14 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.get_blog_post(db,helper.title_url,function(error,data) {
-                helper.blog_post=data;
+            if(helper.title_url!="0"){
+                biz9.get_blog_post(db,helper.title_url,function(error,data) {
+                    helper.blog_post=data;
+                    call();
+                });
+            }else{
                 call();
-            });
+            }
         },
         function(call){
             sort={title:-1};
@@ -162,9 +166,9 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
         },
         function(call){
             if(helper.blog_post.title_url){
-            biz9.update_item_view_count(db,DT_BLOG_POST,helper.blog_post.tbl_id,helper.customer_id,function(error,data) {
-                call();
-            });
+                biz9.update_item_view_count(db,DT_BLOG_POST,helper.blog_post.tbl_id,helper.customer_id,function(error,data) {
+                    call();
+                });
             }else{
                 call();
             }

@@ -50,7 +50,7 @@ router.get('/category_list/:page_current',function(req, res) {
             sql={};
             sort={view_count:-1};
             page_current=1;
-            page_size=PAGE_SIZE_ITEM_LIST;
+            page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
            biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                 helper.popular_list = data_list;
                 call();
@@ -99,7 +99,7 @@ router.get('/product_list/:category/:page_current',function(req, res) {
             }else{
                 sql={category:helper.category};
             }
-            sort={title:-1};
+            sort={title:1};
             page_current=helper.page_current;
             page_size=PAGE_SIZE_ITEM_LIST;
             biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
@@ -148,10 +148,14 @@ router.get('/product_detail/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.get_product(db,helper.title_url,function(error,data) {
+           if(helper.title_url!="0"){
+             biz9.get_product(db,helper.title_url,function(error,data) {
                 helper.product=data;
                 call();
             });
+            }else{
+                call();
+            }
         },
         function(call){
             sort={type:-1};
@@ -162,6 +166,10 @@ router.get('/product_detail/:title_url',function(req, res) {
                 call();
             });
         },
+		function(call){
+			helper.product_visible_option_list = biz9.get_product_visible_option_list();
+			call();
+		},
         function(call){
             if(helper.product.title_url){
                 biz9.update_item_view_count(db,DT_PRODUCT,helper.product.tbl_id,helper.customer_id,function(error,data) {

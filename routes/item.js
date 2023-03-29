@@ -107,7 +107,7 @@ router.get('/photo_detail/:tbl_id/:parent_data_type/:parent_tbl_id',function(req
 });
 //9_copy_
 router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
-    var helper = biz9.get_helper_user(req);
+    var helper = biz9.get_helper(req);
     helper.item = biz9.get_new_item(helper.data_type,helper.tbl_id);
     helper.sub_item_list = [];
     helper.top_sub_item_list = [];
@@ -182,8 +182,8 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             }
         },
         function(call){
-            sql = {};
-            sort={date_create:1};
+            sql = {top_tbl_id:helper.tbl_id};
+            sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 helper.other_list=data_list;
                 call();
@@ -537,10 +537,6 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
             }
         },
         function(call){
-            biz9.o('my_top_item',helper.top_item);
-            call();
-        },
-        function(call){
             biz9.get_item(db,helper.data_type,helper.tbl_id,function(error,data) {
                 helper.sub_item=data;
                 call();
@@ -555,7 +551,7 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
 
 //9_sub_item_copy
 router.post("/copy_sub_item/:parent_data_type/:parent_tbl_id/:sub_tbl_id",biz9.check_user,function(req, res) {
-    var helper = biz9.get_helper_user(req);
+    var helper = biz9.get_helper(req);
     helper.parent_item = biz9.get_new_item(helper.parent_data_type,helper.parent_tbl_id);
     helper.sub_item = biz9.get_new_item(DT_ITEM,helper.sub_tbl_id);
     helper.sub_item_list = [];
@@ -736,7 +732,7 @@ router.post("/copy_sub_item/:parent_data_type/:parent_tbl_id/:sub_tbl_id",biz9.c
 });
 //9_delete_sub_item
 router.post("/delete_sub_item/:data_type/:tbl_id",biz9.check_user,function(req, res) {
-    var helper = biz9.get_helper_user(req);
+    var helper = biz9.get_helper(req);
     helper.sub_item = biz9.get_new_item(DT_ITEM,helper.tbl_id);
     helper.del_list=[];
     helper.copy_sub_item_list = [];

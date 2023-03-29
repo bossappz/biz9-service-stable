@@ -1,6 +1,6 @@
 {
   "name": "biz9-core",
-  "version": "4.6.5",
+  "version": "4.7.1",
   "description": "The core engine of the Biz9 Framework.",
   "main": "index.js",
   "scripts": {

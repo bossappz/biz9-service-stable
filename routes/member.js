@@ -6,7 +6,7 @@ router.get('/ping',function(req, res) {
 });
 //9_category_list
 router.get('/category_list/:page_current',function(req, res) {
- /*--default_start */
+    /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
@@ -103,7 +103,7 @@ router.get('/member_list/:category/:page_current',function(req, res) {
             res.end();
         });
 });
-//9_member_detail
+//9_member_detail 9_detail
 ////9_member
 router.get('/member_detail/:tbl_id',function(req, res) {
     /*--default_start */
@@ -135,10 +135,14 @@ router.get('/member_detail/:tbl_id',function(req, res) {
             });
         },
         function(call){
-            biz9.get_member(db,helper.tbl_id,function(error,data) {
-                helper.member=data;
+            if(helper.tbl_id!="0"){
+                biz9.get_member(db,helper.tbl_id,function(error,data) {
+                    helper.member=data;
+                    call();
+                });
+            }else{
                 call();
-            });
+            }
         },
         function(call){
             sort={title:-1};

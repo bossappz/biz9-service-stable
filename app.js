@@ -13,12 +13,13 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.6.0';
+BIZ9_SERVICE_VERSION='4.6.6'
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.8.5'
+APP_VERSION='2.4.8'
+PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
 PAGE_SIZE_CATEGORY_LIST=19;
 PAGE_SIZE_ITEM_LIST=19;
 PAGE_SIZE_FEATURE_LIST=19;
@@ -35,10 +36,10 @@ MONGO_URL="mongodb://localhost:"+MONGO_PORT+"?keepAlive=true&socketTimeoutMS=360
 /* --- MONGO END --- */
 /* --- ENV AWS START --- */
 S3_SAVE=true;
-S3_BUCKET="ba7-app";
+S3_BUCKET="bappz";
 AWS_KEY="AKIA3JQYFN5KARMHJVKJ";
 AWS_SECRET="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";
-AWS_REGION="us-east-1";
+AWS_REGION="us-east-2";
 /* --- ENV AWS END --- */
 /* --- ENV EMAILZ START --- */
 EMAIL_TO="contact@bossappz.com";
@@ -48,8 +49,8 @@ EMAIL_FROM="contact@bossappz.com";
 FILE_SAVE_PATH="/uploads/";//local
 //FILE_SAVE_PATH=__dirname+"/public/uploads/";
 //FILE_URL="/uploads/"; //box_url
-FILE_URL="http://localhost:1900/uploads/"; //mobile_box_url
-//FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
+//FILE_URL="http://localhost:1900/uploads/"; //mobile_box_url
+FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url
 //FILE_URL="https://bossappz.com/uploads/" //web_prod_url
 /* --- ENV FILE END --- */
 /* --- ENV CONFIG END -- */

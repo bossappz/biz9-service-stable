@@ -334,13 +334,9 @@ module.exports = function(app_config){
         helper.app_title=APP_TITLE;
         helper.app_version=APP_VERSION;
         if(APP_TITLE_ID){
-            helper.app_title_id=APP_TITLE_ID
+            helper.app_title_id=APP_TITLE_ID;
         }else{
-            if(req.subdomains[0]){
-                helper.app_title_id=req.subdomains[0];
-            }else{
-                helper.app_title_id=helper.app_title_id;
-            }
+            helper.app_title_id=helper.app_title_id;
         }
         return helper;
     }
@@ -2687,7 +2683,7 @@ module.get_page=function(db,title_url,setting,callback){
             call();
         },
         function(call){
-            sql = {parent_data_type:title_url};
+            sql = {top_tbl_id:item_map.tbl_id};
             sort={};
             dataz.get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 for(a=0;a<data_list.length;a++){
@@ -2719,7 +2715,7 @@ module.get_page=function(db,title_url,setting,callback){
             call();
         },
         function(call){
-            sql = {};
+            sql = {top_tbl_id:item_map.tbl_id};
             sort={order:1};
             dataz.get_sql_cache(db,item_map.title_url,sql,sort,function(error,data_list) {
                 other_list=data_list;
@@ -2866,7 +2862,7 @@ module.get_page_list=function(db,sql,sort_by,page_current,page_size,callback) {
             });
         },
         function(call){
-            sql = {};
+            sql = {parent_data_type:DT_PAGE};
             sort={};
             dataz.get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 full_photo_list=data_list;
@@ -2915,7 +2911,7 @@ module.get_video_list=function(db,sql,sort_by,page_current,page_size,callback) {
             });
         },
         function(call){
-            sql = {};
+            sql = {parent_data_type:DT_VIDEO};
             sort={};
             dataz.get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 full_photo_list=data_list;
@@ -3163,7 +3159,7 @@ module.get_item_biz_list=function(db,data_type,sql,sort_by,page_current,page_siz
             });
         },
         function(call){
-            sql = {};
+            sql = {top_data_type:data_type};
             sort={};
             dataz.get_sql_cache(db,DT_PHOTO,sql,sort,function(error,data_list) {
                 full_photo_list=data_list;
@@ -3329,7 +3325,7 @@ module.get_service_visible_option_list=function(product_visible_id){
     }
     return visible_option_list;
 }
-module.get_event_visible_option_list=function(event_visible_id){
+module.get_event_visible_option_list=function(){
     visible_option_list=[];
     for(a=0;a<4;a++){
         visible_option_list.push({text:appz.get_visible_event_obj(a).event_status,value:a});
@@ -3346,8 +3342,8 @@ module.get_visible_event_obj=function(event_visible_id){
             event_status_short='Sold Out';
             break;
         case '1':
-            event_status = 'Less than 25 tickets remaining.';
-            event_status_short='Tickets Availble';
+            event_status = 'Less than 25 tickets remaining';
+            event_status_short='rickets Availble';
             break;
         case '2':
             event_status = 'Less than 10 tickets remaining';

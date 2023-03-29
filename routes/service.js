@@ -50,7 +50,7 @@ router.get('/category_list/:page_current',function(req, res) {
             sql={};
             sort={view_count:-1};
             page_current=helper.page_current;
-            page_size=PAGE_SIZE_ITEM_LIST;
+            page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
             biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,item_item_count,page_count){
                 helper.popular_list = data_list;
                 call();
@@ -64,7 +64,7 @@ router.get('/category_list/:page_current',function(req, res) {
 });
 //9_list
 router.get('/service_list/:category/:page_current',function(req, res) {
-     /*--default_start */
+    /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
@@ -160,11 +160,15 @@ router.get('/service_detail/:title_url',function(req, res) {
                 call();
             });
         },
+		function(call){
+			helper.service_visible_option_list = biz9.get_service_visible_option_list();
+			call();
+		},
         function(call){
-            if(helper.service.title_url){
-            biz9.update_item_view_count(db,DT_SERVICE,helper.service.tbl_id,helper.customer_id,function(error,data) {
-                call();
-            });
+            if(helper.title_url!="0"){
+                biz9.update_item_view_count(db,DT_SERVICE,helper.service.tbl_id,helper.customer_id,function(error,data) {
+                    call();
+                });
             }else{
                 call();
             }

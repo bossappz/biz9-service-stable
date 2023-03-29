@@ -88,7 +88,7 @@ router.get('/home',function(req, res) {
                 sql = {};
                 sort={view_count:-1};
                 page_current=1;
-                page_size=PAGE_SIZE_FEATURE_LIST;
+                page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
                 if(helper.mobile.home.card_popular_data_type==DT_BLOG_POST){
                     biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_popular_list = data_list;
@@ -510,6 +510,7 @@ router.post('/setting_update',function(req, res) {
         },
         function(call){
             left_nav_update = biz9.get_new_item(helper.mobile.title_url,helper.left_nav.tbl_id);
+            left_nav_update.photofilename=helper.left_nav_photofilename;
             left_nav_update.left_nav_header=helper.left_nav_header;
             left_nav_update.left_nav_sub_note=helper.left_nav_sub_note;
             left_nav_update.left_nav_bar_title=helper.left_nav_bar_title;

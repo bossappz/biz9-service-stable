@@ -6,7 +6,7 @@ router.get('/ping',function(req, res) {
 });
 //9_category_list
 router.get('/category_list/:page_current',function(req, res) {
- /*--default_start */
+    /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
@@ -58,7 +58,7 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-   helper.gallery_list = [];
+    helper.gallery_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -70,7 +70,7 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
                 helper.mobile=page;
-               call();
+                call();
             });
         },
         function(call){
@@ -106,7 +106,7 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
 //9_gallery_detail
 ////9_detail
 router.get('/gallery_detail/:title_url',function(req, res) {
-   /*--default_start */
+    /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
@@ -122,8 +122,8 @@ router.get('/gallery_detail/:title_url',function(req, res) {
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
-                    helper.mobile=page;
-                    call();
+                helper.mobile=page;
+                call();
             });
         },
         function(call){
@@ -135,10 +135,14 @@ router.get('/gallery_detail/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.get_gallery(db,helper.title_url,function(error,data) {
-                helper.gallery=data;
-                call();
-            });
+            if(helper.title_url!="0"){
+                biz9.get_gallery(db,helper.title_url,function(error,data) {
+                    helper.gallery=data;
+                    call();
+                });
+            }else{
+                call()
+            }
         },
         function(call){
             sort={type:-1};
@@ -149,11 +153,11 @@ router.get('/gallery_detail/:title_url',function(req, res) {
                 call();
             });
         },
-      function(call){
+        function(call){
             if(helper.gallery.title_url){
-            biz9.update_item_view_count(db,DT_GALLERY,helper.gallery.tbl_id,helper.customer_id,function(error,data) {
-                call();
-            });
+                biz9.update_item_view_count(db,DT_GALLERY,helper.gallery.tbl_id,helper.customer_id,function(error,data) {
+                    call();
+                });
             }else{
                 call();
             }

@@ -35,7 +35,7 @@ router.get('/category_list/:data_type/:page_current',function(req, res) {
             });
         },
         function(call){
-            sort={date_create:1};
+            sort={date_create:-1};
             page_current=helper.page_current;
             page_size=PAGE_SIZE_CATEGORY_LIST;
             biz9.get_category_biz_list(db,helper.data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
@@ -83,10 +83,14 @@ router.get('/category_detail/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.get_category(db,helper.title_url,function(error,data) {
-                helper.category=data;
+            if(helper.title_url!="0"){
+                biz9.get_category(db,helper.title_url,function(error,data) {
+                    helper.category=data;
+                    call();
+                });
+            }else{
                 call();
-            });
+            }
         },
         function(call){
             helper.category_title_list = [
