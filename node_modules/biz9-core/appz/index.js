@@ -302,6 +302,8 @@ module.exports = function(app_config){
         helper.app_version=APP_VERSION;
         if(APP_TITLE_ID){
             helper.app_title_id=APP_TITLE_ID;
+        }else if(req.subdomains[0]){
+                helper.app_title_id=req.subdomains[0];
         }else{
             helper.app_title_id=helper.app_title_id;
         }
@@ -335,6 +337,8 @@ module.exports = function(app_config){
         helper.app_version=APP_VERSION;
         if(APP_TITLE_ID){
             helper.app_title_id=APP_TITLE_ID;
+        }else if(req.subdomains[0]){
+                helper.app_title_id=req.subdomains[0];
         }else{
             helper.app_title_id=helper.app_title_id;
         }
@@ -443,10 +447,10 @@ module.exports = function(app_config){
         _blog_post.visible=org_item.visible;
         _blog_post.category=org_item.category;
         _blog_post.order=org_item.order;
+        _blog_post.sub_note=org_item.sub_note;
         _blog_post.note=org_item.note;
         _blog_post.tags=org_item.tags;
         _blog_post.html=org_item.html;
-        _blog_post.sub_note=org_item.sub_note;
         _blog_post.author=org_item.author;
         _blog_post.search=org_item.search;
         return _blog_post;
@@ -464,6 +468,8 @@ module.exports = function(app_config){
         _event.type=org_item.type;
         _event.category=org_item.category;
         _event.price=org_item.price;
+        _event.old_price=org_item.old_price;
+        _event.youtube_url=org_item.youtube_url;
         _event.order=org_item.order;
         _event.note=org_item.note;
         _event.sub_note=org_item.sub_note;
@@ -501,23 +507,9 @@ module.exports = function(app_config){
         _product.tags=org_item.tags;
         _product.price=org_item.price;
         _product.original_price=org_item.original_price;
-        _product.stock=org_item.stock;
-        _product.sku=org_item.sku;
         _product.type=org_item.type;
         _product.sub_type=org_item.sub_type;
-        _product.shipping_title_1=org_item.shipping_title_1;
-        _product.shipping_price_1=org_item.shipping_price_1;
-        _product.shipping_title_2=org_item.shipping_title_2;
-        _product.shipping_price_2=org_item.shipping_price_2;
-        _product.shipping_title_3=org_item.shipping_title_3;
-        _product.shipping_price_3=org_item.shipping_price_3;
-        _product.option_title_1=org_item.option_title_1;
-        _product.option_price_1=org_item.option_price_1;
-        _product.option_title_2=org_item.option_title_2;
-        _product.option_price_2=org_item.option_price_2;
-        _product.option_title_3=org_item.option_title_3;
-        _product.option_price_3=org_item.option_price_3;
-        _product.search=org_item.search;
+        _product.youtube_url=org_item.youtube_url;
         return _product;
     }
     module.set_new_project=function(data_type,org_item){
@@ -535,8 +527,6 @@ module.exports = function(app_config){
         _project.photofilename=org_item.photofilename;
         _project.tags=org_item.tags;
         _project.html=org_item.html;
-        _project.regular_price=org_item.regular_price;
-        _project.sale_price=org_item.sale_price;
         _project.search=org_item.search;
         return _project;
     }
@@ -549,6 +539,8 @@ module.exports = function(app_config){
         _service.category=org_item.category;
         _service.sub_note=org_item.sub_note;
         _service.price=org_item.price;
+        _service.old_price=org_item.old_price;
+        _service.youtube_url=org_item.youtube_url;
         _service.type=org_item.type;
         _service.sub_type=org_item.sub_type;
         _service.order=org_item.order;
@@ -556,14 +548,6 @@ module.exports = function(app_config){
         _service.photofilename=org_item.photofilename;
         _service.tags=org_item.tags;
         _service.html=org_item.html;
-        _service.regular_price=org_item.regular_price;
-        _service.sale_price=org_item.sale_price;
-        _service.option_title_1=org_item.option_title_1;
-        _service.option_price_1=org_item.option_price_1;
-        _service.option_title_2=org_item.option_title_2;
-        _service.option_price_2=org_item.option_price_2;
-        _service.option_title_3=org_item.option_title_3;
-        _service.option_price_3=org_item.option_price_3;
         _service.search=org_item.search;
         return _service;
     }
@@ -922,6 +906,12 @@ module.exports = function(app_config){
             function(call){
                 blog_post.photos=[];
                 blog_post.items=[];
+                call();
+            },
+            function(call){
+                if(blog_post.mp3filename){
+                    blog_post.mp3_url =FILE_URL+helper.item.mp3filename;
+                }
                 call();
             },
             function(call){
