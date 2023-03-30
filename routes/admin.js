@@ -523,7 +523,7 @@ router.post('/update_system', function(req, res, next) {
 			for(a=0;a<helper.blog_post_category_list.length;a++){
 				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var blog_post=biz9.get_new_item(DT_BLOG_POST,0);
-					blog_post.title='Blog Post Title '+ b;
+					blog_post.title='Blog Post Title '+ a + " " + b;
 					blog_post.title_url=biz9.get_title_url(blog_post.title);
 					blog_post.visible='true';
 					blog_post.order=b;
@@ -599,7 +599,7 @@ router.post('/update_system', function(req, res, next) {
 			for(a=0;a<helper.event_category_list.length;a++){
 				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var event=biz9.get_new_item(DT_EVENT,0);
-					event.title='Event Title '+ b;
+					event.title='Event Title '+ a + " " + b;
 					event.title_url=biz9.get_title_url(event.title);
 					event.visible=biz9.get_id(3);
 					event.order=b;
@@ -905,7 +905,7 @@ router.post('/update_system', function(req, res, next) {
 			for(a=0;a<helper.gallery_category_list.length;a++){
 				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var gallery=biz9.get_new_item(DT_GALLERY,0);
-					gallery.title='Gallery Title '+ b;
+					gallery.title='Gallery Title '+ a + " " + b;
 					gallery.title_url=biz9.get_title_url(gallery.title);
 					gallery.visible='true';
 					gallery.order=b;
@@ -1024,7 +1024,7 @@ router.post('/update_system', function(req, res, next) {
 			for(a=0;a<helper.product_category_list.length;a++){
 				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var product=biz9.get_new_item(DT_PRODUCT,0);
-					product.title='Product Title '+ b;
+					product.title='Product Title '+ a + " " + b;
 					product.title_url=biz9.get_title_url(product.title);
 					product.visible=biz9.get_id(5);
 					product.order=b;
@@ -1323,7 +1323,7 @@ router.post('/update_system', function(req, res, next) {
 			for(a=0;a<helper.service_category_list.length;a++){
 				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var service=biz9.get_new_item(DT_SERVICE,0);
-					service.title='Service Title '+ b;
+					service.title='Service Title '+ a + " " + b;
 					service.title_url=biz9.get_title_url(service.title);
 					service.visible=biz9.get_id(3);
 					service.order=b;

@@ -13,12 +13,12 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.6.6'
+BIZ9_SERVICE_VERSION='4.6.7';
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.8.6'
+APP_VERSION='1.8.7'
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
 PAGE_SIZE_CATEGORY_LIST=19;
 PAGE_SIZE_ITEM_LIST=19;
@@ -39,7 +39,7 @@ S3_SAVE=true;
 S3_BUCKET="bappz";
 AWS_KEY="AKIA3JQYFN5KARMHJVKJ";
 AWS_SECRET="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";
-AWS_REGION="us-east-2";
+AWS_REGION="us-east-1";
 /* --- ENV AWS END --- */
 /* --- ENV EMAILZ START --- */
 EMAIL_TO="contact@bossappz.com";
@@ -95,7 +95,8 @@ PHOTO_SIZE_SQUARE_MID={title_url:"square_mid_size_",size:720};
 PHOTO_SIZE_SQUARE_LARGE={title_url:"square_large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
-biz9=require("biz9-core")(app_config,data_config);
+//biz9=require("biz9-core")(app_config,data_config);
+biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- APP URL START  -- */
 test=require("./routes/cloud/test");
