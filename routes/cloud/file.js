@@ -39,7 +39,7 @@ router.post("/update_photo", function(req, res) {
                     helper.error='error: detect-file-type-error: '+err;
                     call();
                 }else{
-                    if(data.ext!='jpg'&&data.ext!='png'&&data.ext!='jpeg'&&data.ext!='svg'&&data.ext!='webp'){
+                    if(data.ext!='jpg'&&data.ext!='png'&&data.ext!='jpeg'&&data.ext!='svg'&&data.ext!='webp'&&data.ext!='avif'){
                         helper.error='error: invalid file type. please upload a valid image.';
                     }
                     call();

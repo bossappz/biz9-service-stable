@@ -5,15 +5,26 @@ router.get('/ping',function(req, res, next) {
 	res.end();
 });
 router.post('/update_system', function(req, res, next) {
-	BIZ_LIST_SIZE_CATEGORY_LIST=4;
+	//-biz-start
+	BIZ_LIST_SIZE_CATEGORY_LIST=2;
 	BIZ_LIST_SIZE_ITEM_LIST=5;
 	BIZ_LIST_SIZE_PHOTO_LIST=4;
 	BIZ_LIST_SIZE_SUB_ITEM_LIST=3;
+	//-biz-end
+	//-stripe-start
+	//-stripe-end
+	BIZ_STRIPE_KEY="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
+	//-stripe-end
+	//-send_in_blue-start
+	BIZ_SEND_IN_BLUE_KEY='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';
+	BIZ_SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID='7';
+	BIZ_SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID='10';
+	//-send_in_blue-end
+	//-default-start
 	var helper = biz9.get_helper(req);
 	helper.primary = biz9.get_new_item(DT_ITEM_MAP,0);
 	helper.user = biz9.set_item_data(DT_USER,0,req.body);
-	helper.app_env=true;
-
+	//-default-end
 	helper.photofilename_list=[
 "73cce38f-6ae3-4e30-a9dc-8a03939b7c8c.png",
 "549d9166-0a89-4614-9d6e-deb39d302882.png",
@@ -49,10 +60,8 @@ router.post('/update_system', function(req, res, next) {
 "cc2b299b-4fae-45c4-83df-58ba20fb7956.png",
 "eb80f2e0-7e27-455e-888e-480b3f49bf39.png"
 	];//nba
-
-
-
-
+	//helper.photofilename_list=[
+	//];
 	//default = header, sub_note, paragrap
 	//item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 	async.series([
@@ -88,6 +97,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.store_info.title='Info';
 			helper.store_info.title_url=biz9.get_title_url(helper.store_info.title);
 			helper.store_info.order='1';
+			//-business-start
 			helper.store_info.business_name=biz9.get_id()+"_business_name_";
 			helper.store_info.business_email=biz9.get_id()+"_business_email@gmail.com";
 			helper.store_info.business_phone=biz9.get_id()+"_business_phone";
@@ -97,20 +107,27 @@ router.post('/update_system', function(req, res, next) {
 			helper.store_info.business_city=biz9.get_id()+"_business_city";
 			helper.store_info.business_state='FL';
 			helper.store_info.business_zip=biz9.get_id()+"_business_zip";
-			helper.store_info.billing_cashapp=biz9.get_id()+"_billing_cashapp";
+			helper.store_info.business_cashapp=biz9.get_id()+"_business_cashapp";
+			//business-end
+			//social-start
 			helper.store_info.social_website=biz9.get_id()+"_social_website";
 			helper.store_info.social_facebook=biz9.get_id()+"_social_facebook";
 			helper.store_info.social_instagram=biz9.get_id()+"_social_instagram";
 			helper.store_info.social_twitter=biz9.get_id()+"_social_twitter";
 			helper.store_info.social_youtube=biz9.get_id()+"_social_youtube";
-			helper.store_info.billing_stripe_key="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
-
-			helper.store_info.send_in_blue_name=biz9.get_id()+"_send_in_blue_name";
-			helper.store_info.send_in_blue_email=biz9.get_id()+"_send_in_blue_email";
-			helper.store_info.send_in_blue_key=biz9.get_id()+"_send_in_blue_key";
-			helper.store_info.send_in_blue_sender_order_con_sub=biz9.get_id()+"_send_in_order_con_sub";
-			helper.store_info.send_in_blue_sender_order_con_template_id=biz9.get_id()+"_send_in_order_con_template_id";
-
+			//business-end
+			//stripe-start
+			helper.store_info.business_stripe_key=BIZ_STRIPE_KEY;
+			//stripe-end
+			//send-in-blue-start
+			helper.store_info.send_in_blue_name="Notifications";
+			helper.store_info.send_in_blue_email="certifiedcoderz@gmail.com";
+			helper.store_info.send_in_blue_key=BIZ_SEND_IN_BLUE_KEY;
+			helper.store_info.send_in_blue_order_send_subject='Order Confirmation';
+			helper.store_info.send_in_blue_order_send_template_id=BIZ_SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID;
+			helper.store_info.send_in_blue_form_send_subject='Form Submission';
+			helper.store_info.send_in_blue_form_send_template_id=BIZ_SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID;
+			//send-in-blue-end
 			biz9.update_item(db,DT_ITEM,helper.store_info,function(error,data) {
 				helper.store_info=data;
 				call();
@@ -182,6 +199,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.left_nav.title_url=biz9.get_title_url(helper.left_nav.title);
 			helper.left_nav.visible='true';
 			helper.left_nav.order='1';
+			helper.left_nav.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			helper.left_nav.parent_tbl_id=helper.mobile.tbl_id;
 			helper.left_nav.parent_data_type=helper.mobile.data_type;
 			helper.left_nav.top_tbl_id=helper.mobile.tbl_id;
@@ -191,7 +209,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.left_nav.left_nav_bar_title=biz9.get_id()+"_bar_title";
 			helper.left_nav.left_nav_bar_social=biz9.get_id()+"_bar_social";
 			helper.left_nav.left_nav_copyright=biz9.get_id()+"_copyright";
-			helper.left_nav=biz9.convert_biz_item(helper.left_nav,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social,left_nav_copyright'])
+			helper.left_nav=biz9.convert_biz_item(helper.left_nav,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social','left_nav_copyright'])
 			biz9.update_item(db,helper.mobile.title_url,helper.left_nav,function(error,data) {
 				helper.left_nav=data;
 				biz9.o('left_nav',helper.left_nav);
@@ -268,10 +286,10 @@ router.post('/update_system', function(req, res, next) {
 			helper.contact.parent_data_type=helper.mobile.data_type;
 			helper.contact.top_tbl_id=helper.mobile.tbl_id;
 			helper.contact.top_data_type=helper.mobile.data_type;
-			helper.contact.header=biz9.get_id()+"_header";
-			helper.contact.sub_note=biz9.get_test_sub_note();
-			helper.contact.text=biz9.get_id()+"_text";
-			helper.contact.sub_text=biz9.get_id()+"_sub_text";
+			helper.contact.form_header="Contact Us Form";
+			helper.contact.form_sub_note="We would love to be in touch with you!";
+			helper.contact.social_header="Additional Contact Information";
+			helper.contact.social_sub_note="Follow our social media sites";
 			helper.contact=biz9.convert_biz_item(helper.contact,['form_header','form_sub_note','social_header','social_sub_note'])
 			biz9.update_item(db,helper.mobile.title_url,helper.contact,function(error,data) {
 				helper.contact=data;
@@ -531,6 +549,7 @@ router.post('/update_system', function(req, res, next) {
 					blog_post.author='Author '+ biz9.get_id(4444);
 					blog_post.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					blog_post.type='type '+ b;
+					blog_post.tags='tag1,tag2,tag3';
 					blog_post.note=biz9.get_test_note();
 					blog_post.category=helper.blog_post_category_list[a].title;
 					blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
@@ -1058,7 +1077,7 @@ router.post('/update_system', function(req, res, next) {
 					product_photo.visible='true';
 					product_photo.order=a;
 					product_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
-					product =helper.product_list[b];
+					var product =helper.product_list[b];
 					product_photo.parent_tbl_id=product.tbl_id;
 					product_photo.parent_data_type=product.data_type;
 					product_photo.top_tbl_id=product.tbl_id;
@@ -1084,7 +1103,7 @@ router.post('/update_system', function(req, res, next) {
 				product_item_size.title_url=biz9.get_title_url(product_item_size.title);
 				product_item_size.visible='true';
 				product_item_size.order=a;
-				product =helper.product_list[a];
+				var product =helper.product_list[a];
 				product_item_size.parent_tbl_id=product.tbl_id;
 				product_item_size.parent_data_type=product.data_type;
 				product_item_size.top_tbl_id=product.tbl_id;
@@ -1145,7 +1164,6 @@ router.post('/update_system', function(req, res, next) {
 				product_item_color.top_tbl_id=product.tbl_id;
 				product_item_color.top_data_type=product.data_type;
 				product_item_color.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-
 				helper.product_item_color_list.push(product_item_color);
 			}
 			biz9.update_list(db,helper.product_item_color_list,function(error,data_list) {
@@ -1250,7 +1268,7 @@ router.post('/update_system', function(req, res, next) {
 				product_item_shipping.title_url=biz9.get_title_url(product_item_shipping.title);
 				product_item_shipping.visible='true';
 				product_item_shipping.order=a;
-				product =helper.product_list[a];
+				var product =helper.product_list[a];
 				product_item_shipping.parent_tbl_id=product.tbl_id;
 				product_item_shipping.parent_data_type=product.data_type;
 				product_item_shipping.top_tbl_id=product.tbl_id;

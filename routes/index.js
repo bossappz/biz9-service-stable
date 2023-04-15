@@ -524,13 +524,15 @@ router.post('/setting_update',function(req, res) {
         },
         function(call){
             info_update = biz9.get_new_item(DT_ITEM,helper.info.tbl_id);
-            info_update.billing_cashapp=helper.billing_cashapp;
-            info_update.billing_stripe_key=helper.billing_stripe_key;
+            info_update.business_cashapp=helper.business_cashapp;
+            info_update.business_stripe_key=helper.business_stripe_key;
             info_update.send_in_blue_name=helper.send_in_blue_name;
    			info_update.send_in_blue_email=helper.send_in_blue_email;
    			info_update.send_in_blue_key=helper.send_in_blue_key;
-   			info_update.send_in_blue_sender_order_con_sub=helper.send_in_blue_sender_order_con_sub;
-   			info_update.send_in_blue_sender_order_con_template_id=helper.send_in_blue_sender_order_con_template_id;
+   			info_update.send_in_blue_order_send_subject=helper.send_in_blue_order_send_subject;
+   			info_update.send_in_blue_order_send_template_id=helper.send_in_blue_order_send_template_id;
+            info_update.send_in_blue_form_send_subject=helper.send_in_blue_form_send_subject;
+   			info_update.send_in_blue_form_send_template_id=helper.send_in_blue_form_send_template_id;
             biz9.update_item(db,DT_ITEM,info_update,function(error,data) {
                 helper.info_update=data;
                 call();

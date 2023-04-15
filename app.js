@@ -13,12 +13,12 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.6.7';
+BIZ9_SERVICE_VERSION='4.7.9';
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='1.8.7'
+APP_VERSION='1.8.8'
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
 PAGE_SIZE_CATEGORY_LIST=19;
 PAGE_SIZE_ITEM_LIST=19;
@@ -67,6 +67,7 @@ DT_PRODUCT="product_biz";
 DT_SERVICE="service_biz";
 DT_CART_ITEM="cart_item_biz";
 DT_ORDER="order_biz";
+DT_ITEM="item_biz";
 DT_ORDER_ITEM="order_item_biz";
 DT_STAT="stat_biz";
 /* --- DATA_TYPE-END --- */
