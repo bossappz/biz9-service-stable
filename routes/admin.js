@@ -15,11 +15,6 @@ router.post('/update_system', function(req, res, next) {
 	//-stripe-end
 	BIZ_STRIPE_KEY="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
 	//-stripe-end
-	//-send_in_blue-start
-	BIZ_SEND_IN_BLUE_KEY='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';
-	BIZ_SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID='7';
-	BIZ_SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID='10';
-	//-send_in_blue-end
 	//-default-start
 	var helper = biz9.get_helper(req);
 	helper.primary = biz9.get_new_item(DT_ITEM_MAP,0);
@@ -119,15 +114,6 @@ router.post('/update_system', function(req, res, next) {
 			//stripe-start
 			helper.store_info.business_stripe_key=BIZ_STRIPE_KEY;
 			//stripe-end
-			//send-in-blue-start
-			helper.store_info.send_in_blue_name="Notifications";
-			helper.store_info.send_in_blue_email="certifiedcoderz@gmail.com";
-			helper.store_info.send_in_blue_key=BIZ_SEND_IN_BLUE_KEY;
-			helper.store_info.send_in_blue_order_send_subject='Order Confirmation';
-			helper.store_info.send_in_blue_order_send_template_id=BIZ_SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID;
-			helper.store_info.send_in_blue_form_send_subject='Form Submission';
-			helper.store_info.send_in_blue_form_send_template_id=BIZ_SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID;
-			//send-in-blue-end
 			biz9.update_item(db,DT_ITEM,helper.store_info,function(error,data) {
 				helper.store_info=data;
 				call();
@@ -162,6 +148,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.mobile.title_url=biz9.get_title_url(helper.mobile.title);
 			helper.mobile.order='1';
 			helper.mobile.visible=true;
+			helper.mobile.delete_protection=true;
 			biz9.update_item(db,DT_ITEM_MAP,helper.mobile,function(error,data) {
 				helper.mobile=data;
 				call();
@@ -175,6 +162,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.primary.title='Primary';
 			helper.primary.title_url=biz9.get_title_url(helper.primary.title);
 			helper.primary.visible='true';
+			helper.primary.delete_protection=true;
 			helper.primary.order='1';
 			helper.primary.parent_tbl_id=helper.mobile.tbl_id;
 			helper.primary.parent_data_type=helper.mobile.data_type;
@@ -198,6 +186,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.left_nav.title='Left Nav';
 			helper.left_nav.title_url=biz9.get_title_url(helper.left_nav.title);
 			helper.left_nav.visible='true';
+			helper.left_nav.delete_protection=true;
 			helper.left_nav.order='1';
 			helper.left_nav.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			helper.left_nav.parent_tbl_id=helper.mobile.tbl_id;
@@ -226,6 +215,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.home.title_url=biz9.get_title_url(helper.home.title);
 			helper.home.visible='true';
 			helper.home.order='1';
+			helper.home.delete_protection=true;
 			helper.home.parent_tbl_id=helper.mobile.tbl_id;
 			helper.home.parent_data_type=helper.mobile.data_type;
 			helper.home.top_tbl_id=helper.mobile.tbl_id;
@@ -259,6 +249,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.about.title_url=biz9.get_title_url(helper.about.title);
 			helper.about.visible='true';
 			helper.about.order='1';
+			helper.about.delete_protection=true;
 			helper.about.parent_tbl_id=helper.mobile.tbl_id;
 			helper.about.parent_data_type=helper.mobile.data_type;
 			helper.about.top_tbl_id=helper.mobile.tbl_id;
@@ -282,6 +273,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.contact.title_url=biz9.get_title_url(helper.contact.title);
 			helper.contact.visible='true';
 			helper.contact.order='1';
+			helper.contact.delete_protection=true;
 			helper.contact.parent_tbl_id=helper.mobile.tbl_id;
 			helper.contact.parent_data_type=helper.mobile.data_type;
 			helper.contact.top_tbl_id=helper.mobile.tbl_id;
@@ -304,6 +296,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.page_list.title_url=biz9.get_title_url(helper.page_list.title);
 			helper.page_list.visible='true';
 			helper.page_list.order='1';
+			helper.page_list.delete_protection=true;
 			helper.page_list.parent_tbl_id=helper.mobile.tbl_id;
 			helper.page_list.parent_data_type=helper.mobile.data_type;
 			helper.page_list.top_tbl_id=helper.mobile.tbl_id;

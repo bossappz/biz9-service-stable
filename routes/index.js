@@ -6,7 +6,7 @@ router.get('/ping',function(req, res, next) {
 });
 //9_home
 router.get('/home',function(req, res) {
-   /*--default_start */
+    /*--default_start */
     var helper = biz9.get_helper(req);
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
@@ -48,7 +48,7 @@ router.get('/home',function(req, res) {
                 if(helper.mobile.home.card_banner_order=='category'){
                     sql={category:helper.mobile.home.card_banner_category};
                 }else{
-                        sql={};
+                    sql={};
                 }
                 if(helper.mobile.home.card_banner_data_type==DT_BLOG_POST){
                     biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
@@ -79,7 +79,7 @@ router.get('/home',function(req, res) {
                     call();
                 }
             }else{
-               call();
+                call();
             }
         },
         //card_popular
@@ -133,9 +133,9 @@ router.get('/home',function(req, res) {
                 page_current=1;
                 page_size=PAGE_SIZE_CATEGORY_LIST;
                 biz9.get_category_biz_list(db,helper.mobile.home.card_category_data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
-                        helper.card_category_list = data_list;
-                        call();
-                    });
+                    helper.card_category_list = data_list;
+                    call();
+                });
             }else{
                 call();
             }
@@ -204,7 +204,7 @@ router.get('/home',function(req, res) {
                 call();
             }
         },
-      ],
+    ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -217,7 +217,7 @@ router.get('/home_edit',function(req, res) {
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
-      helper.data_type_list = [];
+    helper.data_type_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -248,7 +248,7 @@ router.get('/home_edit',function(req, res) {
             helper.data_type_list.push({title:'Services',value:DT_SERVICE});
             call();
         },
-       ],
+    ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -425,7 +425,7 @@ router.get('/setting',function(req, res) {
     /*--default_end */
     helper.primary = biz9.get_new_item(DT_BLANK,0);
     helper.left_nav = biz9.get_new_item(DT_BLANK,0);
-      helper.data_type_list = [];
+    helper.data_type_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -437,9 +437,9 @@ router.get('/setting',function(req, res) {
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
                 if(page){
-                helper.mobile=page;
-                helper.primary=page.primary;
-                helper.left_nav=page.left_nav;
+                    helper.mobile=page;
+                    helper.primary=page.primary;
+                    helper.left_nav=page.left_nav;
                 }
                 call();
             });
@@ -452,7 +452,7 @@ router.get('/setting',function(req, res) {
                 call();
             });
         },
-       ],
+    ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -468,7 +468,7 @@ router.post('/setting_update',function(req, res) {
     /*--default_end */
     helper.primary = biz9.get_new_item(DT_BLANK,0);
     helper.left_nav = biz9.get_new_item(DT_BLANK,0);
-      helper.data_type_list = [];
+    helper.data_type_list = [];
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -480,9 +480,9 @@ router.post('/setting_update',function(req, res) {
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
                 if(page){
-                helper.mobile=page;
-                helper.primary=page.primary;
-                helper.left_nav=page.left_nav;
+                    helper.mobile=page;
+                    helper.primary=page.primary;
+                    helper.left_nav=page.left_nav;
                 }
                 call();
             });
@@ -526,22 +526,104 @@ router.post('/setting_update',function(req, res) {
             info_update = biz9.get_new_item(DT_ITEM,helper.info.tbl_id);
             info_update.business_cashapp=helper.business_cashapp;
             info_update.business_stripe_key=helper.business_stripe_key;
-            info_update.send_in_blue_name=helper.send_in_blue_name;
-   			info_update.send_in_blue_email=helper.send_in_blue_email;
-   			info_update.send_in_blue_key=helper.send_in_blue_key;
-   			info_update.send_in_blue_order_send_subject=helper.send_in_blue_order_send_subject;
-   			info_update.send_in_blue_order_send_template_id=helper.send_in_blue_order_send_template_id;
-            info_update.send_in_blue_form_send_subject=helper.send_in_blue_form_send_subject;
-   			info_update.send_in_blue_form_send_template_id=helper.send_in_blue_form_send_template_id;
             biz9.update_item(db,DT_ITEM,info_update,function(error,data) {
                 helper.info_update=data;
                 call();
             });
         },
-       ],
+    ],
         function(err, result){
             res.send({helper:helper});
             res.end();
         });
+});
+router.post('/send_mail_message',function(req, res) {
+    /*--default_start--*/
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end--*/
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            sub_page='primary';
+            biz9.get_sub_page(db,title_url,sub_page,{},function(error,page){
+                helper.primary=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                if(data_list.length>0){
+                    helper.info = data_list[0];
+                }
+                call();
+            });
+        },
+        function(call){
+            form_send={};
+            customer=set_customer(helper);
+            mail_notification=set_mail_message_notification(helper.info,customer);
+            send_in_blue_obj=get_mail_message_send_in_blue(mail_notification,helper);
+            call();
+        },
+        function(call){
+            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+                if(error){
+                    helper.validation_message=error;
+                }
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+    set_customer=function(item){
+        customer = biz9.get_new_item(DT_BLANK,0);
+        customer.email=item.customer_email ? (item.customer_email) : "email_not_found@gmail.com";
+        customer.name=item.customer_name ? (item.customer_name) : "Customer";
+        return customer;
+    }
+    set_mail_message_notification=function(info,customer){
+        mail_notification={};
+
+        mail_notification.subject=info.send_in_blue_form_send_subject;
+        mail_notification.template_id = info.send_in_blue_form_send_template_id;
+
+        mail_notification.copyright='Copyright @ '+info.business_name;
+        mail_notification.sender={name:info.business_name,email:info.send_in_blue_email};
+        mail_notification.replyTo={name:info.business_name,email:info.business_email};
+        mail_notification.to_list=[];
+        mail_notification.to_list.push({name:customer.name,email:customer.email});
+        mail_notification.to_list.push({name:info.business_name,email:info.send_in_blue_email});
+        return mail_notification;
+    }
+    get_mail_message_send_in_blue=function(mail,helper){
+        form_send={};
+        form_send.business_name=mail.sender.name;
+        form_send.copyright=mail.sender.name;
+        for(a=1;a<parseInt(helper.field_count)+1;a++){
+            form_send['form_title_'+a]=helper['field_title_'+a];
+            form_send['form_value_'+a]=helper['field_value_'+a];
+        }
+        return {
+            'templateId':parseInt(mail.template_id),
+            'subject':mail.subject,
+            'sender' : {'email':mail.sender.email,'name':mail.sender.name},
+            'replyTo' : {'email':mail.replyTo.email,'name':mail.replyTo.name},
+            'to':mail.to_list,
+            'params':form_send
+        }
+    }
 });
 module.exports = router;

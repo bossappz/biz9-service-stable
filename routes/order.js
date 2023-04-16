@@ -289,7 +289,7 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
             });
         },
         function(call){
-            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+            biz9.send_mail(SEND_IN_BLUE_KEY,send_in_blue_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -718,18 +718,17 @@ router.get('/checkout/success/:order_id',function(req, res) {
 set_order_mail_notification=function(info,customer){
     mail_notification={};
 
-    mail_notification.subject=info.send_in_blue_order_send_subject;
-    mail_notification.template_id = info.send_in_blue_order_send_template_id;
+    mail_notification.subject=SEND_IN_BLUE_FORM_SEND_SUBJECT;
+    mail_notification.template_id = SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID;
 
     mail_notification.copyright='Copyright @ '+info.business_name;
-    mail_notification.sender={name:info.business_name,email:info.send_in_blue_email};
+    mail_notification.sender={name:info.business_name,email:info.business_email};
     mail_notification.replyTo={name:info.business_name,email:info.business_email};
     mail_notification.to_list=[];
     mail_notification.to_list.push({name:customer.name,email:customer.email});
-    mail_notification.to_list.push({name:info.business_name,email:info.send_in_blue_email});
+    mail_notification.to_list.push({name:info.business_name,email:info.business_email});
     return mail_notification;
 }
-
 set_order_customer=function(item){
     customer = biz9.get_new_item(DT_BLANK,0);
     customer.name=item.customer_name ? (item.customer_name) : "customer";
@@ -761,7 +760,6 @@ set_order_billing=function(item){
     billing.card_cvc=item.billing_card_cvc ? (item.billing_card_cvc) : "n/a";
     return billing;
 }
-
 cart_checkout_order_add=function(checkout_form,cart,callback){
     var error=null;
     order = biz9.get_new_item(DT_ORDER,0);
@@ -833,6 +831,7 @@ cart_checkout_order_add=function(checkout_form,cart,callback){
                         order_item.cart_note = order_item.cart_note + "<b>Meeting Link:</b> "+cart.item_list[a].meeting_link + "<br/>";
                     }
                 }
+                order_item_list.push(order_item);
             }
             biz9.update_list(db,order_item_list,function(err,data_list) {
                 call();
