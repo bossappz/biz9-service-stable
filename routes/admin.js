@@ -67,6 +67,10 @@ router.post('/update_system', function(req, res, next) {
 			});
 		},
 		function(call){
+			helper.user.first_name=biz9.get_id(99999) + "_first_name";
+			helper.user.last_name=biz9.get_id(99999) + "_last_name";
+			helper.user.customer_id=biz9.get_id(9999);
+			helper.user.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			biz9.update_item(db,helper.user.data_type,helper.user,function(error,data) {
 				helper.user=data;
 				call();
@@ -92,6 +96,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.store_info.title='Info';
 			helper.store_info.title_url=biz9.get_title_url(helper.store_info.title);
 			helper.store_info.order='1';
+			helper.store_info.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			//-business-start
 			helper.store_info.business_name=biz9.get_id()+"_business_name_";
 			helper.store_info.business_email=biz9.get_id()+"_business_email@gmail.com";
@@ -125,6 +130,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.store_paper.title='Paper';
 			helper.store_paper.title_url=biz9.get_title_url(helper.store_paper.title);
 			helper.store_paper.order='1';
+			helper.store_paper.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			biz9.update_item(db,DT_ITEM,helper.store_paper,function(error,data) {
 				helper.store_paper=data;
 				call();
@@ -136,6 +142,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.store_cms.title='CMS';
 			helper.store_cms.title_url=biz9.get_title_url(helper.store_cms.title);
 			helper.store_cms.order='1';
+			helper.store_cms.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			biz9.update_item(db,DT_ITEM,helper.store_cms,function(error,data) {
 				helper.store_cms=data;
 				call();
@@ -210,16 +217,12 @@ router.post('/update_system', function(req, res, next) {
 		//-- home
 		//---
 		function(call){
-			helper.home=biz9.get_new_item(helper.mobile.title_url,0);
+			helper.home=biz9.get_new_item(DT_ITEM_MAP,0);
 			helper.home.title='Home';
 			helper.home.title_url=biz9.get_title_url(helper.home.title);
 			helper.home.visible='true';
 			helper.home.order='1';
 			helper.home.delete_protection=true;
-			helper.home.parent_tbl_id=helper.mobile.tbl_id;
-			helper.home.parent_data_type=helper.mobile.data_type;
-			helper.home.top_tbl_id=helper.mobile.tbl_id;
-			helper.home.top_data_type=helper.mobile.data_type;
 			helper.home.card_banner_visible='true';
 			helper.home.card_banner_data_type=DT_PRODUCT;
 			helper.home.card_banner_order='category';
@@ -235,7 +238,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.home.card_double_data_type=DT_PRODUCT;
 			helper.home.card_double_category=DT_PRODUCT;
 			helper.home.biz_list="card_banner_visible,card_banner_data_type,card_banner_order,card_banner_category,card_popular_visible,card_popular_data_type,card_category_visible,card_category_data_type,                >  \card_buy_visible,card_buy_data_type,card_double_visible,card_double_data_type,card_double_category"
-			biz9.update_item(db,helper.mobile.title_url,helper.home,function(error,data) {
+			biz9.update_item(db,DT_ITEM_MAP,helper.home,function(error,data) {
 				helper.home=data;
 				call();
 			});
@@ -244,22 +247,18 @@ router.post('/update_system', function(req, res, next) {
 		//-- about
 		//---
 		function(call){
-			helper.about=biz9.get_new_item(helper.mobile.title_url,0);
+			helper.about=biz9.get_new_item(DT_ITEM_MAP,0);
 			helper.about.title='About';
 			helper.about.title_url=biz9.get_title_url(helper.about.title);
 			helper.about.visible='true';
 			helper.about.order='1';
 			helper.about.delete_protection=true;
-			helper.about.parent_tbl_id=helper.mobile.tbl_id;
-			helper.about.parent_data_type=helper.mobile.data_type;
-			helper.about.top_tbl_id=helper.mobile.tbl_id;
-			helper.about.top_data_type=helper.mobile.data_type;
 			helper.about.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 			helper.about.header=biz9.get_id()+"_header";
 			helper.about.sub_note=biz9.get_test_sub_note();
 			helper.about.note=biz9.get_test_note();
 			helper.about=biz9.convert_biz_item(helper.about,['header','sub_note'])
-			biz9.update_item(db,helper.mobile.title_url,helper.about,function(error,data) {
+			biz9.update_item(db,DT_ITEM_MAP,helper.about,function(error,data) {
 				helper.about=data;
 				call();
 			});
@@ -268,22 +267,18 @@ router.post('/update_system', function(req, res, next) {
 		//-- contact
 		//---
 		function(call){
-			helper.contact=biz9.get_new_item(helper.mobile.title_url,0);
+			helper.contact=biz9.get_new_item(DT_ITEM_MAP,0);
 			helper.contact.title='Contact';
 			helper.contact.title_url=biz9.get_title_url(helper.contact.title);
 			helper.contact.visible='true';
 			helper.contact.order='1';
 			helper.contact.delete_protection=true;
-			helper.contact.parent_tbl_id=helper.mobile.tbl_id;
-			helper.contact.parent_data_type=helper.mobile.data_type;
-			helper.contact.top_tbl_id=helper.mobile.tbl_id;
-			helper.contact.top_data_type=helper.mobile.data_type;
 			helper.contact.form_header="Contact Us Form";
 			helper.contact.form_sub_note="We would love to be in touch with you!";
 			helper.contact.social_header="Additional Contact Information";
 			helper.contact.social_sub_note="Follow our social media sites";
 			helper.contact=biz9.convert_biz_item(helper.contact,['form_header','form_sub_note','social_header','social_sub_note'])
-			biz9.update_item(db,helper.mobile.title_url,helper.contact,function(error,data) {
+			biz9.update_item(db,DT_ITEM_MAP,helper.contact,function(error,data) {
 				helper.contact=data;
 				call();
 			});
@@ -297,10 +292,10 @@ router.post('/update_system', function(req, res, next) {
 			helper.page_list.visible='true';
 			helper.page_list.order='1';
 			helper.page_list.delete_protection=true;
-			helper.page_list.parent_tbl_id=helper.mobile.tbl_id;
-			helper.page_list.parent_data_type=helper.mobile.data_type;
 			helper.page_list.top_tbl_id=helper.mobile.tbl_id;
 			helper.page_list.top_data_type=helper.mobile.data_type;
+			helper.page_list.parent_tbl_id=helper.mobile.tbl_id;
+			helper.page_list.parent_data_type=helper.mobile.data_type;
 			biz9.update_item(db,helper.mobile.title_url,helper.page_list,function(error,data) {
 				helper.page_list=data;
 				call();
@@ -316,7 +311,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.blog_post.visible='true';
 			helper.blog_post.order='1';
 			helper.blog_post.top_tbl_id=helper.mobile.tbl_id;
-			helper.blog_post.top_data_type=helper.mobile.title_url;
+			helper.blog_post.top_data_type=helper.mobile.data_type;
 			helper.blog_post.parent_tbl_id=helper.page_list.tbl_id;
 			helper.blog_post.parent_data_type=helper.page_list.data_type;
 			helper.blog_post.header=biz9.get_id()+"_header";
@@ -340,7 +335,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.event.visible='true';
 			helper.event.order='1';
 			helper.event.top_tbl_id=helper.mobile.tbl_id;
-			helper.event.top_data_type=helper.mobile.title_url;
+			helper.event.top_data_type=helper.mobile.data_type;
 			helper.event.parent_tbl_id=helper.page_list.tbl_id;
 			helper.event.parent_data_type=helper.page_list.data_type;
 			helper.event.header=biz9.get_id()+"_header";
@@ -348,7 +343,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.event.type=DT_EVENT;
 			helper.event.title_type='Event';
 			helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.event=biz9.convert_biz_item(helper.event,['header','sub_note','type','title_type'])
+			helper.event=biz9.convert_biz_item(DT_ITEM_MAP,['header','sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
 				helper.event=data;
 				call();
@@ -364,7 +359,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.gallery.visible='true';
 			helper.gallery.order='1';
 			helper.gallery.top_tbl_id=helper.mobile.tbl_id;
-			helper.gallery.top_data_type=helper.mobile.title_url;
+			helper.gallery.top_data_type=helper.mobile.data_type;
 			helper.gallery.parent_tbl_id=helper.page_list.tbl_id;
 			helper.gallery.parent_data_type=helper.page_list.data_type;
 			helper.gallery.header=biz9.get_id()+"_header";
@@ -388,7 +383,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.product.visible='true';
 			helper.product.order='1';
 			helper.product.top_tbl_id=helper.mobile.tbl_id;
-			helper.product.top_data_type=helper.mobile.title_url;
+			helper.product.top_data_type=helper.mobile.data_type;
 			helper.product.parent_tbl_id=helper.page_list.tbl_id;
 			helper.product.parent_data_type=helper.page_list.data_type;
 			helper.product.header=biz9.get_id()+"_header";
@@ -412,7 +407,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.service.visible='true';
 			helper.service.order='1';
 			helper.service.top_tbl_id=helper.mobile.tbl_id;
-			helper.service.top_data_type=helper.mobile.title_url;
+			helper.service.top_data_type=helper.mobile.data_type;
 			helper.service.parent_tbl_id=helper.page_list.tbl_id;
 			helper.service.parent_data_type=helper.page_list.data_type;
 			helper.service.header=biz9.get_id()+"_header";
@@ -436,7 +431,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.team.visible='true';
 			helper.team.order='1';
 			helper.team.top_tbl_id=helper.mobile.tbl_id;
-			helper.team.top_data_type=helper.mobile.title_url;
+			helper.team.top_data_type=helper.mobile.tbl_id;
 			helper.team.parent_tbl_id=helper.page_list.tbl_id;
 			helper.team.parent_data_type=helper.page_list.data_type;
 			helper.team.header=biz9.get_id()+"_header";

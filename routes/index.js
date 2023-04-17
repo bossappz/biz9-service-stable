@@ -11,6 +11,7 @@ router.get('/home',function(req, res) {
     helper.mobile = biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
     /*--default_end */
+    helper.home = biz9.get_new_item(DT_BLANK,0);
     helper.card_banner_list = [];
     helper.card_double_list = [];
     helper.card_popular_list = [];
@@ -31,6 +32,13 @@ router.get('/home',function(req, res) {
             });
         },
         function(call){
+            title_url='home';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.home=page;
+                call();
+            });
+        },
+        function(call){
             sql = {title_url:'info'};
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
@@ -44,33 +52,33 @@ router.get('/home',function(req, res) {
             page_current=1;
             page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
             sort={date_create:-1};
-            if(helper.mobile.home.card_banner_visible=='true'){
-                if(helper.mobile.home.card_banner_order=='category'){
-                    sql={category:helper.mobile.home.card_banner_category};
+            if(helper.home.card_banner_visible=='true'){
+                if(helper.home.card_banner_order=='category'){
+                    sql={category:helper.home.card_banner_category};
                 }else{
                     sql={};
                 }
-                if(helper.mobile.home.card_banner_data_type==DT_BLOG_POST){
+                if(helper.home.card_banner_data_type==DT_BLOG_POST){
                     biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_banner_data_type==DT_EVENT){
+                }else if(helper.home.card_banner_data_type==DT_EVENT){
                     biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_banner_data_type==DT_PRODUCT){
+                }else if(helper.home.card_banner_data_type==DT_PRODUCT){
                     biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_banner_data_type==DT_SERVICE){
+                }else if(helper.home.card_banner_data_type==DT_SERVICE){
                     biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_banner_data_type==DT_GALLERY){
+                }else if(helper.home.card_banner_data_type==DT_GALLERY){
                     biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                         helper.card_banner_list = data_list;
                         call();
@@ -84,32 +92,32 @@ router.get('/home',function(req, res) {
         },
         //card_popular
         function(call){
-            if(helper.mobile.home.card_popular_visible=='true'){
+            if(helper.home.card_popular_visible=='true'){
                 sql = {};
                 sort={view_count:-1};
                 page_current=1;
                 page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
-                if(helper.mobile.home.card_popular_data_type==DT_BLOG_POST){
+                if(helper.home.card_popular_data_type==DT_BLOG_POST){
                     biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_popular_data_type==DT_SERVICE){
+                }else if(helper.home.card_popular_data_type==DT_SERVICE){
                     biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_popular_data_type==DT_EVENT){
+                }else if(helper.home.card_popular_data_type==DT_EVENT){
                     biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_popular_data_type==DT_PRODUCT){
+                }else if(helper.home.card_popular_data_type==DT_PRODUCT){
                     biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_popular_data_type==DT_GALLERY){
+                }else if(helper.home.card_popular_data_type==DT_GALLERY){
                     biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_popular_list = data_list;
                         call();
@@ -124,15 +132,15 @@ router.get('/home',function(req, res) {
         },
         //card_category
         function(call){
-            if(helper.mobile.home.card_category_visible=='true'){
-                if(!helper.mobile.home.card_category_data_type){
-                    helper.mobile.home.card_category_data_type =DT_PRODUCT;
+            if(helper.home.card_category_visible=='true'){
+                if(!helper.home.card_category_data_type){
+                    helper.home.card_category_data_type =DT_PRODUCT;
                 }
                 sql = {};
                 sort={view_count:-1};
                 page_current=1;
                 page_size=PAGE_SIZE_CATEGORY_LIST;
-                biz9.get_category_biz_list(db,helper.mobile.home.card_category_data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
+                biz9.get_category_biz_list(db,helper.home.card_category_data_type,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
                     helper.card_category_list = data_list;
                     call();
                 });
@@ -142,26 +150,26 @@ router.get('/home',function(req, res) {
         },
         //card_buy
         function(call){
-            if(helper.mobile.home.card_buy_visible=='true'){
-                if(helper.mobile.home.card_buy_category){
-                    sql={category:helper.mobile.home.card_buy_category};
+            if(helper.home.card_buy_visible=='true'){
+                if(helper.home.card_buy_category){
+                    sql={category:helper.home.card_buy_category};
                 }else{
                     sql={category:DT_PRODUCT};
                 }
                 sort={date_create:-1};
                 page_current=1;
                 page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
-                if(helper.mobile.home.card_buy_data_type==DT_SERVICE){
+                if(helper.home.card_buy_data_type==DT_SERVICE){
                     biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_buy_data_type==DT_EVENT){
+                }else if(helper.home.card_buy_data_type==DT_EVENT){
                     biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_buy_data_type==DT_PRODUCT){
+                }else if(helper.home.card_buy_data_type==DT_PRODUCT){
                     biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                         helper.card_buy_list = data_list;
                         call();
@@ -176,22 +184,22 @@ router.get('/home',function(req, res) {
         },
         //card_double
         function(call){
-            if(helper.mobile.home.card_double_visible=='true'){
-                sql={category:helper.mobile.home.card_double_category};
+            if(helper.home.card_double_visible=='true'){
+                sql={category:helper.home.card_double_category};
                 sort={date_create:-1};
                 page_current=1;
                 page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
-                if(helper.mobile.home.card_double_data_type==DT_SERVICE){
+                if(helper.home.card_double_data_type==DT_SERVICE){
                     biz9.get_servicez(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_double_data_type==DT_EVENT){
+                }else if(helper.home.card_double_data_type==DT_EVENT){
                     biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
                     });
-                }else if(helper.mobile.home.card_double_data_type==DT_PRODUCT){
+                }else if(helper.home.card_double_data_type==DT_PRODUCT){
                     biz9.get_productz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
                         helper.card_double_list = data_list;
                         call();
@@ -233,6 +241,13 @@ router.get('/home_edit',function(req, res) {
             });
         },
         function(call){
+            title_url='home';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.home=page;
+                call();
+            });
+        },
+        function(call){
             sql = {title_url:'info'};
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
@@ -254,7 +269,7 @@ router.get('/home_edit',function(req, res) {
             res.end();
         });
 });
-//9_mobile
+//9_blank
 router.get('/blank',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
@@ -280,6 +295,92 @@ router.get('/blank',function(req, res) {
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 helper.info = data_list[0];
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
+//9_about
+router.get('/about',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    helper.about = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            title_url='about';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.about=page;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
+//9_contact
+router.get('/contact',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    helper.contact = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            title_url='contact';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.contact=page;
                 call();
             });
         },
@@ -495,7 +596,6 @@ router.post('/setting_update',function(req, res) {
                 call();
             });
         },
-
         function(call){
             primary_update = biz9.get_new_item(helper.mobile.title_url,helper.primary.tbl_id);
             primary_update.app_title=helper.primary_app_title;
@@ -537,6 +637,96 @@ router.post('/setting_update',function(req, res) {
             res.end();
         });
 });
+
+//9_profile_update
+router.post('/profile_update',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    helper.primary = biz9.get_new_item(DT_BLANK,0);
+    helper.left_nav = biz9.get_new_item(DT_BLANK,0);
+    helper.data_type_list = [];
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                if(page){
+                    helper.mobile=page;
+                    helper.primary=page.primary;
+                    helper.left_nav=page.left_nav;
+                }
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            user_update = biz9.get_new_item(DT_USER,helper.user_tbl_id);
+            user_update.first_name=helper.first_name;
+            user_update.last_name=helper.last_name;
+            user_update.email=helper.email;
+            user_update.password=helper.first_name;
+            biz9.update_item(db,DT_USER,user_update,function(error,data) {
+                call();
+            });
+        },
+        function(call){
+            biz9.get_item(db,DT_USER,helper.user_tbl_id,function(error,data) {
+                helper.user=data;
+                call();
+            });
+        },
+        function(call){
+            business_update = biz9.get_new_item(helper.info.data_type,helper.info.tbl_id);
+            business_update.business_name=helper.business_name;
+            business_update.business_email=helper.business_email;
+            business_update.business_phone=helper.business_phone;
+            business_update.business_country=helper.business_country;
+            business_update.business_address1=helper.business_address1;
+            business_update.business_address2=helper.business_address2;
+            business_update.business_city=helper.business_city;
+            business_update.business_state=helper.business_state;
+            business_update.business_zip=helper.business_zip;
+            biz9.update_item(db,helper.info.data_type,business_update,function(error,data) {
+                helper.business_update=data;
+                call();
+            });
+        },
+        function(call){
+            social_update = biz9.get_new_item(helper.info.data_type,helper.info.tbl_id);
+            social_update.social_website=helper.social_website;
+            social_update.social_youtube=helper.social_youtube;
+            social_update.social_instagram=helper.social_instagram;
+            social_update.social_facebook=helper.social_facebook;
+            social_update.social_twitter=helper.social_twitter;
+            biz9.update_item(db,helper.info.data_type,social_update,function(error,data) {
+                helper.social_update=data;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
+
+
+
 router.post('/send_mail_message',function(req, res) {
     /*--default_start--*/
     var helper = biz9.get_helper(req);
