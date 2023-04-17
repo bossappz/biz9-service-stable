@@ -533,14 +533,13 @@ router.post('/update_system', function(req, res, next) {
 					blog_post.title_url=biz9.get_title_url(blog_post.title);
 					blog_post.visible='true';
 					blog_post.order=b;
+					blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 					blog_post.sub_note=biz9.get_test_sub_note();
-					blog_post.author='Author '+ biz9.get_id(4444);
-					blog_post.youtube_url='https://youtu.be/lXoLJLBPU-Q';
-					blog_post.type='type '+ b;
-					blog_post.tags='tag1,tag2,tag3';
+					blog_post.author='Marketing Team';
 					blog_post.note=biz9.get_test_note();
 					blog_post.category=helper.blog_post_category_list[a].title;
-					blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+					blog_post.youtube_url='https://youtu.be/lXoLJLBPU-Q';
+					blog_post=biz9.convert_biz_item(blog_post,['youtube_url'])
 					helper.blog_post_list.push(blog_post);
 				}
 			}
@@ -611,6 +610,7 @@ router.post('/update_system', function(req, res, next) {
 					event.visible=biz9.get_id(3);
 					event.order=b;
 					event.sub_note=biz9.get_test_sub_note();
+					event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 					event.author='Author '+ biz9.get_id(45444);
 					event.website='website '+ biz9.get_id(45444);
 					event.meeting_link='meeting_link '+ b;
@@ -622,9 +622,9 @@ router.post('/update_system', function(req, res, next) {
 					event.price=biz9.get_id(99);
 					event.old_price=parseFloat(event.price)+parseFloat(biz9.get_id(99));
 					event.note=biz9.get_test_note();
-					event.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					event.category=helper.event_category_list[a].title;
-					event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+					event.youtube_url='https://youtu.be/lXoLJLBPU-Q';
+					event=biz9.convert_biz_item(event,['youtube_url'])
 					helper.event_list.push(event);
 				}
 			}
@@ -1036,14 +1036,13 @@ router.post('/update_system', function(req, res, next) {
 					product.visible=biz9.get_id(5);
 					product.order=b;
 					product.sub_note=biz9.get_test_sub_note();
-					product.type='type '+ b;
-					product.sub_type='sub_type '+ b;
 					product.price=biz9.get_id(99);
 					product.old_price=parseFloat(product.price)+parseFloat(biz9.get_id(99));
 					product.note=biz9.get_test_note();
-					product.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					product.category=helper.product_category_list[a].title;
 					product.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+					product.youtube_url='https://youtu.be/lXoLJLBPU-Q';
+					product=biz9.convert_biz_item(product,['youtube_url'])
 					helper.product_list.push(product);
 				}
 			}
@@ -1333,15 +1332,14 @@ router.post('/update_system', function(req, res, next) {
 					service.title_url=biz9.get_title_url(service.title);
 					service.visible=biz9.get_id(3);
 					service.order=b;
+					service.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 					service.sub_note=biz9.get_test_sub_note();
-					service.youtube_url='https://youtu.be/lXoLJLBPU-Q';
-					service.type='type '+ b;
-					service.sub_type='sub_type '+ b;
 					service.price=biz9.get_id(99);
 					service.old_price=parseFloat(service.price)+parseFloat(biz9.get_id(99));
 					service.note=biz9.get_test_note();
 					service.category=helper.service_category_list[a].title;
-					service.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+					service.youtube_url='https://youtu.be/lXoLJLBPU-Q';
+					service=biz9.convert_biz_item(service,['youtube_url'])
 					helper.service_list.push(service);
 				}
 			}
