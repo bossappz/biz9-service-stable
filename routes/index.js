@@ -679,7 +679,7 @@ router.post('/profile_update',function(req, res) {
             user_update.first_name=helper.first_name;
             user_update.last_name=helper.last_name;
             user_update.email=helper.email;
-            user_update.password=helper.first_name;
+            user_update.password=helper.password;
             biz9.update_item(db,DT_USER,user_update,function(error,data) {
                 call();
             });
