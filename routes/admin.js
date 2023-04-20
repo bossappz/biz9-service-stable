@@ -952,6 +952,7 @@ router.post('/update_system', function(req, res, next) {
 					gallery.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					gallery.category=helper.gallery_category_list[a].title;
 					gallery.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+					gallery=biz9.convert_biz_item(product,['youtube_url'])
 					helper.gallery_list.push(gallery);
 				}
 			}
