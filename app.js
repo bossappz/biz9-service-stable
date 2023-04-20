@@ -13,12 +13,12 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='4.9.3'
+BIZ9_SERVICE_VERSION='4.9.7'
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
-APP_VERSION='2.6.5'
+APP_VERSION='2.6.6'
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
 PAGE_SIZE_CATEGORY_LIST=19;
 PAGE_SIZE_ITEM_LIST=19;
@@ -53,8 +53,8 @@ EMAIL_TO="contact@bossappz.com";
 EMAIL_FROM="contact@bossappz.com";
 /* --- ENV EMAILZ END --- */
 /* --- ENV FILE START --- */
-FILE_SAVE_PATH="/uploads/";//local
-//FILE_SAVE_PATH=__dirname+"/public/uploads/";
+//FILE_SAVE_PATH="/uploads/";//local
+FILE_SAVE_PATH=__dirname+"/public/uploads/";
 //FILE_URL="/uploads/"; //box_url
 //FILE_URL="http://localhost:1900/uploads/"; //mobile_box_url
 FILE_URL="https://"+S3_BUCKET+".s3.amazonaws.com/" //aws_s3_url

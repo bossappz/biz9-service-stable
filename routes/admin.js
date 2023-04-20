@@ -314,12 +314,11 @@ router.post('/update_system', function(req, res, next) {
 			helper.blog_post.top_data_type=helper.mobile.data_type;
 			helper.blog_post.parent_tbl_id=helper.page_list.tbl_id;
 			helper.blog_post.parent_data_type=helper.page_list.data_type;
-			helper.blog_post.header=biz9.get_id()+"_header";
-			helper.blog_post.sub_note=biz9.get_id()+"_sub_note";
+			helper.blog_post.sub_note="Latest news and highlights";
 			helper.blog_post.type=DT_BLOG_POST;
 			helper.blog_post.title_type='Blog Post';
 			helper.blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.blog_post=biz9.convert_biz_item(helper.blog_post,['header','sub_note','type','title_type'])
+			helper.blog_post=biz9.convert_biz_item(helper.blog_post,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.blog_post,function(error,data) {
 				helper.blog_post=data;
 				call();
@@ -338,12 +337,11 @@ router.post('/update_system', function(req, res, next) {
 			helper.event.top_data_type=helper.mobile.data_type;
 			helper.event.parent_tbl_id=helper.page_list.tbl_id;
 			helper.event.parent_data_type=helper.page_list.data_type;
-			helper.event.header=biz9.get_id()+"_header";
-			helper.event.sub_note=biz9.get_test_sub_note();
+			helper.event.sub_note="Purchase tickets to upcoming events";
 			helper.event.type=DT_EVENT;
 			helper.event.title_type='Event';
 			helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.event=biz9.convert_biz_item(DT_ITEM_MAP,['header','sub_note','type','title_type'])
+			helper.event=biz9.convert_biz_item(DT_ITEM_MAP,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
 				helper.event=data;
 				call();
@@ -363,7 +361,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.gallery.parent_tbl_id=helper.page_list.tbl_id;
 			helper.gallery.parent_data_type=helper.page_list.data_type;
 			helper.gallery.header=biz9.get_id()+"_header";
-			helper.gallery.sub_note=biz9.get_test_sub_note();
+			helper.gallery.sub_note="View recent media from our gallery";
 			helper.gallery.type=DT_GALLERY;
 			helper.gallery.title_type='Gallery';
 			helper.gallery.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
@@ -386,12 +384,11 @@ router.post('/update_system', function(req, res, next) {
 			helper.product.top_data_type=helper.mobile.data_type;
 			helper.product.parent_tbl_id=helper.page_list.tbl_id;
 			helper.product.parent_data_type=helper.page_list.data_type;
-			helper.product.header=biz9.get_id()+"_header";
-			helper.product.sub_note=biz9.get_test_sub_note();
+			helper.product.sub_note="View recent media from our gallery";
 			helper.product.type=DT_PRODUCT;
 			helper.product.title_type='Product';
 			helper.product.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.product=biz9.convert_biz_item(helper.product,['header','sub_note','title_type'])
+			helper.product=biz9.convert_biz_item(helper.product,['sub_note','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.product,function(error,data) {
 				helper.product=data;
 				call();
@@ -410,13 +407,35 @@ router.post('/update_system', function(req, res, next) {
 			helper.service.top_data_type=helper.mobile.data_type;
 			helper.service.parent_tbl_id=helper.page_list.tbl_id;
 			helper.service.parent_data_type=helper.page_list.data_type;
-			helper.service.header=biz9.get_id()+"_header";
-			helper.service.sub_note=biz9.get_test_sub_note();
+			helper.service.sub_note="Listing of professional service we offer";
 			helper.service.type=DT_SERVICE;
 			helper.service.title_type='Service';
 			helper.service.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.service=biz9.convert_biz_item(helper.service,['header','sub_note','type','title_type'])
+			helper.service=biz9.convert_biz_item(helper.service,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.service,function(error,data) {
+				helper.service=data;
+				call();
+			});
+		},
+		//mobile sub_item
+		//-- page_list_sub_item_event
+		//---
+		function(call){
+			helper.event=biz9.get_new_item(helper.mobile.title_url,0);
+			helper.event.title='Events';
+			helper.event.title_url=biz9.get_title_url(helper.service.title);
+			helper.event.visible='true';
+			helper.event.order='1';
+			helper.event.top_tbl_id=helper.mobile.tbl_id;
+			helper.event.top_data_type=helper.mobile.data_type;
+			helper.event.parent_tbl_id=helper.page_list.tbl_id;
+			helper.event.parent_data_type=helper.page_list.data_type;
+			helper.event.sub_note="Purchase tickets to upcoming events";
+			helper.event.type=DT_EVENT;
+			helper.event.title_type='Event';
+			helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
+			helper.service=biz9.convert_biz_item(helper.event,['sub_note','type','title_type'])
+			biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
 				helper.service=data;
 				call();
 			});
@@ -434,12 +453,11 @@ router.post('/update_system', function(req, res, next) {
 			helper.team.top_data_type=helper.mobile.tbl_id;
 			helper.team.parent_tbl_id=helper.page_list.tbl_id;
 			helper.team.parent_data_type=helper.page_list.data_type;
-			helper.team.header=biz9.get_id()+"_header";
-			helper.team.sub_note=biz9.get_test_sub_note();
+			helper.team.sub_note="Meet our executive team";
 			helper.team.type=DT_MEMBER;
 			helper.team.title_type='Member';
 			helper.team.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.team=biz9.convert_biz_item(helper.team,['header','sub_note','type','title_type'])
+			helper.team=biz9.convert_biz_item(helper.team,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.team,function(error,data) {
 				helper.team=data;
 				call();
@@ -450,16 +468,16 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.member_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
+			len =1;
 			for(a=0;a<len;a++){
 				var member_category=biz9.get_new_item(DT_CATEGORY,0);
-				member_category.title='Team Category Title '+ a;
+				member_category.title='Executive Team';
 				member_category.type=DT_MEMBER;
 				member_category.title_url=biz9.get_title_url(member_category.title);
 				member_category.visible='true';
 				member_category.order=a;
 				member_category.visible='true';
-				member_category.sub_note=biz9.get_test_sub_note();
+				member_category.sub_note="The core team which is responsible for providing strategic and operational leadership for the company.";
 				member_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.member_category_list.push(member_category);
 			}
@@ -473,7 +491,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.member_list=[];
-			len =BIZ_LIST_SIZE_ITEM_LIST;
+			len =1;
 			for(a=0;a<len;a++){
 				var member=biz9.get_new_item(DT_MEMBER,0);
 				member.first_name='First Name '+ a;
@@ -481,8 +499,8 @@ router.post('/update_system', function(req, res, next) {
 				member.title_url=biz9.get_title_url(member.first_name);
 				member.visible='true';
 				member.order=a;
-				member.position='Position '+ biz9.get_id(4444);
-				member.location='Location '+ biz9.get_id(4444);
+				member.position='CEO'
+				member.location='City and or State';
 				member.bio=biz9.get_test_sub_note();
 				member.category=helper.member_category_list[biz9.get_id(helper.member_category_list.length)-1].title;
 				member.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
@@ -503,16 +521,19 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.blog_post_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
-			for(a=0;a<len;a++){
+			blog_cat_list = [
+				{title:'Latest News',sub_note:"See what's happening"},
+				{title:'Highlights',sub_note:"Recent showcases"},
+			];
+			for(a=0;a<blog_cat_list.length;a++){
 				var blog_post_category=biz9.get_new_item(DT_CATEGORY,0);
-				blog_post_category.title='Blog Post Category Title '+ a;
+				blog_post_category.title=blog_cat_list[a].title;
 				blog_post_category.type=DT_BLOG_POST;
 				blog_post_category.title_url=biz9.get_title_url(blog_post_category.title);
 				blog_post_category.visible='true';
 				blog_post_category.order=a;
 				blog_post_category.visible='true';
-				blog_post_category.sub_note=biz9.get_test_sub_note();
+				blog_post_category.sub_note=blog_cat_list[a].sub_note;
 				blog_post_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.blog_post_category_list.push(blog_post_category);
 			}
@@ -527,7 +548,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.blog_post_list=[];
 			for(a=0;a<helper.blog_post_category_list.length;a++){
-				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+				for(b=0;b<1;b++){
 					var blog_post=biz9.get_new_item(DT_BLOG_POST,0);
 					blog_post.title='Blog Post Title '+ a + " " + b;
 					blog_post.title_url=biz9.get_title_url(blog_post.title);
@@ -535,7 +556,7 @@ router.post('/update_system', function(req, res, next) {
 					blog_post.order=b;
 					blog_post.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 					blog_post.sub_note=biz9.get_test_sub_note();
-					blog_post.author='Marketing Team';
+					blog_post.author='PR Team';
 					blog_post.note=biz9.get_test_note();
 					blog_post.category=helper.blog_post_category_list[a].title;
 					blog_post.youtube_url='https://youtu.be/lXoLJLBPU-Q';
@@ -553,14 +574,14 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.blog_post_photo_list=[];
-			top_len=helper.blog_post_list.length;
+			top_len=2;
 			for(b=0;b<top_len;b++){
-				len=BIZ_LIST_SIZE_PHOTO_LIST;
+				len=2;
 				for(a=0;a<len;a++){
 					var blog_post_photo=biz9.get_new_item(DT_PHOTO,0);
 					blog_post_photo.visible='true';
 					blog_post_photo.order=a;
-					blog_post_photo.text=biz9.get_id(999) + " " + biz9.get_test_sub_note();
+					blog_post_photo.text=biz9.get_id(999) + " photo";
 					blog_post =helper.blog_post_list[b];
 					blog_post_photo.parent_tbl_id=blog_post.tbl_id;
 					blog_post_photo.parent_data_type=blog_post.data_type;
@@ -580,15 +601,18 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.event_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
-			for(a=0;a<len;a++){
+			event_cat_list = [
+				{title:'Pop Up Shops',sub_note:"Retail spaces open for a short period of time."},
+				{title:'Training Seminars',sub_note:"Learn new professional business and industry practices."},
+			];
+			for(a=0;a<event_cat_list.length;a++){
 				var event_category=biz9.get_new_item(DT_CATEGORY,0);
-				event_category.title='Event Category Title '+ a;
+				event_category.title=event_cat_list[a].title;
 				event_category.type=DT_EVENT;
 				event_category.title_url=biz9.get_title_url(event_category.title);
 				event_category.visible='true';
 				event_category.order=a;
-				event_category.sub_note=biz9.get_test_sub_note();
+				event_category.sub_note=event_cat_list[a].sub_note;
 				event_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.event_category_list.push(event_category);
 			}
@@ -603,7 +627,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.event_list=[];
 			for(a=0;a<helper.event_category_list.length;a++){
-				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+				for(b=0;b<1;b++){
 					var event=biz9.get_new_item(DT_EVENT,0);
 					event.title='Event Title '+ a + " " + b;
 					event.title_url=biz9.get_title_url(event.title);
@@ -640,12 +664,12 @@ router.post('/update_system', function(req, res, next) {
 			helper.event_photo_list=[];
 			top_len=helper.event_list.length;
 			for(b=0;b<top_len;b++){
-				len=BIZ_LIST_SIZE_PHOTO_LIST;
+				len=2;
 				for(a=0;a<len;a++){
 					var event_photo=biz9.get_new_item(DT_PHOTO,0);
 					event_photo.visible='true';
 					event_photo.order=a;
-					event_photo.text=biz9.get_id(999) + " " + biz9.get_test_sub_note();
+					event_photo.text=biz9.get_id(999) + " photo";
 					event =helper.event_list[b];
 					event_photo.parent_tbl_id=event.tbl_id;
 					event_photo.parent_data_type=event.data_type;
@@ -887,15 +911,18 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.gallery_category_list=[];
-			len=BIZ_LIST_SIZE_CATEGORY_LIST;
-			for(a=0;a<len;a++){
+			gallery_cat_list = [
+				{title:'Highlights',sub_note:"Outstanding moments from a recent experience."},
+				{title:'Artwork',sub_note:"Check out our company designs and material."},
+			];
+			for(a=0;a<gallery_cat_list.length;a++){
 				var gallery_category=biz9.get_new_item(DT_CATEGORY,0);
-				gallery_category.title='Gallery Category Title '+ a;
+				gallery_category.title=gallery_cat_list[a].title;
 				gallery_category.type=DT_GALLERY;
 				gallery_category.title_url=biz9.get_title_url(gallery_category.title);
 				gallery_category.visible='true';
 				gallery_category.order=a;
-				gallery_category.sub_note=biz9.get_test_sub_note();
+				gallery_category.sub_note=gallery_cat_list[a].sub_note;
 				gallery_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.gallery_category_list.push(gallery_category);
 			}
@@ -909,14 +936,18 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.gallery_list=[];
-			for(a=0;a<helper.gallery_category_list.length;a++){
-				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+			gallery_cat_list = [
+				{title:'Highlights',sub_note:"Outstanding moments from a recent experience."},
+				{title:'Artwork',sub_note:"Check out our company designs and material."},
+			];
+			for(a=0;a<gallery_cat_list.length;a++){
+				for(b=0;b<1;b++){
 					var gallery=biz9.get_new_item(DT_GALLERY,0);
-					gallery.title='Gallery Title '+ a + " " + b;
+					gallery.title=gallery_cat_list[a].title;
 					gallery.title_url=biz9.get_title_url(gallery.title);
 					gallery.visible='true';
 					gallery.order=b;
-					gallery.sub_note=biz9.get_test_sub_note();
+					gallery.sub_note=gallery_cat_list[a].sub_note;
 					gallery.note=biz9.get_test_note();
 					gallery.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					gallery.category=helper.gallery_category_list[a].title;
@@ -936,12 +967,12 @@ router.post('/update_system', function(req, res, next) {
 			helper.gallery_photo_list=[];
 			top_len=helper.gallery_list.length;
 			for(b=0;b<top_len;b++){
-				len=helper.photofilename_list.length-1;
+				len=2
 				for(a=0;a<len;a++){
 					var gallery_photo=biz9.get_new_item(DT_PHOTO,0);
 					gallery_photo.visible='true';
 					gallery_photo.order=a;
-					gallery_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
+					gallery_photo.text='text_'+biz9.get_id(999) + " photo";
 					gallery =helper.gallery_list[b];
 					gallery_photo.parent_tbl_id=gallery.tbl_id;
 					gallery_photo.parent_data_type=gallery.data_type;
@@ -960,6 +991,7 @@ router.post('/update_system', function(req, res, next) {
 		//video_category
 		//-- video_category_list
 		//---
+		/*
 		function(call){
 			helper.video_category_list=[];
 			len =BIZ_LIST_SIZE_CATEGORY_LIST;
@@ -1001,20 +1033,24 @@ router.post('/update_system', function(req, res, next) {
 				call();
 			});
 		},
+		*/
 		//product_category
 		//-- product_category_list
 		//---
 		function(call){
 			helper.product_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
-			for(a=0;a<len;a++){
+			product_cat_list = [
+				{title:'T-shirts',sub_note:"short-sleeved or sleeveless undershirt."},
+				{title:'Hoodies',sub_note:"Hooded sweatshirt and or jacket."},
+			];
+			for(a=0;a<product_cat_list.length;a++){
 				var product_category=biz9.get_new_item(DT_CATEGORY,0);
-				product_category.title='Product Category Title '+ a;
+				product_category.title=product_cat_list[a].title;
 				product_category.type=DT_PRODUCT;
 				product_category.title_url=biz9.get_title_url(product_category.title);
 				product_category.visible='true';
 				product_category.order=a;
-				product_category.sub_note=biz9.get_test_sub_note();
+				product_category.sub_note=product_cat_list[a].sub_note;
 				product_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.product_category_list.push(product_category);
 			}
@@ -1029,7 +1065,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.product_list=[];
 			for(a=0;a<helper.product_category_list.length;a++){
-				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+				for(b=0;b<1;b++){
 					var product=biz9.get_new_item(DT_PRODUCT,0);
 					product.title='Product Title '+ a + " " + b;
 					product.title_url=biz9.get_title_url(product.title);
@@ -1058,12 +1094,12 @@ router.post('/update_system', function(req, res, next) {
 			helper.product_photo_list=[];
 			top_len=helper.product_list.length;
 			for(b=0;b<top_len;b++){
-				len=BIZ_LIST_SIZE_PHOTO_LIST;
+				len=2;
 				for(a=0;a<len;a++){
 					var product_photo=biz9.get_new_item(DT_PHOTO,0);
 					product_photo.visible='true';
 					product_photo.order=a;
-					product_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
+					product_photo.text='text_'+ " photo";
 					var product =helper.product_list[b];
 					product_photo.parent_tbl_id=product.tbl_id;
 					product_photo.parent_data_type=product.data_type;
@@ -1303,15 +1339,18 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.service_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
-			for(a=0;a<len;a++){
+			service_cat_list = [
+				{title:'Professional',sub_note:"Core quality expert advice."},
+				{title:'Educational Trainings',sub_note:"Expert teachings helping others develop skills."},
+			];
+			for(a=0;a<service_cat_list.length;a++){
 				var service_category=biz9.get_new_item(DT_CATEGORY,0);
-				service_category.title='Service Category Title '+ a;
+				service_category.title=service_cat_list[a].title;
 				service_category.type=DT_SERVICE;
 				service_category.title_url=biz9.get_title_url(service_category.title);
 				service_category.visible='true';
 				service_category.order=a;
-				service_category.sub_note=biz9.get_test_sub_note();
+				service_category.sub_note=service_cat_list[a].sub_note;
 				service_category.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 				helper.service_category_list.push(service_category);
 			}
@@ -1326,7 +1365,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.service_list=[];
 			for(a=0;a<helper.service_category_list.length;a++){
-				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+				for(b=0;b<1;b++){
 					var service=biz9.get_new_item(DT_SERVICE,0);
 					service.title='Service Title '+ a + " " + b;
 					service.title_url=biz9.get_title_url(service.title);
@@ -1353,14 +1392,14 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.service_photo_list=[];
-			top_len=helper.service_list.length;
+			top_len=2;
 			for(b=0;b<top_len;b++){
-				len=BIZ_LIST_SIZE_PHOTO_LIST;
+				len=2;
 				for(a=0;a<len;a++){
 					var service_photo=biz9.get_new_item(DT_PHOTO,0);
 					service_photo.visible='true';
 					service_photo.order=a;
-					service_photo.text='text_'+biz9.get_id(999) + " " + biz9.get_test_sub_note();
+					service_photo.text='text_'+biz9.get_id(999) + " photo";
 					service =helper.service_list[b];
 					service_photo.parent_tbl_id=service.tbl_id;
 					service_photo.parent_data_type=service.data_type;
