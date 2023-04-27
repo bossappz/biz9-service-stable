@@ -5,12 +5,23 @@ router.get('/ping',function(req, res, next) {
 	res.end();
 });
 router.post('/update_system', function(req, res, next) {
-	//-biz-start
+	//DEV_BOX='staging';
+	DEV_BOX='testing';
+	//testing--
+	BIZ_LIST_SIZE_CATEGORY_LIST=9;
+	BIZ_LIST_SIZE_ITEM_LIST=15;
+	BIZ_LIST_SIZE_PHOTO_LIST=12;
+	BIZ_LIST_SIZE_SUB_ITEM_LIST=5;
+	//testing--
+
+	//staging--
 	BIZ_LIST_SIZE_CATEGORY_LIST=2;
 	BIZ_LIST_SIZE_ITEM_LIST=5;
 	BIZ_LIST_SIZE_PHOTO_LIST=4;
 	BIZ_LIST_SIZE_SUB_ITEM_LIST=3;
-	//-biz-end
+	//staging--
+
+
 	//-stripe-start
 	//-stripe-end
 	BIZ_STRIPE_KEY="sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz";
@@ -468,7 +479,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.member_category_list=[];
-			len =1;
+			len =BIZ_LIST_SIZE_CATEGORY_LIST;
 			for(a=0;a<len;a++){
 				var member_category=biz9.get_new_item(DT_CATEGORY,0);
 				member_category.title='Executive Team';
@@ -491,7 +502,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.member_list=[];
-			len =1;
+			len =BIZ_LIST_SIZE_ITEM_LIST;
 			for(a=0;a<len;a++){
 				var member=biz9.get_new_item(DT_MEMBER,0);
 				member.first_name='First Name '+ a;
@@ -521,10 +532,17 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.blog_post_category_list=[];
+			blog_cat_list=[];
+			if(DEV_BOX!='testing'){
 			blog_cat_list = [
 				{title:'Latest News',sub_note:"See what's happening"},
 				{title:'Highlights',sub_note:"Recent showcases"},
 			];
+			}else{
+				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
+						blog_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+			}
 			for(a=0;a<blog_cat_list.length;a++){
 				var blog_post_category=biz9.get_new_item(DT_CATEGORY,0);
 				blog_post_category.title=blog_cat_list[a].title;
@@ -574,7 +592,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.blog_post_photo_list=[];
-			top_len=2;
+			top_len=helper.blog_post_list.length;
 			for(b=0;b<top_len;b++){
 				len=2;
 				for(a=0;a<len;a++){
@@ -601,10 +619,17 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.event_category_list=[];
+			event_cat_list = [];
+			if(DEV_BOX!='testing'){
 			event_cat_list = [
 				{title:'Pop Up Shops',sub_note:"Retail spaces open for a short period of time."},
 				{title:'Training Seminars',sub_note:"Learn new professional business and industry practices."},
 			];
+			}else{
+				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
+						event_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+			}
 			for(a=0;a<event_cat_list.length;a++){
 				var event_category=biz9.get_new_item(DT_CATEGORY,0);
 				event_category.title=event_cat_list[a].title;
@@ -664,7 +689,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.event_photo_list=[];
 			top_len=helper.event_list.length;
 			for(b=0;b<top_len;b++){
-				len=2;
+				len=BIZ_LIST_SIZE_PHOTO_LIST;
 				for(a=0;a<len;a++){
 					var event_photo=biz9.get_new_item(DT_PHOTO,0);
 					event_photo.visible='true';
@@ -952,7 +977,7 @@ router.post('/update_system', function(req, res, next) {
 					gallery.youtube_url='https://youtu.be/lXoLJLBPU-Q';
 					gallery.category=helper.gallery_category_list[a].title;
 					gallery.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					gallery=biz9.convert_biz_item(product,['youtube_url'])
+					gallery=biz9.convert_biz_item(gallery,['youtube_url'])
 					helper.gallery_list.push(gallery);
 				}
 			}
@@ -1040,10 +1065,17 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.product_category_list=[];
+			product_cat_list=[];
+		if(DEV_BOX!='testing'){
 			product_cat_list = [
 				{title:'T-shirts',sub_note:"short-sleeved or sleeveless undershirt."},
 				{title:'Hoodies',sub_note:"Hooded sweatshirt and or jacket."},
 			];
+			}else{
+				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
+						product_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+			}
 			for(a=0;a<product_cat_list.length;a++){
 				var product_category=biz9.get_new_item(DT_CATEGORY,0);
 				product_category.title=product_cat_list[a].title;
@@ -1340,10 +1372,19 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.service_category_list=[];
+			service_cat_list=[];
+				if(DEV_BOX!='testing'){
+
 			service_cat_list = [
 				{title:'Professional',sub_note:"Core quality expert advice."},
 				{title:'Educational Trainings',sub_note:"Expert teachings helping others develop skills."},
 			];
+				}else{
+			for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
+						service_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+				}
+
 			for(a=0;a<service_cat_list.length;a++){
 				var service_category=biz9.get_new_item(DT_CATEGORY,0);
 				service_category.title=service_cat_list[a].title;
@@ -1365,6 +1406,16 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.service_list=[];
+			if(DEV_BOX!='testing'){
+			servive_cat_list = [
+				{title:'Professional',sub_note:"Core quality expert advice."},
+				{title:'Trannings',sub_note:"Expert teaching or developing quality skills."},
+			];
+			}else{
+				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
+					service_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+			}
 			for(a=0;a<helper.service_category_list.length;a++){
 				for(b=0;b<1;b++){
 					var service=biz9.get_new_item(DT_SERVICE,0);
@@ -1393,7 +1444,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.service_photo_list=[];
-			top_len=2;
+			top_len=helper.service_list.length;
 			for(b=0;b<top_len;b++){
 				len=2;
 				for(a=0;a<len;a++){
@@ -1637,8 +1688,6 @@ router.post('/update_system', function(req, res, next) {
 				call();
 			});
 		},
-
-
 		//service_item_shipping_list
 		//-- service_item_shipping_list
 		//---
