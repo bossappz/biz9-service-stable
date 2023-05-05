@@ -223,19 +223,16 @@ module.exports = function(){
         var order = biz9.get_new_item(DT_ORDER,0);
         async.series([
             function(call){
-                sql={tbl_id:tbl_id};
-                dataz.get_sql_cache(db,DT_ORDER,sql,{},function(error,data_list) {
-                    if(data_list.length>0){
-                        order=data_list[0];
-                        order.status=orderz.get_order_status(order.status_id);
-                    }
+                biz9.get_item(db,DT_ORDER,tbl_id,function(error,data) {
+                    order=data;
+                    order.status=orderz.get_order_status(order.status_id);
                     order.order_item_list=[];
                     call();
                 });
             },
             function(call){
-                sql={order_id:order_id};
-                dataz.get_sql_cache(db,DT_ORDER_ITEM,sql,{},function(error,data_list) {
+                sql={order_id:order.order_id};
+                biz9.get_sql(db,DT_ORDER_ITEM,sql,{},function(error,data_list) {
                     order.order_item_list=data_list;
                     call();
                 });

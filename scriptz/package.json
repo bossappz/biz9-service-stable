@@ -1,0 +1,11 @@
+{
+  "name": "biz9-scriptz",
+  "version": "3.5.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "#Certified CoderZ",
+  "license": "ISC"
+}

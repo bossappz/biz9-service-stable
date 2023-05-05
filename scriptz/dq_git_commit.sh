@@ -18,10 +18,22 @@ INCREMENT_VERSION ()
         new="${part[*]}"
         echo -e "${new// /.}"
 }
+
 echo 'Enter noteZ:'
 read commit_notes
+
+echo "Update framework version?"
+read n
+yes=$(echo $n | tr -s '[:upper:]' '[:lower:]')
+if [[  "$n" = "yes"  ]] ; then
+    APP_VERSION_NEW=$(INCREMENT_VERSION ${APP_VERSION});
+else
+    APP_VERSION_NEW=${APP_VERSION};
+fi
+
+
 G_HAS_APP=false;
-APP_VERSION_NEW=$(INCREMENT_VERSION ${APP_VERSION});
+
 sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION_NEW}'/" .biz9_config.sh
 #CMS
 if [ "${APP_TITLE}" = "${BIZ9_CMS_TITLE}" ]; then

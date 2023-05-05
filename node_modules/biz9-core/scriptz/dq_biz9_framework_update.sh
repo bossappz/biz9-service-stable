@@ -4,7 +4,7 @@ echo "BiZ9 Framework Update"
 echo "#################"
 bash ./scriptz/dq_header.sh
 #prod-start
-echo "Enter Framework Tool: [cms, core, docz, mobile, scriptz, service, test, website]"
+echo "Enter Framework Tool: [cms, core, docz, mobile, scriptz, service, test, vendor, vendor-payment, website]"
 read app_type
 echo "Enter Source Branch: [unstable, testing, stable]"
 read source_dir
@@ -33,9 +33,7 @@ if [ "${app_type}" = "docz" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-DocZ';
     echo Destination ${destination_dir}: Version: ${BIZ9_DOCZ_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -50,9 +48,7 @@ if [ "${app_type}" = "website" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Website';
     echo Destination ${destination_dir}: Version: ${BIZ9_WEBSITE_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -68,9 +64,7 @@ if [ "${app_type}" = "service" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Service';
     echo Destination ${destination_dir}: Version: ${BIZ9_SERVICE_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -86,9 +80,7 @@ if [ "${app_type}" = "cms" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-CMS';
     echo Destination ${destination_dir}: Version: ${BIZ9_CMS_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -104,9 +96,7 @@ if [ "${app_type}" = "mobile" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Mobile';
     echo Destination ${destination_dir}: Version: ${BIZ9_MOBILE_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -122,13 +112,12 @@ if [ "${app_type}" = "scriptz" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Scriptz';
     echo Destination ${destination_dir}: Version: ${BIZ9_SCRIPTZ_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
     #sed
+    source ${source_dir}/.biz9_config.sh
     sed -i "s/BIZ9_SCRIPTZ_VERSION=.*/BIZ9_SCRIPTZ_VERSION='${BIZ9_SCRIPTZ_VERSION}';/" ${destination_dir}/.biz9_config.sh
     echo Source ${source_dir}: Version: ${BIZ9_SCRIPTZ_VERSION};
 fi
@@ -138,9 +127,7 @@ if [ "${app_type}" = "core" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Core';
     echo Destination ${destination_dir}: Version: ${BIZ9_CORE_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -155,9 +142,7 @@ if [ "${app_type}" = "test" ]; then
     source ${destination_dir}/.biz9_config.sh
     echo 'Tool: BiZ9-Test';
     echo Destination ${destination_dir}: Version: ${BIZ9_TEST_VERSION};
-    #backup
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${source_dir}_$(date +%F@%H:%M)
-    cp -rf ${G_PROJECT_DIR} .biz9_backup/${destination_dir}_$(date +%F@%H:%M)
+    #rm
     rm -rf ${destination_dir}/*
     #copy
     cp -rf ${source_dir}/* ${destination_dir}/
@@ -166,5 +151,40 @@ if [ "${app_type}" = "test" ]; then
     sed -i "s/BIZ9_TEST_VERSION=.*/BIZ9_TEST_VERSION='${BIZ9_TEST_VERSION}';/" ${destination_dir}/.biz9_config.sh
     echo Source ${source_dir}: Version: ${BIZ9_TEST_VERSION};
 fi
+if [ "${app_type}" = "vendor" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_VENDOR_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_VENDOR_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Vendor';
+    echo Destination ${destination_dir}: Version: ${BIZ9_VENDOR_VERSION};
+    #rm
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_VERSION=.*/BIZ9_VENDOR_VERSION='${BIZ9_VENDOR_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_VERSION=.*/BIZ9_VENDOR_VERSION='${BIZ9_VENDOR_VERSION}';/" ${destination_dir}/app.js
+    echo Source ${source_dir}: Version: ${BIZ9_VENDOR_VERSION};
+fi
+if [ "${app_type}" = "vendor-payment" ]; then
+    G_PROJECT_DIR=${BIZ9_HOME}/${BIZ9_VENDOR_PAYMENT_TITLE,,}/src/${source_dir}
+    cd ${BIZ9_HOME}/${BIZ9_VENDOR_PAYMENT_TITLE,,}/src/
+    source ${destination_dir}/.biz9_config.sh
+    echo 'Tool: BiZ9-Vendor-Payment';
+    echo Destination ${destination_dir}: Version: ${BIZ9_VENDOR_PAYMENT_VERSION};
+    #rm
+    rm -rf ${destination_dir}/*
+    #copy
+    cp -rf ${source_dir}/* ${destination_dir}/
+    #sed
+    source ${source_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_PAYMENT_VERSION=.*/BIZ9_VENDOR_PAYMENT_VERSION='${BIZ9_VENDOR_PAYMENT_VERSION}';/" ${destination_dir}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_PAYMENT_VERSION=.*/BIZ9_VENDOR_PAYMENT_VERSION='${BIZ9_VENDOR_PAYMENT_VERSION}';/" ${destination_dir}/app.js
+    echo Source ${source_dir}: Version: ${BIZ9_VENDOR_PAYMENT_VERSION};
+fi
+
+
+
 bash ./scriptz/dq_footer.sh
 exit

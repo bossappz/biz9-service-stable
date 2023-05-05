@@ -2,102 +2,155 @@ echo "#################"
 echo "BiZ9 Framework Update"
 echo "#################"
 G_PROJECT_FOLDER="$HOME/www/projectz/"
+G_PROJECT_SRC_FOLDER="$HOME/www/doqbox/biz9/"
+
 # prod start #
 echo "Enter APP ID"
 read app_id
-echo "Enter APP Type [website, service, cms, mobile]"
+echo "Enter APP Type [cms, mobile, service, website, vendor, vendor-payment]"
 read app_type
 echo "Enter Web Folder ID"
 read folder_id
+echo "Enter Branch: [unstable, testing, stable]"
+read branch_dir
 # prod end #
+
 # test start #
 : '
-app_id=92
-app_type='mobile'
-folder_id='mobile'
+app_id=19
+app_type='vendor-payment'
+folder_id='vendor-payment'
+branch_dir='stable'
 '
 # test end #
 
 G_BIZ_APP_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
-
-source ${G_BIZ_APP_DIR}/.biz9_config.sh
-G_HAS_APP=false;
-if [ "${app_type}" = "service" ]; then
-    G_HAS_APP=true;
-    cd ${G_BIZ_APP_DIR}/
-    #backup
-    rm -rf .biz9_update_bk
-    mkdir .biz9_update_bk
-    mkdir .biz9_update_bk/other
-    mkdir .biz9_update_bk/other/blank
-    mkdir .biz9_update_bk/public
-    mkdir .biz9_update_bk/public/uploads
-    cp -rf app.js  .biz9_update_bk/
-    cp -rf .biz9_config.sh .biz9_update_bk/
-    cp -rf other .biz9_update_bk/
-    cp -rf public/uploads .biz9_update_bk/
-    #git pull
-    echo ".biz9_update_bk" > .gitignore
-    git add .
-    git stash
-    git pull -f ${BIZ9_GIT_SERVICE_URL} ${BRANCH} --allow-unrelated-histories
-    echo ".biz9_update_bk" > .gitignore
-    #get latest version
-    source .biz9_config.sh
-    biz9_service_version=${BIZ9_SERVICE_VERSION}
-    #backup cp
-    cp -rf .biz9_update_bk/app.js ${G_BIZ_APP_DIR}/
-    cp -rf .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
-    cp -rf .biz9_update_bk/other/*  ${G_BIZ_APP_DIR}/other/
-    cp -rf .biz9_update_bk/public/uploads ${G_BIZ_APP_DIR}/public/uploads
-    source ${G_BIZ_APP_DIR}/.biz9_config.sh
-    #app.js
-    sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}';/" app.js
-    sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION}';/" app.js
-    sed -i "s/APP_ID=.*/APP_ID='${APP_ID}';/" app.js
-    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}';/" app.js
-    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" app.js
-    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${biz9_service_version}';/" .biz9_config.sh
-    rm -rf .biz9_update_bk
-fi
+#go dir
+cd ${G_BIZ_APP_DIR}/
+# mk backup
+rm -rf .biz9_update_bk
+mkdir .biz9_update_bk
 if [ "${app_type}" = "mobile" ]; then
-    G_HAS_APP=false;
-    cd ${G_BIZ_APP_DIR}/
-    #backup
-    rm -rf .biz9_update_bk
-    mkdir .biz9_update_bk
-    mkdir .biz9_update_bk/other
-    mkdir .biz9_update_bk/other/blank
+FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_MOBILE_TITLE,,}/src/${branch_dir}/
+#source
+source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
+   #bk configs
     cp -rf .biz9_config.sh .biz9_update_bk/
-    cp -rf other .biz9_update_bk/
-    cp -rf www/scripts/biz_scriptz/config.js .biz9_update_bk/
-    #git pull
-    echo ".biz9_update_bk" > .gitignore
-    git add .
-    git stash
-    git pull -f ${BIZ9_GIT_MOBILE_URL} ${BRANCH} --allow-unrelated-histories
-    echo ".biz9_update_bk" > .gitignore
-    #get latest version
-    source .biz9_config.sh
-    biz9_mobile_version=${BIZ9_MOBILE_VERSION}
-    #backup cp
-    cp -rf .biz9_update_bk/config.js ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/
-    cp -rf .biz9_update_bk/.biz9_config.sh  ${G_BIZ_APP_DIR}/
-    cp -rf .biz9_update_bk/other/*  ${G_BIZ_APP_DIR}/other/
-    rm -rf .biz9_update_bk
-    source ${G_BIZ_APP_DIR}/.biz9_config.sh
-    #config.js
-    sed -i "s/APP_TITLE=.*/APP_TITLE='${APP_TITLE}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VERSION=.*/APP_VERSION='${APP_VERSION}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_ID=.*/APP_ID='${APP_ID}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_TITLE_ID=.*/APP_TITLE_ID='${APP_TITLE_ID}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VENDOR=.*/APP_VENDOR='${APP_VENDOR}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/APP_VENDOR_WEBSITE=.*/APP_VENDOR_WEBSITE='${APP_VENDOR_WEBSITE}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${biz9_mobile_version}';/" ${G_BIZ_APP_DIR}/www/scripts/biz_scriptz/config.js
-    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${biz9_mobile_version}';/" .biz9_config.sh
-    rm -rf .biz9_update_bk
+    cp -rf www/scripts/biz9-mobile/scriptz/config.js .biz9_update_bk/
+    #copy src to project dir
+    cp -rf ${FRAMEWORK_SRC_PROJECT}config.xml ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}gulpfile.js ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}node_modules ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}package.json ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}platforms ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}plugins ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}www ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}other/scriptz ${G_BIZ_APP_DIR}/other
+    #mv configs
+    cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    cp -rf  .biz9_update_bk/config.js ${G_BIZ_APP_DIR}/www/scripts/biz9-mobile/scriptz/
+    #update versionz
+    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}';/" ${G_BIZ_APP_DIR}/www/scripts/biz9-mobile/scriptz/config.js
+    sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}';/" ${G_BIZ_APP_DIR}/.biz9_config.sh
+    echo "Project Update Complete"
+    print_result="BiZ9 Framework Mobile Version ${BIZ9_MOBILE_VERSION}"
+    fi
+if [ "${app_type}" = "service" ]; then
+    FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_SERVICE_TITLE,,}/src/${branch_dir}/
+    #source
+    source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
+    #bk configs
+    cp -rf .biz9_config.sh .biz9_update_bk/
+    cp -rf app.js .biz9_update_bk/
+    #copy src to project dir
+    cp -rf ${FRAMEWORK_SRC_PROJECT}bin ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}node_modules ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}package.json ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}public ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}routes ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}views ${G_BIZ_APP_DIR}/
+    #mv configs
+    cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    #update versionz
+    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${G_BIZ_APP_DIR}/.biz9_config.sh
+    sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${G_BIZ_APP_DIR}/app.js
+    print_result="${BIZ9_SERVICE_TITLE} Version: ${BIZ9_SERVICE_VERSION}"
 fi
-
-echo "BiZ9 Framework Push Success: @ $(date +%F@%H:%M)"
+if [ "${app_type}" = "cms" ]; then
+    FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_CMS_TITLE,,}/src/${branch_dir}/
+    #source
+    source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
+    #bk configs
+    cp -rf .biz9_config.sh .biz9_update_bk/
+    cp -rf app.js .biz9_update_bk/
+    #copy src to project dir
+    cp -rf ${FRAMEWORK_SRC_PROJECT}bin ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}node_modules ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}package.json ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}public ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}routes ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}views ${G_BIZ_APP_DIR}/
+    #mv configs
+    cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    #update versionz
+    sed -i "s/BIZ9_CMS_VERSION=.*/BIZ9_CMS_VERSION='${BIZ9_CMS_VERSION}';/" ${G_BIZ_APP_DIR}/.biz9_config.sh
+    sed -i "s/BIZ9_CMS_VERSION=.*/BIZ9_CMS_VERSION='${BIZ9_CMS_VERSION}';/" ${G_BIZ_APP_DIR}/app.js
+fi
+if [ "${app_type}" = "vendor" ]; then
+    FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_VENDOR_TITLE,,}/src/${branch_dir}/
+    #source
+    source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
+    #bk configs
+    cp -rf .biz9_config.sh .biz9_update_bk/
+    cp -rf app.js .biz9_update_bk/
+    #copy src to project dir
+    cp -rf ${FRAMEWORK_SRC_PROJECT}bin ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}node_modules ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}package.json ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}public ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}routes ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}views ${G_BIZ_APP_DIR}/
+    #mv configs
+    cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    #update versionz
+    sed -i "s/BIZ9_VENDOR_VERSION=.*/BIZ9_VENDOR_VERSION='${BIZ9_VENDOR_VERSION}';/" ${G_BIZ_APP_DIR}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_VERSION=.*/BIZ9_VENDOR_VERSION='${BIZ9_VENDOR_VERSION}';/" ${G_BIZ_APP_DIR}/app.js
+    print_result="${BIZ9_VENDOR_TITLE} Version: ${BIZ9_VENDOR_VERSION}"
+fi
+if [ "${app_type}" = "vendor-payment" ]; then
+    FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_VENDOR_PAYMENT_TITLE,,}/src/${branch_dir}/
+    #source
+    source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
+    #bk configs
+    cp -rf .biz9_config.sh .biz9_update_bk/
+    cp -rf app.js .biz9_update_bk/
+    #copy src to project dir
+    cp -rf ${FRAMEWORK_SRC_PROJECT}bin ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}node_modules ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}package.json ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}public ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}routes ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
+    cp -rf ${FRAMEWORK_SRC_PROJECT}views ${G_BIZ_APP_DIR}/
+    #mv configs
+    cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
+    #update versionz
+    sed -i "s/BIZ9_VENDOR_PAYMENT_VERSION=.*/BIZ9_VENDOR_PAYMENT_VERSION='${BIZ9_VENDOR_PAYMENT_VERSION}';/" ${G_BIZ_APP_DIR}/.biz9_config.sh
+    sed -i "s/BIZ9_VENDOR_PAYMENT_VERSION=.*/BIZ9_VENDOR_PAYMENT_VERSION='${BIZ9_VENDOR_PAYMENT_VERSION}';/" ${G_BIZ_APP_DIR}/app.js
+    print_result="${BIZ9_VENDOR_PAYMENT_TITLE} Version: ${BIZ9_VENDOR_PAYMENT_VERSION}"
+fi
+echo "----------------------------------"
+echo "Project Update ResultZ"
+echo ${print_result}
+echo "Project APP ID: ${app_id}"
+echo "Project APP Type: ${app_type}"
+echo "Project Folder ID: ${folder_id}"
+echo "Project Branch: ${branch}"
+echo "BiZ9 Framework Update Success: @ $(date +%F@%H:%M)"
+echo "----------------------------------"
 exit 1
 

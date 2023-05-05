@@ -30,5 +30,13 @@ fi
 if [ "${APP_TITLE}" = "${BIZ9_TEST_TITLE}" ]; then
     echo "BIZ9 TEST VERSION : ${BIZ9_TEST_VERSION}"
 fi
+#vendor
+if [ "${APP_TITLE}" = "${BIZ9_VENDOR_TITLE}" ]; then
+    echo "BIZ9 VENDOR VERSION : ${BIZ9_VENDOR_VERSION}"
+fi
+#vendor-payment
+if [ "${APP_TITLE}" = "${BIZ9_VENDOR_PAYMENT_TITLE}" ]; then
+    echo "BIZ9 VENDOR-PAYMENT VERSION : ${BIZ9_VENDOR_PAYMENT_VERSION}"
+fi
 bash ./scriptz/dq_footer.sh
 exit
