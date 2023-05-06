@@ -622,6 +622,9 @@ module.exports = function(app_config){
             _photo_size_square_thumb='square_thumb_size_';
             _photo_size_square_mid='square_mid_size_';
             _photo_size_square_large='square_large_size_';
+            if(item.mp3filename){
+                item.mp3_url = FILE_URL+item.mp3filename;
+            }
             if(!item.photofilename){
                 item.photofilename=null;
             }
