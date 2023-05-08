@@ -123,6 +123,8 @@ router.get('/event_detail/:title_url',function(req, res) {
 	helper.info = biz9.get_new_item(DT_BLANK,0);
 	/*--default_end */
 	helper.event = biz9.get_new_item(DT_EVENT,0);
+ 	helper.category_list = [];
+    helper.card_double_list = [];
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -155,6 +157,20 @@ router.get('/event_detail/:title_url',function(req, res) {
 				call();
 			}
 		},
+		function(call){
+            if(helper.event.category){
+                sql={category:helper.event.category};
+                sort={date_create:-1};
+                page_current=1;
+                page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
+                biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
+                    helper.card_double_list = data_list;
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
 		function(call){
 			sort={type:-1};
 			page_current=helper.page_current;

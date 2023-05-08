@@ -6,17 +6,19 @@ router.get('/ping',function(req, res, next) {
 });
 router.post('/update_system', function(req, res, next) {
 	//DEV_BOX='staging';
-	DEV_BOX='testing';
 	//testing--
+	/*
+	DEV_BOX='testing';
 	BIZ_LIST_SIZE_CATEGORY_LIST=9;
-	BIZ_LIST_SIZE_ITEM_LIST=15;
+	BIZ_LIST_SIZE_ITEM_LIST=10;
 	BIZ_LIST_SIZE_PHOTO_LIST=12;
 	BIZ_LIST_SIZE_SUB_ITEM_LIST=5;
+	*/
 	//testing--
-
 	//staging--
+	DEV_BOX='staging';
 	BIZ_LIST_SIZE_CATEGORY_LIST=2;
-	BIZ_LIST_SIZE_ITEM_LIST=5;
+	BIZ_LIST_SIZE_ITEM_LIST=2;
 	BIZ_LIST_SIZE_PHOTO_LIST=4;
 	BIZ_LIST_SIZE_SUB_ITEM_LIST=3;
 	//staging--
@@ -479,7 +481,7 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.member_category_list=[];
-			len =BIZ_LIST_SIZE_CATEGORY_LIST;
+			len =1;
 			for(a=0;a<len;a++){
 				var member_category=biz9.get_new_item(DT_CATEGORY,0);
 				member_category.title='Executive Team';
@@ -539,8 +541,8 @@ router.post('/update_system', function(req, res, next) {
 				{title:'Highlights',sub_note:"Recent showcases"},
 			];
 			}else{
-				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
-						blog_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+			for(a=0;a<BIZ_LIST_SIZE_CATEGORY_LIST;a++){
+							blog_cat_list.push({title:biz9.get_id()+'_title category',sub_note:biz9.get_id()+'_sub_note'});
 				}
 			}
 			for(a=0;a<blog_cat_list.length;a++){
@@ -566,7 +568,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.blog_post_list=[];
 			for(a=0;a<helper.blog_post_category_list.length;a++){
-				for(b=0;b<1;b++){
+				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var blog_post=biz9.get_new_item(DT_BLOG_POST,0);
 					blog_post.title='Blog Post Title '+ a + " " + b;
 					blog_post.title_url=biz9.get_title_url(blog_post.title);
@@ -626,8 +628,8 @@ router.post('/update_system', function(req, res, next) {
 				{title:'Training Seminars',sub_note:"Learn new professional business and industry practices."},
 			];
 			}else{
-				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
-						event_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				for(a=0;a<BIZ_LIST_SIZE_CATEGORY_LIST;a++){
+						event_cat_list.push({title:biz9.get_id()+'_title category',sub_note:biz9.get_id()+'_sub_note'});
 				}
 			}
 			for(a=0;a<event_cat_list.length;a++){
@@ -652,7 +654,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.event_list=[];
 			for(a=0;a<helper.event_category_list.length;a++){
-				for(b=0;b<1;b++){
+				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var event=biz9.get_new_item(DT_EVENT,0);
 					event.title='Event Title '+ a + " " + b;
 					event.title_url=biz9.get_title_url(event.title);
@@ -936,10 +938,17 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.gallery_category_list=[];
+			gallery_cat_list=[];
+		if(DEV_BOX!='testing'){
 			gallery_cat_list = [
 				{title:'Highlights',sub_note:"Outstanding moments from a recent experience."},
 				{title:'Artwork',sub_note:"Check out our company designs and material."},
 			];
+			}else{
+				for(a=0;a<BIZ_LIST_SIZE_CATEGORY_LIST;a++){
+						gallery_cat_list.push({title:biz9.get_id()+'_category_title',sub_note:biz9.get_id()+'_sub_note'});
+				}
+			}
 			for(a=0;a<gallery_cat_list.length;a++){
 				var gallery_category=biz9.get_new_item(DT_CATEGORY,0);
 				gallery_category.title=gallery_cat_list[a].title;
@@ -961,14 +970,10 @@ router.post('/update_system', function(req, res, next) {
 		//---
 		function(call){
 			helper.gallery_list=[];
-			gallery_cat_list = [
-				{title:'Highlights',sub_note:"Outstanding moments from a recent experience."},
-				{title:'Artwork',sub_note:"Check out our company designs and material."},
-			];
-			for(a=0;a<gallery_cat_list.length;a++){
-				for(b=0;b<1;b++){
+			for(a=0;a<helper.gallery_category_list.length;a++){
+				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var gallery=biz9.get_new_item(DT_GALLERY,0);
-					gallery.title=gallery_cat_list[a].title;
+					gallery.title='Gallery Title '+ a + " " + b;
 					gallery.title_url=biz9.get_title_url(gallery.title);
 					gallery.visible='true';
 					gallery.order=b;
@@ -1072,8 +1077,8 @@ router.post('/update_system', function(req, res, next) {
 				{title:'Hoodies',sub_note:"Hooded sweatshirt and or jacket."},
 			];
 			}else{
-				for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
-						product_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				for(a=0;a<BIZ_LIST_SIZE_CATEGORY_LIST;a++){
+						product_cat_list.push({title:biz9.get_id()+'_category_title',sub_note:biz9.get_id()+'_sub_note'});
 				}
 			}
 			for(a=0;a<product_cat_list.length;a++){
@@ -1098,7 +1103,7 @@ router.post('/update_system', function(req, res, next) {
 		function(call){
 			helper.product_list=[];
 			for(a=0;a<helper.product_category_list.length;a++){
-				for(b=0;b<1;b++){
+				for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
 					var product=biz9.get_new_item(DT_PRODUCT,0);
 					product.title='Product Title '+ a + " " + b;
 					product.title_url=biz9.get_title_url(product.title);
@@ -1380,8 +1385,8 @@ router.post('/update_system', function(req, res, next) {
 				{title:'Educational Trainings',sub_note:"Expert teachings helping others develop skills."},
 			];
 				}else{
-			for(a=0;a<BIZ_LIST_SIZE_ITEM_LIST;a++){
-						service_cat_list.push({title:biz9.get_id()+'_title',sub_note:biz9.get_id()+'_sub_note'});
+				for(a=0;a<BIZ_LIST_SIZE_CATEGORY_LIST;a++){
+						service_cat_list.push({title:biz9.get_id()+'_title category',sub_note:biz9.get_id()+'_sub_note'});
 				}
 				}
 
@@ -1417,8 +1422,8 @@ router.post('/update_system', function(req, res, next) {
 				}
 			}
 			for(a=0;a<helper.service_category_list.length;a++){
-				for(b=0;b<1;b++){
-					var service=biz9.get_new_item(DT_SERVICE,0);
+					for(b=0;b<BIZ_LIST_SIZE_ITEM_LIST;b++){
+				var service=biz9.get_new_item(DT_SERVICE,0);
 					service.title='Service Title '+ a + " " + b;
 					service.title_url=biz9.get_title_url(service.title);
 					service.visible=biz9.get_id(3);

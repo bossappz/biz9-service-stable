@@ -42,6 +42,17 @@ router.get('/photo_list/:parent_data_type/:parent_tbl_id',function(req, res) {
             });
         },
         function(call){
+            if(helper.parent_item.parent_tbl_id==helper.parent_item.top_tbl_id){
+                helper.top_item=helper.parent_item;
+                call();
+            }else{
+                biz9.get_item(db,helper.parent_item.top_data_type,helper.top_tbl_id,function(error,data) {
+                    helper.top_item=data;
+                    call();
+                });
+            }
+        },
+        function(call){
             sql = {parent_tbl_id:helper.parent_tbl_id};
             sort={date_create:-1};
             biz9.get_sql(db,DT_PHOTO,sql,sort,function(error,data_list) {
@@ -97,6 +108,17 @@ router.get('/photo_detail/:tbl_id/:parent_data_type/:parent_tbl_id',function(req
                 helper.parent_item=data;
                 call();
             });
+        },
+        function(call){
+            if(helper.parent_item.parent_tbl_id==helper.parent_item.top_tbl_id){
+                helper.top_item=helper.parent_item;
+                call();
+            }else{
+                biz9.get_item(db,helper.parent_item.top_data_type,helper.top_tbl_id,function(error,data) {
+                    helper.top_item=data;
+                    call();
+                });
+            }
         },
 
     ],
@@ -467,9 +489,6 @@ router.get('/sub_item_list/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id',
             }
         },
         function(call){
-            call();
-        },
-        function(call){
             sql={parent_tbl_id:helper.parent_item.tbl_id};
             sort={date_create:-1};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
@@ -526,14 +545,14 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
             });
         },
         function(call){
-            if(helper.parent_item.parent_tbl_id==helper.parent_item.top_tbl_id){
-                helper.top_item=helper.parent_item;
-                call();
-            }else{
-                biz9.get_item(db,helper.parent_item.top_data_type,helper.top_tbl_id,function(error,data) {
+            if(helper.parent_item.parent_tbl_id){
+        biz9.get_item(db,helper.parent_item.parent_data_type,helper.parent_item.parent_tbl_id,function(error,data) {
                     helper.top_item=data;
                     call();
                 });
+            }else{
+                helper.top_item=helper.parent_item;
+                call();
             }
         },
         function(call){

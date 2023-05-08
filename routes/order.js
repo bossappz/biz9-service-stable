@@ -97,14 +97,13 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", fun
                 if(helper.cart_item.website){
                     event_str= event_str + ", "+ helper.cart_item.website;
                 }
-                if(helper.cart_item.meeting_link){
-                    event_str= event_str + ", "+ helper.cart_item.meeting_link;
-                }
                 if(helper.cart_item.location){
                     event_str= event_str + ", "+ helper.cart_item.location;
                 }
-                helper.cart_item.cart_note=event_str;;
+                helper.cart_item.cart_note=event_str;
             }
+            biz9.o('rrrrr',helper.cart_item.cart_note);
+            biz9.o('cool',helper.cart_item.option_note);
             biz9.update_item(db,DT_CART_ITEM,helper.cart_item,function(error,data) {
                 helper.cart_item=data;
                 call();

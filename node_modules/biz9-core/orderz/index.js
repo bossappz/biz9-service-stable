@@ -142,9 +142,12 @@ module.exports = function(){
             r_cart_item.option_note=r_cart_item.option_note + ' '+ r_cart_item.cart_note;
         }
         r_cart_item.cart_note=cart_item.cart_note ? (cart_item.cart_note): ' ' ;
+        /*
         if(r_cart_item.cart_note){
+            console.log('eee');
             r_cart_item.option_note= r_cart_item.option_note +', '+ r_cart_item.cart_note;
         }
+        */
         //option_note_end
         if(!has_option){
             r_cart_item.sub_total = cart_item.price;
@@ -164,10 +167,11 @@ module.exports = function(){
         r_cart_item.category=cart_item.category;
         r_cart_item.quantity=cart_item.quantity;
         discount = cart_item.old_price - cart_item.price;
-        if(isNaN(discount)){
-            discount="0%";
+        if(isNaN(discount) || !discount){
+           r_cart_item.discount="0%";
+        }else{
+            r_cart_item.discount= String(parseInt(((discount / cart_item.old_price) * 100)))+"%";
         }
-        r_cart_item.discount= String(parseInt(((discount / cart_item.old_price) * 100)))+"%";
         return r_cart_item;
     }
     module.get_cart_item_list=function(db,sql,callback) {
