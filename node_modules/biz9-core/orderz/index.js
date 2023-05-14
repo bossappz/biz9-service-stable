@@ -142,12 +142,6 @@ module.exports = function(){
             r_cart_item.option_note=r_cart_item.option_note + ' '+ r_cart_item.cart_note;
         }
         r_cart_item.cart_note=cart_item.cart_note ? (cart_item.cart_note): ' ' ;
-        /*
-        if(r_cart_item.cart_note){
-            console.log('eee');
-            r_cart_item.option_note= r_cart_item.option_note +', '+ r_cart_item.cart_note;
-        }
-        */
         //option_note_end
         if(!has_option){
             r_cart_item.sub_total = cart_item.price;

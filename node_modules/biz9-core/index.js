@@ -449,8 +449,8 @@ module.exports = function(app_config,data_config){
                 callback(error,data_list,item_count,page_count);
             });
     }
-    module.get_categoryz=function(db,sql,sort_by,page_current,page_size,callback){
-        appz.get_category_list(db,sql,sort_by,page_current,page_size,function(error,data_list,item_count,page_count)
+    module.get_categoryz=function(db,data_type,sort_by,page_current,page_size,callback){
+        appz.get_category_list(db,data_type,sort_by,page_current,page_size,function(error,data_list,item_count,page_count)
             {
                 callback(error,data_list,item_count,page_count);
             });
