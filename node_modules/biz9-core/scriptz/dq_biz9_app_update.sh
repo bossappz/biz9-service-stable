@@ -30,6 +30,7 @@ cd ${G_BIZ_APP_DIR}/
 # mk backup
 rm -rf .biz9_update_bk
 mkdir .biz9_update_bk
+
 if [ "${app_type}" = "mobile" ]; then
 FRAMEWORK_SRC_PROJECT=${G_PROJECT_SRC_FOLDER}${BIZ9_MOBILE_TITLE,,}/src/${branch_dir}/
 #source
@@ -149,7 +150,7 @@ echo ${print_result}
 echo "Project APP ID: ${app_id}"
 echo "Project APP Type: ${app_type}"
 echo "Project Folder ID: ${folder_id}"
-echo "Project Branch: ${branch}"
+echo "Project Branch: ${branch_dir}"
 echo "BiZ9 Framework Update Success: @ $(date +%F@%H:%M)"
 echo "----------------------------------"
 exit 1
