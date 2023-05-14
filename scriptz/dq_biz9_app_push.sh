@@ -9,24 +9,24 @@ echo "Enter APP Title"
 read app_title
 echo "Enter APP Title ID"
 read app_title_id
-echo "Enter APP Type [cms, mobile, service, vendor, vendor-payment, website]"
+echo "Enter APP Type [change-request, cms, docz, mobile, service, vendor, vendor-payment, website, workshop]"
 read app_type
 echo "Enter Web Folder ID"
 read folder_id
 echo "Enter Branch [unstable, testing, stable]"
 read branch
 # prod end #
-# test start #
-: '
-app_id=19;
-app_title='Cool 339'
-app_type='cms'
-app_title_id='cool339'
-folder_id='cms'
-branch='stable'
-'
-# test end #
 
+: '
+# test start #
+app_id=19;
+app_title='Cool DocZ'
+app_type='docz'
+app_title_id='cool339'
+folder_id='docz'
+branch='stable'
+# test end #
+'
 G_BIZ_APP_NEW_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
 if [ -d "${G_BIZ_APP_NEW_DIR}" ];  then
     echo "File exsist. overwrite?"
@@ -44,6 +44,34 @@ else
     mkdir ${G_BIZ_APP_NEW_DIR}
 fi
 G_HAS_APP=false;
+if [ "${app_type}" = "change-request" ]; then
+    G_HAS_APP=false;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_CHANGE_REQUEST_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git checkout -b ${GIT_BRANCH}
+    source .biz9_config.sh
+    print_result="${BIZ9_CHANGE_REQUEST_TITLE} Version: ${BIZ9_CHANGE_REQUEST_VERSION}"
+fi
+if [ "${app_type}" = "workshop" ]; then
+    G_HAS_APP=false;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_WORKSHOP_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git checkout -b ${GIT_BRANCH}
+    source .biz9_config.sh
+    print_result="${BIZ9_WORKSHOP_TITLE} Version: ${BIZ9_WORKSHOP_VERSION}"
+fi
+if [ "${app_type}" = "docz" ]; then
+    G_HAS_APP=false;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    pwd
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_DOCZ_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    git checkout -b ${GIT_BRANCH}
+    source .biz9_config.sh
+    print_result="${BIZ9_DOCZ_TITLE} Version: ${BIZ9_DOCZ_VERSION}"
+fi
 if [ "${app_type}" = "service" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/
@@ -54,6 +82,7 @@ if [ "${app_type}" = "service" ]; then
     sed -i "s/BIZ9_SERVICE_VERSION=.*/BIZ9_SERVICE_VERSION='${BIZ9_SERVICE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/app.js
     print_result="${BIZ9_SERVICE_TITLE} Version: ${BIZ9_SERVICE_VERSION}"
 fi
+
 if [ "${app_type}" = "website" ]; then
     G_HAS_APP=true;
     cd ${G_BIZ_APP_NEW_DIR}/

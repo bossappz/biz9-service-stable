@@ -173,11 +173,6 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             });
         },
         function(call){
-            biz9.copy_photo_list(db,helper.tbl_id,helper.item_copy.tbl_id,function(error,data_list) {
-                call();
-            });
-        },
-        function(call){
             sql = {parent_tbl_id:helper.tbl_id};
             sort={date_create:1};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
@@ -303,7 +298,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
 });
 //9_item_review_update
 router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
-    var helper = biz9.get_helper(req);
+    var helper = biz9.get_helper_user(req);
     helper.review_obj = biz9.get_new_item(DT_REVIEW,0);
     helper.review = biz9.set_item_data(DT_REVIEW,0,req.body);
     helper.item = biz9.get_new_item(helper.item_data_type,helper.item_tbl_id);
@@ -311,6 +306,14 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
                 db=_db;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
                 call();
             });
         },
@@ -341,6 +344,27 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            customer_review=set_review_customer(helper);
+            mail_notification=set_review_update_mail_notification(helper.info,customer);
+            call();
+        },
+        function(call){
+            get_new_review_update_send_mail_notification(customer_review,mail_notification,function(_send_in_blue_obj){
+                send_in_blue_obj=_send_in_blue_obj;
+                biz9.o('aa',send_in_blue_obj);
+                //call();
+              });
+        },
+        function(call){
+            biz9.send_mail(SEND_IN_BLUE_KEY,send_in_blue_obj,function(error,data) {
+                if(error){
+                    helper.validation_message=error;
+                }
+                call();
+            });
+        },
+
     ],
         function(err, result){
             res.send({helper:helper});
@@ -883,7 +907,53 @@ router.post("/delete_sub_item/:data_type/:tbl_id",biz9.check_user,function(req, 
             res.end();
         });
 });
+set_review_update_mail_notification=function(info,customer){
+    mail_notification={};
+    mail_notification.subject= SEND_IN_BLUE_ITEM_REVIEW_UPDATE_SEND_SUBJECT;
+    mail_notification.template_id = SEND_IN_BLUE_ITEM_REVIEW_UPDATE_TEMPLATE_ID;
+    mail_notification.copyright='Copyright @ '+info.business_name;
+    mail_notification.sender={name:info.business_name,email:info.business_email};
+    mail_notification.replyTo={name:info.business_name,email:info.business_email};
+    mail_notification.to_list=[];
+    mail_notification.to_list.push({name:customer.name,email:customer.email});
+    mail_notification.to_list.push({name:info.business_name,email:info.business_email});
+    return mail_notification;
+}
 
+set_review_customer=function(item){
+    customer = biz9.get_new_item(DT_BLANK,0);
+    customer.name=item.customer_name ? (item.customer_name) : "customer";
+    customer.comment=item.comment ? (item.comment) : " ";
+    customer.rating=item.rating ? (item.rating) : 1;
+    customer.id=item.user.customer_id;
+    customer.email=item.email ? (item.email) : "email_not_found@gmail.com";
+    return customer;
+}
+
+get_new_review_update_send_mail_notification=function(customer_review,mail,callback){
+    var item_list=[];
+    async.series([
+        function(call){
+            send_in_blue_obj=
+                {
+                    'templateId':parseInt(mail.template_id),
+                    'subject':mail.subject,
+                    'sender' : {'email':mail.sender.email,'name':mail.sender.name},
+                    'replyTo' : {'email':mail.replyTo.email,'name':mail.replyTo.name},
+                    'to':mail.to_list,
+                    'params':{
+                        "business_name":mail.sender.name,
+                        "customer_email":customer.email,
+                        "customer_name":customer.name,
+                    }
+                }
+            call();
+        }
+    ],
+        function(err, result){
+            callback(send_in_blue_obj);
+        });
+}
 
 
 module.exports = router;

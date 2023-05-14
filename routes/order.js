@@ -288,7 +288,7 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
             });
         },
         function(call){
-            biz9.send_mail(SEND_IN_BLUE_KEY,send_in_blue_obj,function(error,data) {
+            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -717,8 +717,8 @@ router.get('/checkout/success/:order_id',function(req, res) {
 set_order_mail_notification=function(info,customer){
     mail_notification={};
 
-    mail_notification.subject=SEND_IN_BLUE_FORM_SEND_SUBJECT;
-    mail_notification.template_id = SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID;
+    mail_notification.subject=info.send_in_blue_order_send_subject;
+    mail_notification.template_id=info.send_in_blue_order_send_template_id;
 
     mail_notification.copyright='Copyright @ '+info.business_name;
     mail_notification.sender={name:info.business_name,email:info.business_email};
@@ -938,6 +938,7 @@ get_order_send_mail_notification=function(customer,shipping,billing,cart,order,m
                         "shipping_state":shipping.state,
                         "shipping_zip":shipping.zip,
                         "shipping_phone":shipping.phone,
+                        "shipping_country":shipping.country,
                         "billing_type":billing.payment_type,
                         "billing_note":billing.note,
                         "cart_shipping_total":cart.price.shipping_total,
