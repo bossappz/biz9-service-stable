@@ -75,7 +75,9 @@ module.exports = function(){
                         call();
                     });
                 }else{
-                    biz9.o('update_bucket_file','no buffer found');
+                    error = "error: no buffer found :" +" file_path:"+file_path + ", key: "+key + ", content_type:"+content_type;
+                    biz9.o('update_bucket_file',error);
+                    call();
                 }
         }
         ],

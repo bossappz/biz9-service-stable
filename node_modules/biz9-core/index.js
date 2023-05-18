@@ -9,6 +9,7 @@ module.exports = function(app_config,data_config){
     arraySort = require('array-sort');
     aws = require('aws-sdk');
     exec = require('child_process').exec;
+    Promise = require('bluebird');
     fs = require('fs-extra');
     path = require('path');
     request = require('request');
@@ -582,8 +583,8 @@ module.exports = function(app_config,data_config){
                 callback(error,data);
             });
     }
-    module.set_resize_square_photo_file=function(new_size,file_path,org_filename,new_filename,callback){
-        utilityz.set_resize_square_photo_file(new_size,file_path,org_filename,new_filename,function(error,data)
+    module.set_resize_square_photo_file=function(org_file,sizes,callback){
+        utilityz.set_resize_square_photo_file(org_file,sizes,function(error,data)
             {
                 callback(error,data);
             });

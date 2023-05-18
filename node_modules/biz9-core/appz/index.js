@@ -1470,9 +1470,6 @@ module.exports = function(app_config){
                     }
                 },
                 function(call){
-                    console.log('here');
-                    console.log('here');
-                    console.log('here');
                     if(item_map.tbl_id!=0&&sub_page.tbl_id!=0){
                         sort=appz.get_key_sort_type(sub_page);
                         if(!setting.filter_category){
@@ -1483,9 +1480,6 @@ module.exports = function(app_config){
                         if(setting.filter_search){
                             sql.search=setting.filter_search;
                         }
-                        console.log('aaaaaaaaa');
-                        console.log(sql);
-                        console.log('bbbbbbbbbbb');
                         if(setting.count){
                             dataz.get_sql_paging_cache(db,item_map.title_url,sql,sort,1,setting.count,function(error,data_list,_item_count,_page_count) {
                                 top_list=data_list;
@@ -2473,7 +2467,7 @@ module.get_page=function(db,title_url,setting,callback){
             }else{
                 sql={parent_tbl_id:item_map.tbl_id,category:setting.filter_category};
             }
-            sort={order:1};
+            sort={order:-1};
             if(setting.page_current){
                 dataz.get_sql_paging_cache(db,item_map.title_url,sql,sort,setting.page_current,setting.page_size,function(error,data_list,_item_count,_page_count) {
                     top_list=data_list;
