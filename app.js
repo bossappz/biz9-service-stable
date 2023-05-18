@@ -13,7 +13,7 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='5.1.6'
+BIZ9_SERVICE_VERSION='5.1.8'
 APP_ID='19';
 //APP_TITLE_ID='';
 APP_TITLE_ID='';

@@ -368,7 +368,7 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
               });
         },
         function(call){
-            biz9.send_mail(SEND_IN_BLUE_KEY,send_in_blue_obj,function(error,data) {
+            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -920,8 +920,8 @@ router.post("/delete_sub_item/:data_type/:tbl_id",biz9.check_user,function(req, 
 });
 set_review_update_mail_notification=function(info,customer){
     mail_notification={};
-    mail_notification.subject= SEND_IN_BLUE_ITEM_REVIEW_UPDATE_SEND_SUBJECT;
-    mail_notification.template_id = SEND_IN_BLUE_ITEM_REVIEW_UPDATE_TEMPLATE_ID;
+    mail_notification.subject=info.send_in_blue_item_review_update_subject;
+    mail_notification.template_id =info.send_in_blue_item_review_update_template_id;
     mail_notification.copyright='Copyright @ '+info.business_name;
     mail_notification.sender={name:info.business_name,email:info.business_email};
     mail_notification.replyTo={name:info.business_name,email:info.business_email};
