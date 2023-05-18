@@ -173,6 +173,11 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             });
         },
         function(call){
+            biz9.copy_photo_list(db,helper.tbl_id,helper.item_copy.tbl_id,function(error,data_list) {
+                call();
+            });
+        },
+        function(call){
             sql = {parent_tbl_id:helper.tbl_id};
             sort={date_create:1};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
@@ -180,6 +185,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
                 call();
             });
         },
+        //a
         function(call){
             for(a=0;a<helper.sub_item_list.length;a++){
                 helper.sub_item_list[a].is_parent=false;
@@ -188,6 +194,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             }
             call();
         },
+        //b
         function(call){
             if(helper.top_sub_item_list.length>0){
                 biz9.update_list(db,helper.top_sub_item_list,function(error,data_list) {
@@ -198,6 +205,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
                 call();
             }
         },
+        //c
         function(call){
             sql = {top_tbl_id:helper.tbl_id};
             sort={};
@@ -206,6 +214,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
                 call();
             });
         },
+        //d
         function(call){
             for(a=0;a<helper.top_sub_item_list.length;a++){
                 for(b=0;b<helper.other_list.length;b++){
@@ -217,6 +226,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             }
             call();
         },
+        //e
         function(call){
             if(helper.p1_org_sub_item_list.length>0){
                 biz9.update_list(db,helper.p1_org_sub_item_list,function(error,data_list) {
@@ -227,6 +237,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
                 call();
             }
         },
+        //f
         function(call){
             for(a=0;a<helper.p1_org_sub_item_list.length;a++){
                 for(b=0;b<helper.other_list.length;b++){
@@ -238,6 +249,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             }
             call();
         },
+        //g
         function(call){
             if(helper.p2_org_sub_item_list.length>0){
                 biz9.update_list(db,helper.p2_org_sub_item_list,function(error,data_list) {
@@ -352,8 +364,7 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
         function(call){
             get_new_review_update_send_mail_notification(customer_review,mail_notification,function(_send_in_blue_obj){
                 send_in_blue_obj=_send_in_blue_obj;
-                biz9.o('aa',send_in_blue_obj);
-                //call();
+                call();
               });
         },
         function(call){
