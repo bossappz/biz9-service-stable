@@ -74,6 +74,7 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", fun
             helper.cart_item.price=biz9.remove_money(helper.item.price);
             helper.cart_item.old_price=biz9.remove_money(helper.item.old_price);
             helper.cart_item.title=helper.item.title;
+            helper.cart_item.sub_note=helper.item.sub_note;
             helper.cart_item.category=helper.item.category;
             helper.cart_item.title_url=helper.item.title_url;
             helper.cart_item.photofilename=helper.item.photofilename;
@@ -102,8 +103,6 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", fun
                 }
                 helper.cart_item.cart_note=event_str;
             }
-            biz9.o('rrrrr',helper.cart_item.cart_note);
-            biz9.o('cool',helper.cart_item.option_note);
             biz9.update_item(db,DT_CART_ITEM,helper.cart_item,function(error,data) {
                 helper.cart_item=data;
                 call();
@@ -589,6 +588,9 @@ router.post('/checkout/striperedirecturl',function(req, res) {
         function(call){
             retail_line_items=[];
             for(a=0;a<cart.item_list.length;a++){
+                if(!cart.item_list[a].sub_note){
+                    cart.item_list[a].sub_note= ' ';
+                }
                 retail_line_items.push({
                     name:cart.item_list[a].item.title,
                     quantity:cart.item_list[a].item.quantity,
@@ -606,6 +608,7 @@ router.post('/checkout/striperedirecturl',function(req, res) {
                 if(error){
                     validation_message=error;
                     stripe_redirect_url='error';
+                    call();
                 }
                 helper.stripe_redirect_url=data;
                 call();
@@ -812,6 +815,7 @@ cart_checkout_order_add=function(checkout_form,cart,callback){
                 order_item.discount=cart.item_list[a].discount;
                 order_item.old_price=cart.item_list[a].old_price;
                 order_item.title=cart.item_list[a].title;
+                order_item.sub_note=cart.item_list[a].sub_note;
                 order_item.title_url=cart.item_list[a].title_url;
                 order_item.category=cart.item_list[a].category;
                 order_item.photofilename=cart.item_list[a].photofilename;

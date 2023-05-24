@@ -13,10 +13,10 @@ session=require("express-session");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='5.1.8'
+BIZ9_SERVICE_VERSION='5.2.0'
 APP_ID='19';
+APP_TITLE_ID='mobile-116';
 //APP_TITLE_ID='';
-APP_TITLE_ID='';
 APP_TITLE='BiZ9-Service';
 APP_VERSION='2.7.0'
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
@@ -99,8 +99,8 @@ PHOTO_SIZE_SQUARE_MID={title_url:"square_mid_size_",size:720};
 PHOTO_SIZE_SQUARE_LARGE={title_url:"square_large_size_",size:1000};
 /* --- PHOTO-SIZE-END --- */
 /* --- BiZ9_CORE_CONFIG-START --- */
-//biz9=require("biz9-core")(app_config,data_config);
-biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
+biz9=require("biz9-core")(app_config,data_config);
+//biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- APP URL START  -- */
 test=require("./routes/cloud/test");

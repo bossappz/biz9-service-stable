@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "async": "^3.2.4",
-    "biz9-core": "^5.1.7",
+    "biz9-core": "^5.2.7",
     "busboy": "^1.6.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

@@ -654,7 +654,7 @@ module.exports = function(app_config){
             }
             no_date_str='';
             if(!item.date_create){
-                item.date_create=null;
+                item.date_create= new moment().toISOString();
             }
             item.date_obj={
                 pretty_create: (item.date_create) ? utilityz.get_date_time_pretty(item.date_create) : no_date_str,
@@ -1437,6 +1437,7 @@ module.exports = function(app_config){
                     sub_page.title_url=sub_page_title_url;
                     sub_page.photos=[];
                     sub_page.items=[];
+                    sub_page.review_obj={};
                     call();
                 },
                 function(call){
@@ -1455,6 +1456,7 @@ module.exports = function(app_config){
                         call();
                     }
                 },
+
                 function(call){
                     if(item_map.tbl_id!=0&&sub_page.tbl_id!=0){
                         sql = {parent_data_type:page_title_url};
@@ -1466,6 +1468,16 @@ module.exports = function(app_config){
                             call();
                         });
                     }else{
+                        call();
+                    }
+                },
+                function(call){
+                    if(item_map.tbl_id!=0&&sub_page.tbl_id!=0){
+                        appz.get_review_obj(db,sub_page.tbl_id,function(error,data){
+                        sub_page.review_obj=data;
+                        call();
+                    });
+                }else{
                         call();
                     }
                 },
@@ -2449,7 +2461,14 @@ module.get_page=function(db,title_url,setting,callback){
         function(call){
             item_map.photos=[];
             item_map.items=[];
+            item_map.review_obj={};
             call();
+        },
+        function(call){
+                    appz.get_review_obj(db,item_map.tbl_id,function(error,data){
+                        item_map.review_obj=data;
+                        call();
+                    });
         },
         function(call){
             sql = {top_tbl_id:item_map.tbl_id};

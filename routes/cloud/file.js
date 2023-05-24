@@ -65,11 +65,9 @@ router.post("/update_photo", function(req, res) {
                     xy: PHOTO_SIZE_THUMB.size
                 },{
                     path:FILE_SAVE_PATH+PHOTO_SIZE_MID.title_url+helper.item.photofilename,
-                    xy: PHOTO_SIZE_SQUARE_MID.size
-                },{
-                    path:FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,
-                    xy: PHOTO_SIZE_LARGE.size
-                }];
+                    xy: PHOTO_SIZE_MID.size
+                },
+                ];
                 biz9.set_resize_photo_file(FILE_SAVE_PATH+helper.item.photofilename,sizes,function(error,data) {
                     call();
                 });
@@ -127,17 +125,6 @@ router.post("/update_photo", function(req, res) {
         function(call){
             if(S3_SAVE){
                 biz9.update_bucket_file(aws_config,S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_MID.title_url+helper.item.photofilename,PHOTO_SIZE_MID.title_url+helper.item.photofilename,file_mime_type,function(error,data) {
-                    helper.error=error;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
-        //update_s3_large
-        function(call){
-            if(S3_SAVE){
-                biz9.update_bucket_file(aws_config,S3_BUCKET,FILE_SAVE_PATH+PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,PHOTO_SIZE_LARGE.title_url+helper.item.photofilename,file_mime_type,function(error,data) {
                     helper.error=error;
                     call();
                 });

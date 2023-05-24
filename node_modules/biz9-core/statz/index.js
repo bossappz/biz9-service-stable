@@ -8,10 +8,11 @@ module.exports = function(){
     module.update_item_view_count=function(db,item_data_type,item_tbl_id,customer_id,callback){
         var new_view=true;
         var item_count=0;
+        var update_item = biz9.get_new_item(item_data_type,item_tbl_id);
+        var new_stat = biz9.get_new_item(DT_STAT,0);
         var error=null;
         async.series([
             function(call){
-
                 if(customer_id){
                 sql = {customer_id:customer_id,item_tbl_id:item_tbl_id,type_id:1};
                 sort={};
@@ -28,7 +29,6 @@ module.exports = function(){
             },
             function(call){
                 if(new_view){
-                    new_stat = biz9.get_new_item(DT_STAT,0);
                     new_stat.item_data_type=item_data_type;
                     new_stat.item_tbl_id=item_tbl_id;
                     new_stat.customer_id=customer_id;
@@ -59,9 +59,9 @@ module.exports = function(){
             },
             function(call){
                 if(new_view){
-                    update_item = biz9.get_new_item(item_data_type,item_tbl_id);
                     update_item.view_count=parseInt(item_count)+1;
                     biz9.update_item(db,item_data_type,update_item,function(error,data) {
+                        update_item=data;
                         call();
                     });
                 }else{
@@ -70,7 +70,10 @@ module.exports = function(){
             },
         ],
             function(err, result){
-                callback(error,new_view);
+                update_item.new_view=new_view;
+                update_item.new_stat=new_stat;
+                update_item.item_count = item_count;
+                callback(error,update_item);
             });
     }
     return module;
