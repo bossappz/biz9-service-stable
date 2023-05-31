@@ -14,13 +14,93 @@ router.post("/update_photo", function(req, res) {
     var file_mime_type=null;
     helper.error=null;
     async.series([
-        //save file
+        function(call){
+            let imageFileName = {}
+            const bb = busboy({ headers: req.headers });
+            const run = async function(a, b) {
+                bb.on("file", (fieldname, file, filename, encoding, mimetype) => {
+                    // Getting extension of any image
+                    const imageExtension = filename.filename.split(".")[filename.filename.split(".").length - 1];
+                    file_ext = imageExtension;
+                    // Setting filename
+                    //helper.item.photofilename = biz9.get_guid()+"."+file_ext;
+                    imageFileName = `${Math.round(Math.random() * 1000000000)}.${imageExtension}`;
+                    filepath = path.join(FILE_SAVE_PATH, imageFileName);
+                    // Creating path
+                    helper.item.photofilename=imageFileName;
+                    file.pipe(fs.createWriteStream(filepath));
+                });
+                bb.on("finish", () => {
+                    call();
+                });
+                req.pipe(bb);
+            }
+            run();
+        },
+        /*upload_mulitple_photos work
+         * https://stackoverflow.com/questions/58461076/upload-multiple-images-on-firebase-using-nodejs-and-busboy
+        function(call){
+            let imageFileName = {}
+            let imagesToUpload = []
+            let imageToAdd = {}
+            //This triggers for each file type that comes in the form data
+            busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+                if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+                    return res
+                        .status(400)
+                        .json({ error: "Wrong file type submitted!" });
+                }
+                // Getting extension of any image
+                const imageExtension = filename.split(".")[
+                    filename.split(".").length - 1
+                ];
+                // Setting filename
+                imageFileName = `${Math.round(
+                    Math.random() * 1000000000
+                )}.${imageExtension}`;
+                // Creating path
+                const filepath = path.join(os.tmpdir(), imageFileName);
+                imageToAdd = {
+                    imageFileName
+                    filepath,
+                    mimetype };
+                file.pipe(fs.createWriteStream(filepath));
+                //Add the image to the array
+                imagesToUpload.push(imageToAdd);
+            });
+            busboy.on("finish", () => {
+                let promises = []
+                let imageUrls = []
+                imagesToUpload.forEach(imageToBeUploaded => {
+                    imageUrls.push(`https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o${folder}%2F${imageFileName}?alt=media`)
+                    promises.push(admin
+                        .storage()
+                        .bucket()
+                        .upload(imageToBeUploaded.filepath, {
+                            destination: `${folder}/${imageFileName}`,
+                            resumable: false,
+                            metadata: {
+                                metadata: {
+                                    contentType: imageToBeUploaded.mimetype
+                                }
+                            }
+                        }))
+                })
+                try{
+                    await Promises.all(resolve)
+                    res.status(200).json({msg: 'Successfully uploaded all images', imageUrls})
+                }catch(err){ res.status(500).json(err) }
+            });
+            busboy.end(req.rawBody);
+        },
+        */
+        //save file_old
+        /*
         function(call){
             const bb = busboy({ headers: req.headers });
             const run = async function(a, b) {
                 bb.on('file', (fieldname, file,filename, encoding,mimetype) => {
                     file_ext=filename.filename.substr(filename.filename.lastIndexOf('.') + 1);
-                    biz9.o('file_ext',file_ext);
                     helper.item.photofilename = biz9.get_guid()+"."+file_ext;
                     const saveTo = path.join(FILE_SAVE_PATH,helper.item.photofilename);
                     file.pipe(fs.createWriteStream(saveTo));
@@ -32,6 +112,7 @@ router.post("/update_photo", function(req, res) {
             }
             run();
         },
+        */
         function(call){
             switch (file_ext) {
                 case 'png':
@@ -69,6 +150,7 @@ router.post("/update_photo", function(req, res) {
                 },
                 ];
                 biz9.set_resize_photo_file(FILE_SAVE_PATH+helper.item.photofilename,sizes,function(error,data) {
+                    helper.error=error;
                     call();
                 });
             }else{
@@ -87,6 +169,7 @@ router.post("/update_photo", function(req, res) {
                 }
                 ];
                 biz9.set_resize_square_photo_file(FILE_SAVE_PATH+helper.item.photofilename,sizes,function(error,data) {
+                    helper.error=error;
                     call();
                 });
             }else{

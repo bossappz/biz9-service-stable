@@ -278,7 +278,8 @@ module.exports = function(){
         Promise.map(sizes, function(size) {
         sharp(org_file)
                 .resize(size.xy)
-                .toFile(size.path,(error,info)=>{
+                .toFile(size.path,(error,info)=>{if(error){
+                }
             });
         }).then(function(x){
             callback();
