@@ -68,6 +68,50 @@ router.post('/update_system', function(req, res, next) {
 "cc2b299b-4fae-45c4-83df-58ba20fb7956.png",
 "eb80f2e0-7e27-455e-888e-480b3f49bf39.png"
 	];//nba
+
+	helper.photo_text_list=[
+"Accept yourself",
+"Act justly",
+"Aim high",
+"Alive & well",
+"Amplify hope",
+"Baby steps",
+"Be awesome",
+"Be colorful",
+"Be fearless",
+"Be honest",
+"Be kind",
+"Be spontaneous",
+"Be still",
+"Be yourself",
+"Beautiful chaos",
+"Breathe deeply",
+"Carpe diem",
+"Cherish today",
+"Chill out",
+"Come back",
+"Crazy beautiful",
+"Dance today",
+"Don’t panic",
+"Don’t stop",
+"Dream big",
+"Dream bird",
+"Enjoy life",
+"Enjoy today",
+"Explore magic",
+"Fairy dust",
+"Fear not",
+"Feeling groowy",
+"Find balance",
+"Follow through",
+"For real",
+"Forever free",
+"Forget this",
+"Friends forever",
+];
+
+
+
 	//helper.photofilename_list=[
 	//];
 	//default = header, sub_note, paragrap
@@ -601,7 +645,7 @@ router.post('/update_system', function(req, res, next) {
 					var blog_post_photo=biz9.get_new_item(DT_PHOTO,0);
 					blog_post_photo.visible='true';
 					blog_post_photo.order=a;
-					blog_post_photo.text=biz9.get_id(999) + " photo";
+					blog_post_photo.text=helper.photo_text_list[biz9.get_id(helper.photo_text_list.length-1)];
 					blog_post =helper.blog_post_list[b];
 					blog_post_photo.parent_tbl_id=blog_post.tbl_id;
 					blog_post_photo.parent_data_type=blog_post.data_type;
@@ -696,7 +740,7 @@ router.post('/update_system', function(req, res, next) {
 					var event_photo=biz9.get_new_item(DT_PHOTO,0);
 					event_photo.visible='true';
 					event_photo.order=a;
-					event_photo.text=biz9.get_id(999) + " photo";
+					event_photo.text=helper.photo_text_list[biz9.get_id(helper.photo_text_list.length-1)];
 					event =helper.event_list[b];
 					event_photo.parent_tbl_id=event.tbl_id;
 					event_photo.parent_data_type=event.data_type;
@@ -1003,7 +1047,7 @@ router.post('/update_system', function(req, res, next) {
 					var gallery_photo=biz9.get_new_item(DT_PHOTO,0);
 					gallery_photo.visible='true';
 					gallery_photo.order=a;
-					gallery_photo.text='text_'+biz9.get_id(999) + " photo";
+					gallery_photo.text=helper.photo_text_list[biz9.get_id(helper.photo_text_list.length-1)];
 					gallery =helper.gallery_list[b];
 					gallery_photo.parent_tbl_id=gallery.tbl_id;
 					gallery_photo.parent_data_type=gallery.data_type;
@@ -1137,7 +1181,7 @@ router.post('/update_system', function(req, res, next) {
 					var product_photo=biz9.get_new_item(DT_PHOTO,0);
 					product_photo.visible='true';
 					product_photo.order=a;
-					product_photo.text='text_'+ " photo";
+					product_photo.text=helper.photo_text_list[biz9.get_id(helper.photo_text_list.length-1)];
 					var product =helper.product_list[b];
 					product_photo.parent_tbl_id=product.tbl_id;
 					product_photo.parent_data_type=product.data_type;
@@ -1456,7 +1500,7 @@ router.post('/update_system', function(req, res, next) {
 					var service_photo=biz9.get_new_item(DT_PHOTO,0);
 					service_photo.visible='true';
 					service_photo.order=a;
-					service_photo.text='text_'+biz9.get_id(999) + " photo";
+					service_photo.text=helper.photo_text_list[biz9.get_id(helper.photo_text_list.length-1)];
 					service =helper.service_list[b];
 					service_photo.parent_tbl_id=service.tbl_id;
 					service_photo.parent_data_type=service.data_type;
