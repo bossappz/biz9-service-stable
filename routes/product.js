@@ -183,6 +183,7 @@ router.get('/product_detail/:title_url',function(req, res) {
         },
         function(call){
             helper.product_visible_option_list = biz9.get_product_visible_option_list();
+            biz9.o('rrrrr',helper.product_visible_option_list);
             call();
         },
         function(call){

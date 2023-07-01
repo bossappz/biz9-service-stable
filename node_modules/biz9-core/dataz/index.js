@@ -6,6 +6,32 @@
  */
 module.exports = function(data_config){
     module.get_mongo_connect_db=async function(db_name,callback){
+        const client = new mongo_client(MONGO_FULL_URL);
+        var error=null;
+        async function run() {
+            try {
+                await client.connect();
+           } catch (e) {
+               error=e;
+                console.error(error);
+                biz9.o('get_mongo_connect_db',error);
+                biz9.o('get_mongo_connect_db_db_name',db_name);
+                var cmd = "sudo mongod --fork --config /etc/mongod.conf";
+                dir = exec(cmd, function(error,stdout,stderr){
+                });
+                dir.on('exit', function (code) {
+                    console.log('SUCCESS LOCAL RESET DB');
+                    callback(error,null);
+                });
+            } finally {
+                const db = client.db(db_name);
+                db.db_name=db_name;
+                callback(error,db);
+            }
+        }
+        run();
+    }
+    module.get_mongo_connect_db_old=async function(db_name,callback){
         var error=null;
         mongo_client.connect(MONGO_FULL_URL,{useUnifiedTopology:true,useNewUrlParser:true,socketTimeoutMS:360000,connectTimeoutMS:360000,keepAlive:true},function(error,client){
             if(error){
@@ -182,10 +208,10 @@ module.exports = function(data_config){
             },
             function(call){
                 if(!_cache_found){
-                    data_mon.get(db,data_type,tbl_id,function(error,data){
-                        if(data){
-                            set_cache_item(client_redis,db.db_name,data_type,tbl_id,data,function(data){
-                                data_item=data;
+                    data_mon.get(db,data_type,tbl_id,function(error,data_list){
+                        if(data_list.length>0){
+                            set_cache_item(client_redis,db.db_name,data_type,tbl_id,data_list[0],function(data){
+                                data_item=data_list[0];
                                 data_item.source='db';
                                 call();
                             });
@@ -294,6 +320,7 @@ module.exports = function(data_config){
                     var data_value = {};
                     async.forEachOf(_list,(item2,key2,go2)=>{
                         if(item2){
+                            //item2
                             cache_red.get_cache_string(client_redis,get_cache_item_attr_key(db.db_name,data_type,item.tbl_id,item2),function(error,data){
                                 if(data){
                                     data_value[item2] = data;
@@ -320,11 +347,11 @@ module.exports = function(data_config){
             function(call){
                 async.forEachOf(data_sql_tbl_id_list,(item,key,go)=>{
                     if(!item.data){
-                        data_mon.get(db,data_type,item.tbl_id,function(error,data){
-                            if(data){
-                                set_cache_item(client_redis,db.db_name,item.data_type,item.tbl_id,data,function(data_b){
+                        data_mon.get(db,data_type,item.tbl_id,function(error,data_list){
+                            if(data_list.length>0){
+                                set_cache_item(client_redis,db.db_name,item.data_type,item.tbl_id,data_list[0],function(data_b){
                                     data_b.source='db';
-                                    item.data=data_b;
+                                    item.data=data_list[0];
                                     go();
                                 });
                             }

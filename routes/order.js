@@ -6,7 +6,7 @@ router.get('/ping',function(req, res) {
 });
 //- CART PROCESSING - START - //
 //9_cart_add
-router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", function(req, res) {
+router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity",function(req, res){
     /*--default_start */
     var helper = biz9.get_helper(req);
     /*--default_end */
@@ -104,6 +104,7 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", fun
                 helper.cart_item.cart_note=event_str;
             }
             biz9.update_item(db,DT_CART_ITEM,helper.cart_item,function(error,data) {
+                biz9.o('cart_item',data);
                 helper.cart_item=data;
                 call();
             });
@@ -112,6 +113,7 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity", fun
             sql={customer_id:helper.customer_id};
             biz9.get_cart(db,sql,function(error,data){
                 helper.cart=data;
+                biz9.o('get_cart',data);
                 call();
             });
         }
@@ -186,19 +188,53 @@ router.post("/cart_remove/:customer_id/:cart_item_tbl_id", function(req, res) {
             res.end();
         });
 });
-//9_cart_detail
-router.get('/cart_detail/:customer_id',function(req, res) {
-    /*--default_start */
-    var helper = biz9.get_helper(req);
-    helper.mobile = biz9.get_new_item(DT_BLANK,0);
-    helper.info = biz9.get_new_item(DT_BLANK,0);
-    /*--default_end */
+//9_cart_get
+router.get('/cart_get/:customer_id',function(req, res) {
     var helper = biz9.get_helper(req);
     helper.cart = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
                 db=_db;
+                call();
+            });
+        },
+        function(call){
+            sql={customer_id:helper.customer_id};
+            biz9.get_cart(db,sql,function(error,data){
+                helper.cart=data;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
+//9_cart_get
+router.get('/cart_summary/:customer_id',function(req, res) {
+    /*--default-start */
+    var helper = biz9.get_helper(req);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.primary= biz9.get_new_item(DT_BLANK,0);
+    helper.footer= biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    helper.page_title = APP_TITLE +': Shopping Cart Checkout';
+    /*--default-end */
+    helper.cart = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='primary';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.primary=page;
                 call();
             });
         },
@@ -227,6 +263,127 @@ router.get('/cart_detail/:customer_id',function(req, res) {
     ],
         function(err, result){
             res.send({helper:helper});
+            res.end();
+        });
+});
+
+
+//9_cart_detail 9_detail
+router.get('/cart_detail/:customer_id',function(req, res) {
+    /*--default-start */
+    var helper = biz9.get_helper(req);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.primary= biz9.get_new_item(DT_BLANK,0);
+    helper.footer= biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    helper.page_title = APP_TITLE +': Shopping Cart Checkout';
+    /*--default-end */
+    helper.render='order_cart_detail';
+    helper.render_menu='li_product';
+    /*--default_end */
+    helper.cart = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='primary';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.primary=page;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            title_url='footer';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.footer=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            sql={customer_id:helper.customer_id};
+            biz9.get_cart(db,sql,function(error,data){
+                helper.cart=data;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.render(helper.render,{helper:helper});
+            res.end();
+        });
+});
+//9_cart_checkout
+router.get('/cart_checkout/:customer_id',function(req, res) {
+    /*--default-start */
+    var helper = biz9.get_helper(req);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.primary= biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    helper.footer = biz9.get_new_item(DT_BLANK,0);
+    helper.page_title = APP_TITLE +': Shopping Cart Checkout';
+    /*--default-end */
+    helper.render_menu='li_product';
+    helper.render='order_checkout';
+    helper.cart = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            title_url='footer';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.footer=page;
+                call();
+            });
+        },
+        function(call){
+            sql={customer_id:helper.customer_id};
+            biz9.get_cart(db,sql,function(error,data){
+                helper.cart=data;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.render(helper.render,{helper:helper});
             res.end();
         });
 });
@@ -270,12 +427,18 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
         function(call){
             sql={customer_id:helper.customer_id};
             biz9.get_cart(db,sql,function(error,cart) {
-                cart=cart;
+                helper.cart=cart;
                 call();
             });
         },
         function(call){
             cart_checkout_order_add(helper,cart,function(error,data) {
+                order=data;
+                call();
+            });
+        },
+        function(call){
+            biz9.get_order(db,order.order_id,function(error,data) {
                 helper.order=data;
                 call();
             });
@@ -413,6 +576,12 @@ router.post('/checkout/payondelivery/:customer_id',function(req, res) {
         },
         function(call){
             cart_checkout_order_add(helper,cart,function(error,data) {
+                order=data;
+                call();
+            });
+        },
+        function(call){
+            biz9.get_order(db,order.order_id,function(error,data) {
                 helper.order=data;
                 call();
             });
@@ -557,8 +726,128 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
             res.end();
         });
 });
+router.post('/checkout/stripecard/:customer_id',function(req, res) {
+    /*--default_start */
+    var helper = biz9.get_helper(req);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    var customer=biz9.get_new_item(DT_BLANK,0);
+    var shipping=biz9.get_new_item(DT_BLANK,0);
+    var billing=biz9.get_new_item(DT_BLANK,0);
+    var mail_notification=biz9.get_new_item(DT_BLANK,0);
+    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var stripe_token=null;
+    var stripe_charge=null;
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                if(data_list.length>0){
+                    helper.info = data_list[0];
+                }
+                call();
+            });
+        },
+        function(call){
+            sql={customer_id:helper.customer_id};
+            biz9.get_cart(db,sql,function(error,cart) {
+                cart=cart;
+                call();
+            });
+        },
+        function(call){
+            customer=set_order_customer(helper);
+            shipping=set_order_shipping(helper);
+            billing=set_order_billing(helper);
+            mail_notification=set_order_mail_notification(helper.info,customer);
+            call();
+        },
+        function(call){
+            //- process card
+            stripe_key=helper.info.business_stripe_key;
+            credit_card={
+                number:billing.card_number,
+                exp_month:billing.card_exp_month,
+                exp_year:billing.card_exp_year,
+                cvc:billing.card_cvc
+            };
+            biz9.get_stripe_card_token(helper.info.business_stripe_key,credit_card.number,credit_card.exp_month,credit_card.exp_year,credit_card.cvc,function(err,data) {
+                if(err){
+                    helper.validation_message=err;
+                    call();
+                }else{
+                    stripe_token=data;
+                    call();
+                }
+            });
+        },
+        function(call){
+            //- process card 2
+            if(!helper.validation_message){
+                stripe_card_charge={amount:cart.price.cents,description:helper.info.business_name};
+                biz9.get_stripe_card_charge(helper.info.business_stripe_key,stripe_token,stripe_card_charge.amount,stripe_card_charge.description,function(err,data) {
+                    if(err){
+                        helper.validation_message=err;
+                        call();
+                    }else{
+                        stripe_charge=data;
+                        call();
+                    }
+                });
+            }else{
+                call();
+            }
+        },
+        function(call){
+            if(!helper.validation_message){
+                cart_checkout_order_add(helper,cart,function(error,data) {
+                    helper.order=data;
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+        function(call){
+            if(!helper.validation_message){
+                get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_send_in_blue_obj){
+                    send_in_blue_obj=_send_in_blue_obj;
+                    call();
+                });
+            }else{
+                call();
+            }
+        },
+        function(call){
+            if(!helper.validation_message){
+                biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+                    if(error){
+                        helper.validation_message=error;
+                    }
+                    call();
+                });
+            }else{
+                console.log('STRIPE_CARD_ERROR')
+                console.log(helper.validation_message);
+                call();
+            }
+        },
+    ],
+        function(err, result){
+            res.send({helper:helper});
+            res.end();
+        });
+});
 //9_stripe
-router.post('/checkout/striperedirecturl',function(req, res) {
+router.post('/checkout/striperedirecturl/:customer_id',function(req, res) {
     var helper = biz9.get_helper(req);
     helper.cart = biz9.get_new_item(DT_BLANK,0);
     helper.order = biz9.get_new_item(DT_BLANK,0);
@@ -570,11 +859,18 @@ router.post('/checkout/striperedirecturl',function(req, res) {
             });
         },
         function(call){
-            //-customer
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                if(data_list.length>0){
+                    helper.info = data_list[0];
+                }
+                call();
+            });
+        },
+        function(call){
             var customer=set_order_customer(helper);
-            //-shipping
             var shipping=set_order_shipping(helper);
-            //-billing
             var billing=set_order_billing(helper);
             call();
         },
@@ -586,39 +882,38 @@ router.post('/checkout/striperedirecturl',function(req, res) {
             });
         },
         function(call){
+            cart_checkout_order_add(helper,cart,function(error,data) {
+                helper.order=data;
+                call();
+            });
+        },
+        function(call){
             retail_line_items=[];
             for(a=0;a<cart.item_list.length;a++){
                 if(!cart.item_list[a].sub_note){
                     cart.item_list[a].sub_note= ' ';
                 }
                 retail_line_items.push({
-                    name:cart.item_list[a].item.title,
-                    quantity:cart.item_list[a].item.quantity,
-                    description:cart.item_list[a].item.sub_note,
-                    price:biz9.get_currency(cart.item_list[a].item.price),
-                    images:[cart.item_list[a].photo.square_mid_url],
+                    name:cart.item_list[a].title,
+                    quantity:cart.item_list[a].quantity,
+                    description:cart.item_list[a].sub_note,
+                    price:cart.price.cents,
+                    images:[cart.item_list[a].photo_obj.mid_url],
                 });
             }
             call();
         },
         function(call){
-            stripe_key='sk_test_51MCo2HGRzqmjqRkc7RoZvsnPnDW4tUHpi0n8a73PDUcw7dWJo41nYfjWhTLtGVpeT7uTmxtMB7mhwYf1zwKkWvHO00R9xKHKdz';
-            stripe_config={key:stripe_key,success_url:'https://google.com',cancel_url:'https://google.com'};
+            stripe_key=helper.info.business_stripe_key;
+            stripe_config={key:stripe_key,success_url:G_URL+'/order/checkout/striperedirecturlsuccess/'+helper.order.order_id,cancel_url:G_URL+'/order/cart_detail/'+helper.customer_id};
             biz9.get_stripe_redirect_url(stripe_config,retail_line_items,function(error,data) {
                 if(error){
-                    validation_message=error;
+                    helper.validation_message=error;
                     stripe_redirect_url='error';
-                    call();
                 }
+                console.log(error);
+                console.log(data);
                 helper.stripe_redirect_url=data;
-                call();
-            });
-        },
-        function(call){
-            //- order
-            billing.link=helper.stripe_redirect_url;
-            gart_checkout_order_add(customer,shipping,billing,cart,function(error,data) {
-                helper.order=data;
                 call();
             });
         },
@@ -628,10 +923,16 @@ router.post('/checkout/striperedirecturl',function(req, res) {
             res.end();
         });
 });
-//9_stripe_redirect
-router.post('/checkout/striperedirecturl/success/:order_id',function(req, res) {
+//9_stripe_success_b
+router.get('/checkout/striperedirecturlsuccess/:order_id',function(req, res) {
+    /*--default_start */
     var helper = biz9.get_helper(req);
-    helper.order = biz9.get_new_item(DT_ORDER,0);
+    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    /*--default_end */
+    var order=biz9.get_new_item(DT_BLANK,0);
+    var customer=biz9.get_new_item(DT_BLANK,0);
+    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -640,48 +941,59 @@ router.post('/checkout/striperedirecturl/success/:order_id',function(req, res) {
             });
         },
         function(call){
-            sql = {id:helper.order_id};
+            sql = {title_url:'info'};
             sort={};
-            biz9.get_sql(db,DT_ORDER,sql,sort,function(error,data_list) {
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 if(data_list.length>0){
-                    helper.order=data_list[0];
+                    helper.info = data_list[0];
                 }
                 call();
             });
         },
         function(call){
-            //-customer
-            var customer=set_order_customer(helper.order);
-            //-shipping
-            var shipping=set_order_shipping(helper.order);
-            //-billing
-            var billing=set_order_billing(helper.order);
-            call();
-        },
-        function(call){
-            sql={customer_id:helper.customer_id};
-            biz9.get_cart(db,sql,function(error,cart) {
-                cart=cart;
+            biz9.get_order(db,helper.order_id,function(error,data) {
+                helper.order=data;
                 call();
             });
         },
         function(call){
+            customer=set_order_customer({customer_name:helper.order.shipping_first_name + " " +helper.order.shipping_last_name,customer_email:helper.order.customer_email,customer_id:helper.order.customer_id});
+            shipping=set_order_shipping(helper.order);
+            billing=set_order_billing(helper.order);
+            mail_notification=set_order_mail_notification(helper.info,customer);
             call();
+        },
+        function(call){
+            get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_send_in_blue_obj){
+                send_in_blue_obj=_send_in_blue_obj;
+                call();
+            });
+        },
+        function(call){
+            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+                if(error){
+                    biz9.o('error_message',error);
+                    helper.validation_message=error;
+                    call();
+                }
+                call();
+            });
         },
     ],
         function(err, result){
-            res.send({helper:helper});
+            res.redirect('/order/checkout/success/'+helper.order.order_id);
             res.end();
         });
 });
 //9_checkout_success//9_success
 router.get('/checkout/success/:order_id',function(req, res) {
-    /*--default_start */
+    /*--default-start */
     var helper = biz9.get_helper(req);
-    helper.mobile = biz9.get_new_item(DT_BLANK,0);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.primary= biz9.get_new_item(DT_BLANK,0);
     helper.info = biz9.get_new_item(DT_BLANK,0);
-    /*--default_end */
-    helper.order = biz9.get_new_item(DT_ORDER,0);
+    /*--default-end */
+    helper.cart = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -713,6 +1025,54 @@ router.get('/checkout/success/:order_id',function(req, res) {
     ],
         function(err, result){
             res.send({helper:helper});
+            res.end();
+        });
+});
+
+//9_checkout_success//9_success
+router.get('/checkout/success_detail/:order_id',function(req, res) {
+    /*--default-start */
+    var helper = biz9.get_helper(req);
+    helper.item = biz9.get_new_item(DT_BLANK,0);
+    helper.primary= biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
+    helper.page_title = APP_TITLE +': Shopping Cart Checkout Success';
+    /*--default-end */
+    helper.render='order_cart_success';
+    helper.render_menu='li_product';
+    /*--default_end */
+    helper.cart = biz9.get_new_item(DT_BLANK,0);
+    async.series([
+        function(call){
+            biz9.get_connect_db(helper.app_title_id,function(error,_db){
+                db=_db;
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,page){
+                helper.mobile=page;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            biz9.get_order(db,helper.order_id,function(error,data) {
+                helper.order=data;
+                call();
+            });
+        },
+    ],
+        function(err, result){
+            res.render(helper.render,{helper:helper});
             res.end();
         });
 
@@ -958,5 +1318,4 @@ get_order_send_mail_notification=function(customer,shipping,billing,cart,order,m
             callback(send_in_blue_obj);
         });
 }
-
 module.exports = router;

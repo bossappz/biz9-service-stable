@@ -48,7 +48,7 @@ router.get('/category_list/:page_current',function(req, res) {
         },
         function(call){
             sql={};
-            sort={view_count:-1};
+           	sort={date_create:-1};
             page_current=helper.page_current;
             page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
             biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){

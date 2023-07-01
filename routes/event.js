@@ -48,8 +48,8 @@ router.get('/category_list/:page_current',function(req, res) {
 		},
 		function(call){
 			sql={};
-			sort={view_count:-1};
-			page_current=helper.page_current;
+		 	sort={date_create:-1};
+            page_current=helper.page_current;
 			page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
 			biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
 				helper.popular_list = data_list;

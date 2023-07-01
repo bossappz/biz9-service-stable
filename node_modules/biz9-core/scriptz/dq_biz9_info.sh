@@ -11,8 +11,8 @@ if [ "$APP_TITLE" = "BIZ9_SERVICE_TITLE" ]; then
     echo "BIZ9 SERVICE VERSION : ${BIZ9_SERVICE_VERSION}"
 fi
 #web
-if [ "${APP_TITLE}" = "${BIZ9_WEB_TITLE}" ]; then
-    echo "BIZ9 WEB VERSION : ${BIZ9_WEB_VERSION}"
+if [ "${APP_TITLE}" = "${BIZ9_WEBSITE_TITLE}" ]; then
+    echo "BIZ9 WEBSITE VERSION : ${BIZ9_WEBSITE_VERSION}"
 fi
 #core
 if [ "${APP_TITLE}" = "${BIZ9_CORE_TITLE}" ]; then

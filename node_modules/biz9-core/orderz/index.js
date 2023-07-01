@@ -114,7 +114,6 @@ module.exports = function(){
         return cart;
     }
     function set_cart_item(cart_item){
-        var has_option=false;
         var r_cart_item = biz9.get_new_item(DT_CART_ITEM,cart_item.tbl_id);
         r_cart_item.sub_total=0;
         r_cart_item.grand_total=0;
@@ -123,14 +122,13 @@ module.exports = function(){
         r_cart_item.option_note=' ';
         for(var a=0;a<6;a++){
             if(cart_item['item_option_'+a+'_tbl_id']){
-                if(cart_item['item_option_'+a+'_price']){
-                    has_option=true;
+                if(cart_item['item_option_'+a+'_price'] && !cart_item['item_option_'+a+'_title'].toLowerCase().includes('ship')){
                     r_cart_item.sub_total=r_cart_item.sub_total+parseFloat(cart_item['item_option_'+a+'_price']);
                 }
                 if(cart_item['item_option_'+a+'_title'].toLowerCase().includes('ship')){
                     r_cart_item.shipping_total=r_cart_item.shipping_total + parseFloat(cart_item['item_option_'+a+'_price']);
                 }
-                r_cart_item.option_note=r_cart_item.option_note+cart_item['item_option_'+a+'_title']+"-"+biz9.get_money(cart_item['item_option_'+a+'_price'])+", ";
+                r_cart_item.option_note=r_cart_item.option_note+cart_item['item_option_'+a+'_title']+"- "+biz9.get_money(cart_item['item_option_'+a+'_price'])+", ";
             }
         }
         if(r_cart_item.option_note){
@@ -143,9 +141,7 @@ module.exports = function(){
         }
         r_cart_item.cart_note=cart_item.cart_note ? (cart_item.cart_note): ' ' ;
         //option_note_end
-        if(!has_option){
-            r_cart_item.sub_total = cart_item.price;
-        }
+        r_cart_item.sub_total = r_cart_item.sub_total + parseFloat(cart_item.price);
         r_cart_item.shipping_total=(parseFloat(r_cart_item.shipping_total)*parseFloat(cart_item.quantity));
         r_cart_item.grand_total=(parseFloat(r_cart_item.sub_total)*parseFloat(cart_item.quantity))+ r_cart_item.shipping_total ;
         if(!cart_item.customer_id){
@@ -161,9 +157,9 @@ module.exports = function(){
         r_cart_item.old_price=biz9.get_money(cart_item.old_price);
         r_cart_item.category=cart_item.category;
         r_cart_item.quantity=cart_item.quantity;
-        discount = cart_item.old_price - cart_item.price;
-        if(!isNaN(discount) || !discount){
-           r_cart_item.discount="0%";
+        discount = parseFloat(cart_item.old_price) - parseFloat(cart_item.price);
+        if(isNaN(discount) || !discount){
+            r_cart_item.discount="0%";
         }else{
             r_cart_item.discount= String(parseInt(((discount / cart_item.old_price) * 100)))+"%";
         }

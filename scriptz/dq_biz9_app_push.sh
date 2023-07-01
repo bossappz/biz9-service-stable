@@ -9,7 +9,7 @@ echo "Enter APP Title"
 read app_title
 echo "Enter APP Title ID"
 read app_title_id
-echo "Enter APP Type [change-request, cms, docz, mobile, service, vendor, vendor-payment, website, workshop]"
+echo "Enter APP Type [change-request, cms, docz, mobile, service, server, vendor, vendor-payment, website, workshop]"
 read app_type
 echo "Enter Web Folder ID"
 read folder_id
@@ -17,16 +17,16 @@ echo "Enter Branch [unstable, testing, stable]"
 read branch
 # prod end #
 
-: '
 # test start #
-app_id=19;
-app_title='Cool DocZ'
-app_type='docz'
-app_title_id='cool339'
-folder_id='docz'
-branch='stable'
-# test end #
 '
+app_id=19;
+app_title='Cool Server'
+app_type='server'
+app_title_id='cool339'
+folder_id='server'
+branch='unstable'
+ '
+# test end #
 G_BIZ_APP_NEW_DIR=${G_PROJECT_FOLDER}${app_id}/${folder_id}
 if [ -d "${G_BIZ_APP_NEW_DIR}" ];  then
     echo "File exsist. overwrite?"
@@ -133,6 +133,16 @@ if [ "${app_type}" = "mobile" ]; then
     source .biz9_config.sh
     sed -i "s/BIZ9_MOBILE_VERSION=.*/BIZ9_MOBILE_VERSION='${BIZ9_MOBILE_VERSION}';/" ${G_BIZ_APP_NEW_DIR}/www/scripts/biz9-mobile/scriptz/config.js
     print_result="${BIZ9_MOBILE_TITLE} Version: ${BIZ9_MOBILE_VERSION}"
+fi
+if [ "${app_type}" = "server" ]; then
+    G_HAS_APP=false;
+    cd ${G_BIZ_APP_NEW_DIR}/
+    git init
+    git pull ${BIZ9_GIT_URL}/${BIZ9_SERVER_TITLE,,}-${branch}.git ${GIT_BRANCH} --allow-unrelated-histories
+    #sed
+    #.biz9_config
+    source .biz9_config.sh
+    print_result="${BIZ9_SERVER_TITLE} Version: ${BIZ9_SERVER_VERSION}"
 fi
 #sed
 #.biz9_config

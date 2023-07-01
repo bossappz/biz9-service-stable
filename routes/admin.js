@@ -265,8 +265,6 @@ router.post('/update_system', function(req, res, next) {
 			helper.left_nav=biz9.convert_biz_item(helper.left_nav,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social','left_nav_copyright'])
 			biz9.update_item(db,helper.mobile.title_url,helper.left_nav,function(error,data) {
 				helper.left_nav=data;
-				biz9.o('left_nav',helper.left_nav);
-
 				call();
 			});
 		},
@@ -398,7 +396,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.event.type=DT_EVENT;
 			helper.event.title_type='Event';
 			helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.event=biz9.convert_biz_item(DT_ITEM_MAP,['sub_note','type','title_type'])
+			helper.event=biz9.convert_biz_item(helper.event,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
 				helper.event=data;
 				call();
@@ -714,8 +712,8 @@ router.post('/update_system', function(req, res, next) {
 					event.start_date="2023"+"-"+parseInt(biz9.get_id(12) )+"-"+biz9.get_id(25);
 					event.start_time=biz9.get_id(23)+":"+biz9.get_id(58);
 					event.start_date_time = event.start_date + " " + event.start_time;
-					event.price=biz9.get_id(99);
-					event.old_price=parseFloat(event.price)+parseFloat(biz9.get_id(99));
+					event.price=parseFloat(250);
+					event.old_price=parseFloat(500);
 					event.note=biz9.get_test_note();
 					event.category=helper.event_category_list[a].title;
 					event.youtube_url='https://youtu.be/lXoLJLBPU-Q';
@@ -801,7 +799,7 @@ router.post('/update_system', function(req, res, next) {
 					event_item_size_item.top_tbl_id=event_item_size.top_tbl_id;
 					event_item_size_item.top_data_type=event_item_size.top_data_type;
 					event_item_size_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					event_item_size_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					event_item_size_item.price=parseInt(biz9.get_id(9))*10;
 					event_item_size_item=biz9.convert_biz_item(event_item_size_item,['price'])
 					helper.event_item_size_item_list.push(event_item_size_item);
 				}
@@ -857,7 +855,7 @@ router.post('/update_system', function(req, res, next) {
 					event_item_color_item.top_tbl_id=event_item_color.top_tbl_id;
 					event_item_color_item.top_data_type=event_item_color.top_data_type;
 					event_item_color_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					event_item_color_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					event_item_color_item.price=parseInt(biz9.get_id(9))*10;
 					event_item_color_item=biz9.convert_biz_item(event_item_color_item,['price'])
 					helper.event_item_color_item_list.push(event_item_color_item);
 				}
@@ -912,7 +910,7 @@ router.post('/update_system', function(req, res, next) {
 					event_item_brand_item.top_tbl_id=event_item_brand.top_tbl_id;
 					event_item_brand_item.top_data_type=event_item_brand.top_data_type;
 					event_item_brand_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					event_item_brand_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					event_item_brand_item.price=parseInt(biz9.get_id(9))*10;
 					event_item_brand_item=biz9.convert_biz_item(event_item_brand_item,['price'])
 					helper.event_item_brand_item_list.push(event_item_brand_item);
 				}
@@ -967,7 +965,7 @@ router.post('/update_system', function(req, res, next) {
 					event_item_shipping_item.top_tbl_id=event_item_shipping.top_tbl_id;
 					event_item_shipping_item.top_data_type=event_item_shipping.top_data_type;
 					event_item_shipping_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					event_item_shipping_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					event_item_shipping_item.price=parseInt(biz9.get_id(9))*10;
 					event_item_shipping_item=biz9.convert_biz_item(event_item_shipping_item,['price'])
 					helper.event_item_shipping_item_list.push(event_item_shipping_item);
 				}
@@ -1154,8 +1152,8 @@ router.post('/update_system', function(req, res, next) {
 					product.visible=biz9.get_id(5);
 					product.order=b;
 					product.sub_note=biz9.get_test_sub_note();
-					product.price=biz9.get_id(99);
-					product.old_price=parseFloat(product.price)+parseFloat(biz9.get_id(99));
+					product.price=parseFloat(250);
+					product.old_price=parseFloat(500);
 					product.note=biz9.get_test_note();
 					product.category=helper.product_category_list[a].title;
 					product.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
@@ -1241,7 +1239,7 @@ router.post('/update_system', function(req, res, next) {
 					product_item_size_item.top_tbl_id=product_item_size.top_tbl_id;
 					product_item_size_item.top_data_type=product_item_size.top_data_type;
 					product_item_size_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					product_item_size_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					product_item_size_item.price=parseInt(biz9.get_id(9))*10;
 					product_item_size_item=biz9.convert_biz_item(product_item_size_item,['price'])
 					helper.product_item_size_item_list.push(product_item_size_item);
 				}
@@ -1296,7 +1294,7 @@ router.post('/update_system', function(req, res, next) {
 					product_item_color_item.top_tbl_id=product_item_color.top_tbl_id;
 					product_item_color_item.top_data_type=product_item_color.top_data_type;
 					product_item_color_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					product_item_color_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					product_item_color_item.price=parseInt(biz9.get_id(9))*10;
 					product_item_color_item=biz9.convert_biz_item(product_item_color_item,['price'])
 					helper.product_item_color_item_list.push(product_item_color_item);
 				}
@@ -1351,7 +1349,7 @@ router.post('/update_system', function(req, res, next) {
 					product_item_brand_item.top_tbl_id=product_item_brand.top_tbl_id;
 					product_item_brand_item.top_data_type=product_item_brand.top_data_type;
 					product_item_brand_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					product_item_brand_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					product_item_brand_item.price=parseInt(biz9.get_id(9))*10;
 					product_item_brand_item=biz9.convert_biz_item(product_item_brand_item,['price'])
 					helper.product_item_brand_item_list.push(product_item_brand_item);
 				}
@@ -1406,7 +1404,7 @@ router.post('/update_system', function(req, res, next) {
 					product_item_shipping_item.top_tbl_id=product_item_shipping.top_tbl_id;
 					product_item_shipping_item.top_data_type=product_item_shipping.top_data_type;
 					product_item_shipping_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					product_item_shipping_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					product_item_shipping_item.price=parseInt(biz9.get_id(9))*10;
 					product_item_shipping_item=biz9.convert_biz_item(product_item_shipping_item,['price'])
 					helper.product_item_shipping_item_list.push(product_item_shipping_item);
 				}
@@ -1474,8 +1472,8 @@ router.post('/update_system', function(req, res, next) {
 					service.order=b;
 					service.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 					service.sub_note=biz9.get_test_sub_note();
-					service.price=biz9.get_id(99);
-					service.old_price=parseFloat(service.price)+parseFloat(biz9.get_id(99));
+					service.price=parseFloat(250);
+					service.old_price=parseFloat(500);
 					service.note=biz9.get_test_note();
 					service.category=helper.service_category_list[a].title;
 					service.youtube_url='https://youtu.be/lXoLJLBPU-Q';
@@ -1560,7 +1558,7 @@ router.post('/update_system', function(req, res, next) {
 					service_item_size_item.top_tbl_id=service_item_size.top_tbl_id;
 					service_item_size_item.top_data_type=service_item_size.top_data_type;
 					service_item_size_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					service_item_size_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					service_item_size_item.price=parseInt(biz9.get_id(9))*10;;
 					service_item_size_item=biz9.convert_biz_item(service_item_size_item,['price'])
 					helper.service_item_size_item_list.push(service_item_size_item);
 				}
@@ -1616,7 +1614,7 @@ router.post('/update_system', function(req, res, next) {
 					service_item_color_item.top_tbl_id=service_item_color.top_tbl_id;
 					service_item_color_item.top_data_type=service_item_color.top_data_type;
 					service_item_color_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					service_item_color_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					service_item_color_item.price=parseInt(biz9.get_id(9))*10;
 					service_item_color_item=biz9.convert_biz_item(service_item_color_item,['price'])
 					helper.service_item_color_item_list.push(service_item_color_item);
 				}
@@ -1671,7 +1669,7 @@ router.post('/update_system', function(req, res, next) {
 					service_item_brand_item.top_tbl_id=service_item_brand.top_tbl_id;
 					service_item_brand_item.top_data_type=service_item_brand.top_data_type;
 					service_item_brand_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					service_item_brand_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					service_item_brand_item.price=parseInt(biz9.get_id(9))*10;
 					service_item_brand_item=biz9.convert_biz_item(service_item_brand_item,['price'])
 					helper.service_item_brand_item_list.push(service_item_brand_item);
 				}
@@ -1727,7 +1725,7 @@ router.post('/update_system', function(req, res, next) {
 					service_item_feature_item.top_tbl_id=service_item_feature.top_tbl_id;
 					service_item_feature_item.top_data_type=service_item_feature.top_data_type;
 					service_item_feature_item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-					service_item_feature_item.price=biz9.get_id(99)+"."+biz9.get_id(99);
+					service_item_feature_item.price=parseInt(biz9.get_id(9))*10;
 					service_item_feature_item=biz9.convert_biz_item(service_item_feature_item,['price'])
 					helper.service_item_feature_item_list.push(service_item_feature_item);
 				}

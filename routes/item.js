@@ -146,161 +146,10 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             });
         },
         function(call){
-            biz9.get_item(db,helper.data_type,helper.tbl_id,function(error,data) {
+            biz9.copy_top_item(db,helper.data_type,helper.tbl_id,function(error,data) {
                 helper.item=data;
                 call();
             });
-        },
-        function(call){
-            if(helper.data_type==DT_PROJECT){
-                helper.item_copy=biz9.set_new_project(DT_PROJECT,helper.item);
-            }else if(helper.data_type==DT_BLOG_POST){
-                helper.item_copy=biz9.set_new_blog_post(DT_BLOG_POST,helper.item);
-            }else if(helper.data_type==DT_PRODUCT){
-                helper.item_copy=biz9.set_new_product(DT_PRODUCT,helper.item);
-            }else if(helper.data_type==DT_CATEGORY){
-                helper.item_copy=biz9.set_new_category(DT_CATEGORY,helper.item);
-            }else if(helper.data_type==DT_SERVICE){
-                helper.item_copy=biz9.set_new_service(DT_SERVICE,helper.item);
-            }else if(helper.data_type==DT_EVENT){
-                helper.item_copy=biz9.set_new_event(DT_EVENT,helper.item);
-            }else if(helper.data_type==DT_MEMBER){
-                helper.item_copy=biz9.set_new_member(DT_MEMBER,helper.item);
-            }
-            biz9.update_item(db,helper.data_type,helper.item_copy,function(error,data) {
-                helper.item_copy=data;
-                call();
-            });
-        },
-        function(call){
-            biz9.copy_photo_list(db,helper.tbl_id,helper.item_copy.tbl_id,function(error,data_list) {
-                call();
-            });
-        },
-        function(call){
-            sql = {parent_tbl_id:helper.tbl_id};
-            sort={date_create:1};
-            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
-                helper.sub_item_list = data_list;
-                call();
-            });
-        },
-        //a
-        function(call){
-            for(a=0;a<helper.sub_item_list.length;a++){
-                helper.sub_item_list[a].is_parent=false;
-                helper.sub_item_list[a].parent_tbl_id=helper.item_copy.tbl_id;//top
-                helper.top_sub_item_list.push(biz9.set_new_sub_item(DT_ITEM,helper.sub_item_list[a]));
-            }
-            call();
-        },
-        //b
-        function(call){
-            if(helper.top_sub_item_list.length>0){
-                biz9.update_list(db,helper.top_sub_item_list,function(error,data_list) {
-                    helper.top_sub_item_list=data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
-        //c
-        function(call){
-            sql = {top_tbl_id:helper.tbl_id};
-            sort={};
-            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
-                helper.other_list=data_list;
-                call();
-            });
-        },
-        //d
-        function(call){
-            for(a=0;a<helper.top_sub_item_list.length;a++){
-                for(b=0;b<helper.other_list.length;b++){
-                    if(helper.top_sub_item_list[a].org_tbl_id==helper.other_list[b].parent_tbl_id){
-                        helper.other_list[b].parent_tbl_id=helper.top_sub_item_list[a].tbl_id;
-                        helper.p1_org_sub_item_list.push(biz9.set_new_sub_item(DT_ITEM,helper.other_list[b]));
-                    }
-                }
-            }
-            call();
-        },
-        //e
-        function(call){
-            if(helper.p1_org_sub_item_list.length>0){
-                biz9.update_list(db,helper.p1_org_sub_item_list,function(error,data_list) {
-                    helper.p1_org_sub_item_list=data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
-        //f
-        function(call){
-            for(a=0;a<helper.p1_org_sub_item_list.length;a++){
-                for(b=0;b<helper.other_list.length;b++){
-                    if(helper.p1_org_sub_item_list[a].org_tbl_id==helper.other_list[b].parent_tbl_id){
-                        helper.other_list[b].parent_tbl_id=helper.p1_org_sub_item_list[a].tbl_id;
-                        helper.p2_org_sub_item_list.push(biz9.set_new_sub_item(DT_ITEM,helper.other_list[b]));
-                    }
-                }
-            }
-            call();
-        },
-        //g
-        function(call){
-            if(helper.p2_org_sub_item_list.length>0){
-                biz9.update_list(db,helper.p2_org_sub_item_list,function(error,data_list) {
-                    helper.p2_org_sub_item_list=data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
-        function(call){
-            for(a=0;a<helper.p2_org_sub_item_list.length;a++){
-                for(b=0;b<helper.other_list.length;b++){
-                    if(helper.p2_org_sub_item_list[a].org_tbl_id==helper.other_list[b].parent_tbl_id){
-                        helper.other_list[b].parent_tbl_id=helper.p2_org_sub_item_list[a].tbl_id;
-                        helper.p3_org_sub_item_list.push(biz9.set_new_sub_item(DT_ITEM,helper.other_list[b]));
-                    }
-                }
-            }
-            call();
-        },
-        function(call){
-            if(helper.p2_org_sub_item_list.length>0){
-                biz9.update_list(db,helper.p2_org_sub_item_list,function(error,data_list) {
-                    helper.p2_org_sub_item_list=data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
-        function(call){
-            for(a=0;a<helper.p3_org_sub_item_list.length;a++){
-                for(b=0;b<helper.other_list.length;b++){
-                    if(helper.p3_org_sub_item_list[a].org_tbl_id==helper.other_list[b].parent_tbl_id){
-                        helper.other_list[b].parent_tbl_id=helper.p3_org_sub_item_list[a].tbl_id;
-                        helper.p4_org_sub_item_list.push(biz9.set_new_sub_item(DT_ITEM,helper.other_list[b]));
-                    }
-                }
-            }
-            call();
-        },
-        function(call){
-            if(helper.p3_org_sub_item_list.length>0){
-                biz9.update_list(db,helper.p2_org_sub_item_list,function(error,data_list) {
-                    helper.p3_org_sub_item_list=data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
         },
     ],
         function(err, result){
@@ -362,7 +211,7 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
             call();
         },
         function(call){
-            get_new_review_update_send_mail_notification(customer_review,mail_notification,function(_send_in_blue_obj){
+            get_new_review_update_send_mail_notification(helper.info,customer_review,mail_notification,helper.item,function(_send_in_blue_obj){
                 send_in_blue_obj=_send_in_blue_obj;
                 call();
               });
@@ -375,8 +224,7 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
                 call();
             });
         },
-
-    ],
+     ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -602,7 +450,6 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
             res.end();
         });
 });
-
 //9_sub_item_copy
 router.post("/copy_sub_item/:parent_data_type/:parent_tbl_id/:sub_tbl_id",biz9.check_user,function(req, res) {
     var helper = biz9.get_helper(req);
@@ -920,8 +767,8 @@ router.post("/delete_sub_item/:data_type/:tbl_id",biz9.check_user,function(req, 
 });
 set_review_update_mail_notification=function(info,customer){
     mail_notification={};
-    mail_notification.subject=info.send_in_blue_item_review_update_subject;
-    mail_notification.template_id =info.send_in_blue_item_review_update_template_id;
+    mail_notification.subject= info.send_in_blue_item_review_update_subject;
+    mail_notification.template_id = info.SEND_IN_BLUE_ITEM_REVIEW_UPDATE_TEMPLATE_ID;
     mail_notification.copyright='Copyright @ '+info.business_name;
     mail_notification.sender={name:info.business_name,email:info.business_email};
     mail_notification.replyTo={name:info.business_name,email:info.business_email};
@@ -930,24 +777,23 @@ set_review_update_mail_notification=function(info,customer){
     mail_notification.to_list.push({name:info.business_name,email:info.business_email});
     return mail_notification;
 }
-
 set_review_customer=function(item){
     customer = biz9.get_new_item(DT_BLANK,0);
     customer.name=item.customer_name ? (item.customer_name) : "customer";
     customer.comment=item.comment ? (item.comment) : " ";
+    customer.location=item.location ? (item.location) : " ";
     customer.rating=item.rating ? (item.rating) : 1;
     customer.id=item.user.customer_id;
     customer.email=item.email ? (item.email) : "email_not_found@gmail.com";
     return customer;
 }
-
-get_new_review_update_send_mail_notification=function(customer_review,mail,callback){
+get_new_review_update_send_mail_notification=function(info,customer_review,mail,item,callback){
     var item_list=[];
     async.series([
         function(call){
             send_in_blue_obj=
                 {
-                    'templateId':parseInt(mail.template_id),
+                    'templateId':parseInt(info.send_in_blue_item_review_update_template_id),
                     'subject':mail.subject,
                     'sender' : {'email':mail.sender.email,'name':mail.sender.name},
                     'replyTo' : {'email':mail.replyTo.email,'name':mail.replyTo.name},
@@ -956,6 +802,10 @@ get_new_review_update_send_mail_notification=function(customer_review,mail,callb
                         "business_name":mail.sender.name,
                         "customer_email":customer.email,
                         "customer_name":customer.name,
+                        "item_title":item.title,
+                        "customer_location":customer_review.location,
+                        "customer_comment":customer_review.comment,
+                        "customer_rating":customer_review.rating + ' out of 5 rating',
                     }
                 }
             call();
@@ -965,6 +815,4 @@ get_new_review_update_send_mail_notification=function(customer_review,mail,callb
             callback(send_in_blue_obj);
         });
 }
-
-
 module.exports = router;

@@ -18,7 +18,7 @@ module.exports = function(){
                         biz9.o('send_in_blue_obj',send_in_blue);
                         biz9.o('send_mail_error',error);
                         biz9.o('send_mail_error_2',error.response.error.text);
-                        r_error=error.response.error.text;
+                        r_error='SEND_IN_BLUE_ERROR '+ error.response.error.text;
                         biz9.o('send_mail_error_3',r_error);
                         call();
                     }
