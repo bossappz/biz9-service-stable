@@ -259,8 +259,8 @@ router.post('/update_system', function(req, res, next) {
 			helper.left_nav.top_data_type=helper.mobile.data_type;
 			helper.left_nav.left_nav_header=biz9.get_id()+"_header";
 			helper.left_nav.left_nav_sub_note=biz9.get_test_sub_note();
-			helper.left_nav.left_nav_bar_title=biz9.get_id()+"_bar_title";
-			helper.left_nav.left_nav_bar_social=biz9.get_id()+"_bar_social";
+			helper.left_nav.left_nav_bar_title="Stay Connected";
+			helper.left_nav.left_nav_bar_social="Contact Us";
 			helper.left_nav.left_nav_copyright=biz9.get_id()+"_copyright";
 			helper.left_nav=biz9.convert_biz_item(helper.left_nav,['left_nav_header','left_nav_sub_note','left_nav_bar_title','left_nav_bar_social','left_nav_copyright'])
 			biz9.update_item(db,helper.mobile.title_url,helper.left_nav,function(error,data) {
@@ -292,7 +292,7 @@ router.post('/update_system', function(req, res, next) {
 			helper.home.card_double_visible='true';
 			helper.home.card_double_data_type=DT_PRODUCT;
 			helper.home.card_double_category=DT_PRODUCT;
-			helper.home.biz_list="card_banner_visible,card_banner_data_type,card_banner_order,card_banner_category,card_popular_visible,card_popular_data_type,card_category_visible,card_category_data_type,                >  \card_buy_visible,card_buy_data_type,card_double_visible,card_double_data_type,card_double_category"
+			helper.home.biz_list="card_banner_visible,card_banner_data_type,card_banner_order,card_banner_category,card_popular_visible,card_popular_data_type,card_category_visible,card_category_data_type,  \card_buy_visible,card_buy_data_type,card_double_visible,card_double_data_type,card_double_category"
 			biz9.update_item(db,DT_ITEM_MAP,helper.home,function(error,data) {
 				helper.home=data;
 				call();
@@ -473,7 +473,7 @@ router.post('/update_system', function(req, res, next) {
 			});
 		},
 		//mobile sub_item
-		//-- page_list_sub_item_event
+		//-- page_list_sub_item_event_1
 		//---
 		function(call){
 			helper.event=biz9.get_new_item(helper.mobile.title_url,0);
@@ -489,9 +489,9 @@ router.post('/update_system', function(req, res, next) {
 			helper.event.type=DT_EVENT;
 			helper.event.title_type='Event';
 			helper.event.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
-			helper.service=biz9.convert_biz_item(helper.event,['sub_note','type','title_type'])
+			helper.event=biz9.convert_biz_item(helper.event,['sub_note','type','title_type'])
 			biz9.update_item(db,helper.mobile.title_url,helper.event,function(error,data) {
-				helper.service=data;
+				helper.event=data;
 				call();
 			});
 		},
@@ -566,7 +566,6 @@ router.post('/update_system', function(req, res, next) {
 				call();
 			});
 		},
-
 		//blog_post
 		//gallery
 		//product
