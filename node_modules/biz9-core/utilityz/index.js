@@ -1,4 +1,4 @@
-/* Copyright (C) 2021 9_OPZ #Certified CoderZ
+/* Copyright (C) 2016 9_OPZ #Certified CoderZ
  * GNU GENERAL PUBLIC LICENSE
  * Full LICENSE file ( gpl-3.0-licence.txt )
  * BiZ9 Framework

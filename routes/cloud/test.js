@@ -17,6 +17,7 @@ router.get('/report', function(req, res, next) {
             });
         },
         function(call){
+            console.log('bbbbbbbb');
             helper.item.field_1=biz9.get_id();
             helper.item.field_2=biz9.get_id();
             helper.item.field_3=biz9.get_id();
@@ -27,6 +28,7 @@ router.get('/report', function(req, res, next) {
             });
         },
         function(call){
+            console.log('cccccc');
             biz9.get_item(db,DT_BLANK,helper.item.tbl_id,function(error,data) {
                 helper.item=data;
                 biz9.o('DB_FIELD_BLANK_GET',helper.item);
@@ -87,7 +89,7 @@ router.post('/bucket_get_data', function(req, res, next) {
     helper.re_test_file='re_test_file.png'
    async.series([
         function(call){
-            biz9.get_bucket_data(helper.bucket_title,helper.re_test_file,function(error,data) {
+            iz9.get_bucket_data(helper.bucket_title,helper.re_test_file,function(error,data) {
                 helper.error=error;
                 helper.data=data;
                 call();

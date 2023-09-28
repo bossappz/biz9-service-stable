@@ -724,9 +724,6 @@ router.post('/profile_update',function(req, res) {
             res.end();
         });
 });
-
-
-
 router.post('/send_mail_message',function(req, res) {
     /*--default_start--*/
     var helper = biz9.get_helper(req);

@@ -1,4 +1,4 @@
-/* Copyright (C) 2021 9_OPZ #Certified CoderZ
+/* Copyright (C) 2016 9_OP #Certified CoderZ
  * GNU GENERAL PUBLIC LICENSE
  * Full LICENSE file ( gpl-3.0-licence.txt )
  * BiZ9 Framework
@@ -88,7 +88,7 @@ module.exports = function(){
                     }
                     run();
                 }else{
-                    error = "error: no buffer found :" +" file_path:"+file_path + ", key: "+key + ", content_type:"+content_type;
+                    error = "error: update bucket no buffer found :" +" file_path:"+file_path + ", key: "+key + ", content_type:"+content_type;
                     biz9.o('update_bucket_file',error);
                     call();
                 }

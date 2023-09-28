@@ -56,6 +56,7 @@ module.exports = function(){
     }
     module.get_sql_tbl_id=function(db,data_type,sql_obj,sort_by,callback){
         var error=null;
+        var data = {};
         async function run() {
             try {
                 const collection = db.collection(data_type);

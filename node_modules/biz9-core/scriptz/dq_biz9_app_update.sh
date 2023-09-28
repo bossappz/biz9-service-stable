@@ -48,6 +48,8 @@ source ${FRAMEWORK_SRC_PROJECT}.biz9_config.sh
     cp -rf ${FRAMEWORK_SRC_PROJECT}scriptz ${G_BIZ_APP_DIR}/
     cp -rf ${FRAMEWORK_SRC_PROJECT}www ${G_BIZ_APP_DIR}/
     cp -rf ${FRAMEWORK_SRC_PROJECT}other/scriptz ${G_BIZ_APP_DIR}/other
+    cp -rf ${FRAMEWORK_SRC_PROJECT}other/cordova/android ${G_BIZ_APP_DIR}/other/cordova/android
+    cp -rf ${FRAMEWORK_SRC_PROJECT}other/cordova/config ${G_BIZ_APP_DIR}/other/cordova/config
     #mv configs
     cp -rf  .biz9_update_bk/.biz9_config.sh ${G_BIZ_APP_DIR}/
     cp -rf  .biz9_update_bk/config.js ${G_BIZ_APP_DIR}/www/scripts/biz9-mobile/scriptz/

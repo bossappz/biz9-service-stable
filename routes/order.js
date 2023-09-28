@@ -399,7 +399,7 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
     var shipping=biz9.get_new_item(DT_BLANK,0);
     var billing=biz9.get_new_item(DT_BLANK,0);
     var mail_notification=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -444,13 +444,13 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
             });
         },
         function(call){
-            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_send_in_blue_obj){
-                send_in_blue_obj=_send_in_blue_obj;
+            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_brevo_obj){
+                brevo_obj=_brevo_obj;
                 call();
             });
         },
         function(call){
-            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+            biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -474,7 +474,7 @@ router.post('/checkout/zelle/:customer_id',function(req, res) {
     var shipping=biz9.get_new_item(DT_BLANK,0);
     var billing=biz9.get_new_item(DT_BLANK,0);
     var mail_notification=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -513,13 +513,13 @@ router.post('/checkout/zelle/:customer_id',function(req, res) {
             });
         },
         function(call){
-            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_send_in_blue_obj){
-                send_in_blue_obj=_send_in_blue_obj;
+            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_brevo_obj){
+                brevo_obj=_brevo_obj;
                 call();
             });
         },
         function(call){
-            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+            biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -542,7 +542,7 @@ router.post('/checkout/payondelivery/:customer_id',function(req, res) {
     var shipping=biz9.get_new_item(DT_BLANK,0);
     var billing=biz9.get_new_item(DT_BLANK,0);
     var mail_notification=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -587,13 +587,13 @@ router.post('/checkout/payondelivery/:customer_id',function(req, res) {
             });
         },
         function(call){
-            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_send_in_blue_obj){
-                send_in_blue_obj=_send_in_blue_obj;
+            get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_brevo_obj){
+                brevo_obj=_brevo_obj;
                 call();
             });
         },
         function(call){
-            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+            biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -616,7 +616,7 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
     var shipping=biz9.get_new_item(DT_BLANK,0);
     var billing=biz9.get_new_item(DT_BLANK,0);
     var mail_notification=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     var stripe_token=null;
     var stripe_charge=null;
     async.series([
@@ -698,8 +698,8 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
         },
         function(call){
             if(!helper.validation_message){
-                get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_send_in_blue_obj){
-                    send_in_blue_obj=_send_in_blue_obj;
+                get_order_send_mail_notification(customer,shipping,billing,cart,helper.order,mail_notification,function(_brevo_obj){
+                    brevo_obj=_brevo_obj;
                     call();
                 });
             }else{
@@ -708,7 +708,7 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
         },
         function(call){
             if(!helper.validation_message){
-                biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+                biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                     if(error){
                         helper.validation_message=error;
                     }
@@ -736,7 +736,7 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
     var shipping=biz9.get_new_item(DT_BLANK,0);
     var billing=biz9.get_new_item(DT_BLANK,0);
     var mail_notification=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     var stripe_token=null;
     var stripe_charge=null;
     async.series([
@@ -818,8 +818,8 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
         },
         function(call){
             if(!helper.validation_message){
-                get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_send_in_blue_obj){
-                    send_in_blue_obj=_send_in_blue_obj;
+                get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_brevo_obj){
+                    brevo_obj=_brevo_obj;
                     call();
                 });
             }else{
@@ -828,7 +828,7 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
         },
         function(call){
             if(!helper.validation_message){
-                biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+                biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                     if(error){
                         helper.validation_message=error;
                     }
@@ -932,7 +932,7 @@ router.get('/checkout/striperedirecturlsuccess/:order_id',function(req, res) {
     /*--default_end */
     var order=biz9.get_new_item(DT_BLANK,0);
     var customer=biz9.get_new_item(DT_BLANK,0);
-    var send_in_blue_obj=biz9.get_new_item(DT_BLANK,0);
+    var brevo_obj=biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -964,13 +964,13 @@ router.get('/checkout/striperedirecturlsuccess/:order_id',function(req, res) {
             call();
         },
         function(call){
-            get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_send_in_blue_obj){
-                send_in_blue_obj=_send_in_blue_obj;
+            get_order_send_mail_notification(customer,shipping,billing,helper.order,mail_notification,function(_brevo_obj){
+                brevo_obj=_brevo_obj;
                 call();
             });
         },
         function(call){
-            biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
+            biz9.send_brevo_mail(helper.info.brevo_key,brevo_obj,function(error,data) {
                 if(error){
                     biz9.o('error_message',error);
                     helper.validation_message=error;
@@ -1080,8 +1080,8 @@ router.get('/checkout/success_detail/:order_id',function(req, res) {
 set_order_mail_notification=function(info,customer){
     mail_notification={};
 
-    mail_notification.subject=info.send_in_blue_order_send_subject;
-    mail_notification.template_id=info.send_in_blue_order_send_template_id;
+    mail_notification.subject=info.brevo_order_send_subject;
+    mail_notification.template_id=info.brevo_order_send_template_id;
 
     mail_notification.copyright='Copyright @ '+info.business_name;
     mail_notification.sender={name:info.business_name,email:info.business_email};
@@ -1276,11 +1276,10 @@ get_order_send_mail_notification=function(customer,shipping,billing,cart,order,m
                     photo_url:cart.item_list[a].photo_obj.square_mid_url,
                 });
             }
-
             call();
         },
         function(call){
-            send_in_blue_obj=
+            brevo_obj=
                 {
                     'templateId':parseInt(mail.template_id),
                     'subject':mail.subject,
@@ -1315,7 +1314,7 @@ get_order_send_mail_notification=function(customer,shipping,billing,cart,order,m
         }
     ],
         function(err, result){
-            callback(send_in_blue_obj);
+            callback(brevo_obj);
         });
 }
 module.exports = router;

@@ -5,7 +5,7 @@ The core engine of the Biz9 Framework.
 
 ## Authors
 
-- Brandon 'Tank' Poole Sr. [@9_tank](https://www.github.com/certifiedcoderz)
+- Brandon 'TaNK9' Poole Sr. [@9_tank](https://www.github.com/biz9framework)
 
 
 ## 🚀 About Us
