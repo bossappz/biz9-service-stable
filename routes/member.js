@@ -44,6 +44,11 @@ router.get('/category_list/:page_current',function(req, res) {
                 helper.page_count=page_count;
                 call();
             });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         }
     ],
         function(err, result){
@@ -97,6 +102,11 @@ router.get('/member_list/:category/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -153,6 +163,11 @@ router.get('/member_detail/:tbl_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

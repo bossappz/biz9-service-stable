@@ -26,15 +26,15 @@ router.get('/home',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
         function(call){
             title_url='home';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.home=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.home=data;
                 call();
             });
         },
@@ -79,8 +79,7 @@ router.get('/home',function(req, res) {
                         call();
                     });
                 }else if(helper.home.card_banner_data_type==DT_GALLERY){
-                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) {
-                        helper.card_banner_list = data_list;
+                    biz9.get_galleryz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count) { helper.card_banner_list = data_list;
                         call();
                     });
                 }else{
@@ -212,6 +211,11 @@ router.get('/home',function(req, res) {
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -235,8 +239,8 @@ router.get('/home_edit',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
@@ -263,6 +267,11 @@ router.get('/home_edit',function(req, res) {
             helper.data_type_list.push({title:'Services',value:DT_SERVICE});
             call();
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -285,8 +294,8 @@ router.get('/blank',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
@@ -295,6 +304,11 @@ router.get('/blank',function(req, res) {
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -321,8 +335,8 @@ router.get('/about',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
@@ -336,8 +350,13 @@ router.get('/about',function(req, res) {
         },
         function(call){
             title_url='about';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.about=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.about=data;
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -364,8 +383,8 @@ router.get('/contact',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
@@ -379,8 +398,13 @@ router.get('/contact',function(req, res) {
         },
         function(call){
             title_url='contact';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.contact=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.contact=data;
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -407,8 +431,8 @@ router.get('/page/:title_url',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                helper.mobile=page;
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
                 call();
             });
         },
@@ -423,8 +447,13 @@ router.get('/page/:title_url',function(req, res) {
         function(call){
             title_url='mobile';
             sub_page=helper.title_url;
-            biz9.get_sub_page(db,title_url,sub_page,{},function(error,page){
-                helper.page=page;
+            biz9.get_sub_page(db,title_url,sub_page,{},function(error,data){
+                helper.page=data;
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -453,6 +482,11 @@ router.get('/login_check', function(req, res, next) {
                 }else{
                     helper.validation_message = 'In Correct Login';
                 }
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -511,6 +545,11 @@ router.get('/sql',function(req, res) {
             biz9.delete_item(db,helper.item.data_type,helper.item.tbl_id,function(error,data) {
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.render(helper.render,{helper:helper});
@@ -536,11 +575,11 @@ router.get('/setting',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                if(page){
-                    helper.mobile=page;
-                    helper.primary=page.primary;
-                    helper.left_nav=page.left_nav;
+            biz9.get_page(db,title_url,{},function(error,data){
+                if(data){
+                    helper.mobile=data;
+                    helper.primary=data.primary;
+                    helper.left_nav=data.left_nav;
                 }
                 call();
             });
@@ -550,6 +589,11 @@ router.get('/setting',function(req, res) {
             sort={};
             biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
                 helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -579,11 +623,11 @@ router.post('/setting_update',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                if(page){
-                    helper.mobile=page;
-                    helper.primary=page.primary;
-                    helper.left_nav=page.left_nav;
+            biz9.get_page(db,title_url,{},function(error,data){
+                if(data){
+                    helper.mobile=data;
+                    helper.primary=data.primary;
+                    helper.left_nav=data.left_nav;
                 }
                 call();
             });
@@ -631,6 +675,11 @@ router.post('/setting_update',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -657,11 +706,11 @@ router.post('/profile_update',function(req, res) {
         },
         function(call){
             title_url='mobile';
-            biz9.get_page(db,title_url,{},function(error,page){
-                if(page){
-                    helper.mobile=page;
-                    helper.primary=page.primary;
-                    helper.left_nav=page.left_nav;
+            biz9.get_page(db,title_url,{},function(error,data){
+                if(data){
+                    helper.mobile=data;
+                    helper.primary=data.primary;
+                    helper.left_nav=data.left_nav;
                 }
                 call();
             });
@@ -718,6 +767,11 @@ router.post('/profile_update',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -740,8 +794,8 @@ router.post('/send_mail_message',function(req, res) {
         function(call){
             title_url='mobile';
             sub_page='primary';
-            biz9.get_sub_page(db,title_url,sub_page,{},function(error,page){
-                helper.primary=page;
+            biz9.get_sub_page(db,title_url,sub_page,{},function(error,data){
+                helper.primary=data;
                 call();
             });
         },
@@ -767,6 +821,11 @@ router.post('/send_mail_message',function(req, res) {
                 if(error){
                     helper.validation_message=error;
                 }
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },

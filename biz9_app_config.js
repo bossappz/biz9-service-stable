@@ -1,6 +1,6 @@
 /* --- APP CONFIG START  --- */
 const APP_ID='19';
-const APP_TITLE_ID='abc';
+const APP_TITLE_ID='mobile-september';
 const APP_TITLE='BiZ9-Service';
 const APP_PORT="1901";
 const APP_CLOUD_BUCKET='bappz';
@@ -21,12 +21,12 @@ const EMAIL_SENDER="bossappz6@gmail.com";
 const EMAIL_REPLY="notifications@bossappz.net";
 /* --- ENV EMAILZ START --- */
 /* --- MONGO START --- */
-const MONGO_IP='localhost';  // OS_ENV = process.env.BIZ9_BOX_217; local = 'localhost'; ip_address = '0.0.0.0'
+const MONGO_IP='localhost';  // OS_ENV = process.env.BIZ9_BOX_IP_217; local = 'localhost'; ip_address = '0.0.0.0'
 const MONGO_USERNAME_PASSWORD=''; // local = ''; remote = 'ban:1234567@'
 const MONGO_PORT="27019";
 const MONGO_SERVER_USER='admin';
 const MONGO_CONFIG_FILE='/etc/mongod.conf';
-const SSH_KEY_FILE='/home/admin/www/other/aws/ec2_key/217.pem';
+const SSH_KEY_FILE='';
 /* --- MONGO END --- */
 /* --- REDIS START --- */
 const REDIS_URL="0.0.0.0";

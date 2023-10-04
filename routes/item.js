@@ -59,6 +59,11 @@ router.get('/photo_list/:parent_data_type/:parent_tbl_id',function(req, res) {
                 helper.photo_list = data_list;
                 call();
             });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         }
     ],
         function(err, result){
@@ -120,7 +125,11 @@ router.get('/photo_detail/:tbl_id/:parent_data_type/:parent_tbl_id',function(req
                 });
             }
         },
-
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -151,6 +160,11 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -214,7 +228,7 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
             get_new_review_update_send_mail_notification(helper.info,customer_review,mail_notification,helper.item,function(_send_in_blue_obj){
                 send_in_blue_obj=_send_in_blue_obj;
                 call();
-              });
+            });
         },
         function(call){
             biz9.send_mail(helper.info.send_in_blue_key,send_in_blue_obj,function(error,data) {
@@ -224,7 +238,12 @@ router.post('/review_update/:item_data_type/:item_tbl_id',function(req, res) {
                 call();
             });
         },
-     ],
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
+    ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -271,6 +290,11 @@ router.get('/review_list/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -316,6 +340,11 @@ router.post('/review_delete/:review_tbl_id/:item_data_type/:item_tbl_id',functio
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -383,6 +412,11 @@ router.get('/sub_item_list/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id',
             helper.page_title=helper.parent_item.title + ' Sub Items';
             call();
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -429,7 +463,7 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
         },
         function(call){
             if(helper.parent_item.parent_tbl_id){
-        biz9.get_item(db,helper.parent_item.parent_data_type,helper.parent_item.parent_tbl_id,function(error,data) {
+                biz9.get_item(db,helper.parent_item.parent_data_type,helper.parent_item.parent_tbl_id,function(error,data) {
                     helper.top_item=data;
                     call();
                 });
@@ -444,6 +478,11 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -625,6 +664,11 @@ router.post("/copy_sub_item/:parent_data_type/:parent_tbl_id/:sub_tbl_id",biz9.c
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -759,6 +803,11 @@ router.post("/delete_sub_item/:data_type/:tbl_id",biz9.check_user,function(req, 
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

@@ -55,6 +55,11 @@ router.get('/category_list/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -108,6 +113,11 @@ router.get('/product_list/:category/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -194,6 +204,11 @@ router.get('/product_detail/:title_url',function(req, res) {
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

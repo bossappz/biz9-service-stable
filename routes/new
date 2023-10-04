@@ -1,0 +1,7 @@
+ },
+   function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
+

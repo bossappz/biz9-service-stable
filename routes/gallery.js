@@ -44,7 +44,12 @@ router.get('/category_list/:page_current',function(req, res) {
                 helper.page_count=page_count;
                 call();
             });
-        }
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -94,6 +99,11 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
                 helper.gallery_list = data_list;
                 helper.item_count=item_count;
                 helper.page_count=page_count;
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         },
@@ -177,6 +187,11 @@ router.get('/gallery_detail/:title_url',function(req, res) {
             }else{
                 call();
             }
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         },
     ],
         function(err, result){

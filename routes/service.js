@@ -55,6 +55,11 @@ router.get('/category_list/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -107,6 +112,11 @@ router.get('/service_list/:category/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -175,10 +185,10 @@ router.get('/service_detail/:title_url',function(req, res) {
                 call();
             });
         },
-		function(call){
-			helper.service_visible_option_list = biz9.get_service_visible_option_list();
-			call();
-		},
+        function(call){
+            helper.service_visible_option_list = biz9.get_service_visible_option_list();
+            call();
+        },
         function(call){
             if(helper.title_url!="0"){
                 biz9.update_item_view_count(db,DT_SERVICE,helper.service.tbl_id,helper.customer_id,function(error,data) {
@@ -188,6 +198,11 @@ router.get('/service_detail/:title_url',function(req, res) {
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

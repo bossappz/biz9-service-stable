@@ -17,7 +17,6 @@ router.get('/report', function(req, res, next) {
             });
         },
         function(call){
-            console.log('bbbbbbbb');
             helper.item.field_1=biz9.get_id();
             helper.item.field_2=biz9.get_id();
             helper.item.field_3=biz9.get_id();
@@ -28,13 +27,17 @@ router.get('/report', function(req, res, next) {
             });
         },
         function(call){
-            console.log('cccccc');
             biz9.get_item(db,DT_BLANK,helper.item.tbl_id,function(error,data) {
                 helper.item=data;
                 biz9.o('DB_FIELD_BLANK_GET',helper.item);
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -65,7 +68,7 @@ router.post('/bucket_file_update', function(req, res, next) {
     helper.item = biz9.get_new_item(DT_BLANK,0);
     test_file=path.join(__dirname,'../../public/images/no_image.png');;
     re_test_file='re_test_file.png'
-   async.series([
+    async.series([
         function(call){
             biz9.update_bucket_file(helper.title,test_file,re_test_file,function(error,data) {
                 helper.error=error;
@@ -87,9 +90,9 @@ router.post('/bucket_get_data', function(req, res, next) {
     var helper = biz9.get_helper(req);
     helper.item = biz9.get_new_item(DT_BLANK,0);
     helper.re_test_file='re_test_file.png'
-   async.series([
+    async.series([
         function(call){
-            iz9.get_bucket_data(helper.bucket_title,helper.re_test_file,function(error,data) {
+            biz9.get_bucket_data(helper.bucket_title,helper.re_test_file,function(error,data) {
                 helper.error=error;
                 helper.data=data;
                 call();
@@ -106,7 +109,7 @@ router.post('/write_file', function(req, res, next) {
     helper.item = biz9.get_new_item(DT_BLANK,0);
     test_file=path.join(__dirname,'../../public/images/no_image.png');;
     re_test_file=path.join(__dirname,'../../public/images/no_image_test.png');;
-   async.series([
+    async.series([
         function(call){
             sharp(test_file)
                 .toFile(re_test_file,(error,info)=> {
@@ -157,6 +160,11 @@ router.get('/uptime', function(req, res, next) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -164,4 +172,3 @@ router.get('/uptime', function(req, res, next) {
         });
 });
 module.exports = router;
-

@@ -32,6 +32,11 @@ router.post('/send_brevo_mail_message',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -232,6 +237,11 @@ router.post('/update_email_list',function(req,res){
         },
         function(call){
             biz9.send_mail(mail,function(_data) {
+                call();
+            });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
                 call();
             });
         }

@@ -48,11 +48,16 @@ router.get('/category_list/:page_current',function(req, res) {
 		},
 		function(call){
 			sql={};
-		 	sort={date_create:-1};
-            page_current=helper.page_current;
+			sort={date_create:-1};
+			page_current=helper.page_current;
 			page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
 			biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
 				helper.popular_list = data_list;
+				call();
+			});
+		},
+		function(call){
+			biz9.close_connect_db(function(error){
 				call();
 			});
 		},
@@ -108,6 +113,11 @@ router.get('/event_list/:category/:page_current',function(req, res) {
 				call();
 			});
 		},
+		function(call){
+			biz9.close_connect_db(function(error){
+				call();
+			});
+		},
 	],
 		function(err, result){
 			res.send({helper:helper});
@@ -123,8 +133,8 @@ router.get('/event_detail/:title_url',function(req, res) {
 	helper.info = biz9.get_new_item(DT_BLANK,0);
 	/*--default_end */
 	helper.event = biz9.get_new_item(DT_EVENT,0);
- 	helper.category_list = [];
-    helper.card_double_list = [];
+	helper.category_list = [];
+	helper.card_double_list = [];
 	async.series([
 		function(call){
 			biz9.get_connect_db(helper.app_title_id,function(error,_db){
@@ -158,19 +168,19 @@ router.get('/event_detail/:title_url',function(req, res) {
 			}
 		},
 		function(call){
-            if(helper.event.category){
-                sql={category:helper.event.category};
-                sort={date_create:-1};
-                page_current=1;
-                page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
-                biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
-                    helper.card_double_list = data_list;
-                    call();
-                });
-            }else{
-                call();
-            }
-        },
+			if(helper.event.category){
+				sql={category:helper.event.category};
+				sort={date_create:-1};
+				page_current=1;
+				page_size=PAGE_SIZE_SLIDE_SHOW_LIST;
+				biz9.get_eventz(db,sql,sort,page_current,page_size,function(error,data_list,total_item_count,page_count){
+					helper.card_double_list = data_list;
+					call();
+				});
+			}else{
+				call();
+			}
+		},
 		function(call){
 			sort={type:-1};
 			page_current=helper.page_current;
@@ -192,6 +202,11 @@ router.get('/event_detail/:title_url',function(req, res) {
 			}else{
 				call();
 			}
+		},
+		function(call){
+			biz9.close_connect_db(function(error){
+				call();
+			});
 		},
 	],
 		function(err, result){

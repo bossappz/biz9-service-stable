@@ -116,6 +116,11 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity",func
                 biz9.o('get_cart',data);
                 call();
             });
+        },
+   function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         }
     ],
         function(err, result){
@@ -150,6 +155,11 @@ router.post("/cart_update/:customer_id/:cart_item_tbl_id/:quantity", function(re
                 call();
             });
         },
+   function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -182,6 +192,11 @@ router.post("/cart_remove/:customer_id/:cart_item_tbl_id", function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -206,6 +221,11 @@ router.get('/cart_get/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -260,14 +280,17 @@ router.get('/cart_summary/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
             res.end();
         });
 });
-
-
 //9_cart_detail 9_detail
 router.get('/cart_detail/:customer_id',function(req, res) {
     /*--default-start */
@@ -326,6 +349,11 @@ router.get('/cart_detail/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.render(helper.render,{helper:helper});
@@ -381,6 +409,11 @@ router.get('/cart_checkout/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.render(helper.render,{helper:helper});
@@ -457,6 +490,11 @@ router.post('/checkout/cashapp/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -526,6 +564,11 @@ router.post('/checkout/zelle/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -600,6 +643,11 @@ router.post('/checkout/payondelivery/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -720,6 +768,11 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -840,6 +893,11 @@ router.post('/checkout/stripecard/:customer_id',function(req, res) {
                 call();
             }
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -917,6 +975,11 @@ router.post('/checkout/striperedirecturl/:customer_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -979,6 +1042,11 @@ router.get('/checkout/striperedirecturlsuccess/:order_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.redirect('/order/checkout/success/'+helper.order.order_id);
@@ -1022,6 +1090,11 @@ router.get('/checkout/success/:order_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -1070,6 +1143,11 @@ router.get('/checkout/success_detail/:order_id',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.render(helper.render,{helper:helper});
@@ -1253,6 +1331,11 @@ router.get('/order_list/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

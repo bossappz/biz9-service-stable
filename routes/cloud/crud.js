@@ -17,6 +17,11 @@ router.post("/delete/:data_type/:tbl_id", function(req, res) {
             biz9.delete_item(db,helper.data_type,helper.tbl_id,function(error,data) {
                 call();
             });
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         }
     ],
         function(err, result){
@@ -40,6 +45,11 @@ router.post("/update/:data_type/:tbl_id", function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -64,6 +74,11 @@ router.post("/update_biz/:data_type/:tbl_id", function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});
@@ -86,6 +101,11 @@ router.get("/get/:data_type/:tbl_id", function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        }
     ],
         function(err, result){
             res.send({helper:helper});

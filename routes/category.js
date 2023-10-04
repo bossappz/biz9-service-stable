@@ -45,6 +45,11 @@ router.get('/category_list/:data_type/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -101,6 +106,11 @@ router.get('/category_detail/:title_url',function(req, res) {
                 {value:DT_SERVICE,title:'Service'},
             ]
             call();
+        },
+        function(call){
+            biz9.close_connect_db(function(error){
+                call();
+            });
         },
     ],
         function(err, result){
