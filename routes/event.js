@@ -15,8 +15,9 @@ router.get('/category_list/:page_current',function(req, res) {
 	helper.popualr_list =[];
 	async.series([
 		function(call){
-			biz9.get_connect_db(helper.app_title_id,function(error,_db){
-				db=_db;
+			biz9.get_client_db(function(error,_client_db){
+				client_db=_client_db;
+				db = client_db.db(helper.app_title_id);
 				call();
 			});
 		},
@@ -57,7 +58,7 @@ router.get('/category_list/:page_current',function(req, res) {
 			});
 		},
 		function(call){
-			biz9.close_connect_db(function(error){
+			biz9.close_client_db(client_db,function(error){
 				call();
 			});
 		},
@@ -77,11 +78,13 @@ router.get('/event_list/:category/:page_current',function(req, res) {
 	helper.event_list = [];
 	async.series([
 		function(call){
-			biz9.get_connect_db(helper.app_title_id,function(error,_db){
-				db=_db;
+			biz9.get_client_db(function(error,_client_db){
+				client_db=_client_db;
+				db = client_db.db(helper.app_title_id);
 				call();
 			});
 		},
+
 		function(call){
 			title_url='mobile';
 			biz9.get_page(db,title_url,{},function(error,page){
@@ -114,7 +117,7 @@ router.get('/event_list/:category/:page_current',function(req, res) {
 			});
 		},
 		function(call){
-			biz9.close_connect_db(function(error){
+			biz9.close_client_db(client_db,function(error){
 				call();
 			});
 		},
@@ -137,8 +140,9 @@ router.get('/event_detail/:title_url',function(req, res) {
 	helper.card_double_list = [];
 	async.series([
 		function(call){
-			biz9.get_connect_db(helper.app_title_id,function(error,_db){
-				db=_db;
+			biz9.get_client_db(function(error,_client_db){
+				client_db=_client_db;
+				db = client_db.db(helper.app_title_id);
 				call();
 			});
 		},
@@ -204,7 +208,7 @@ router.get('/event_detail/:title_url',function(req, res) {
 			}
 		},
 		function(call){
-			biz9.close_connect_db(function(error){
+			biz9.close_client_db(client_db,function(error){
 				call();
 			});
 		},

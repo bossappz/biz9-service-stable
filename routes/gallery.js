@@ -13,13 +13,15 @@ router.get('/category_list/:page_current',function(req, res) {
     /*--default_end */
     helper.category_list =[];
     async.series([
-        function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+ function(call){
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
-        function(call){
+
+       function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
                 helper.mobile=page;
@@ -45,12 +47,12 @@ router.get('/category_list/:page_current',function(req, res) {
                 call();
             });
         },
-        function(call){
-            biz9.close_connect_db(function(error){
+  function(call){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
-    ],
+      ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -65,9 +67,10 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
     /*--default_end */
     helper.gallery_list = [];
     async.series([
-        function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+       function(call){
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -102,12 +105,12 @@ router.get('/gallery_list/:category/:page_current',function(req, res) {
                 call();
             });
         },
-        function(call){
-            biz9.close_connect_db(function(error){
+  function(call){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
-    ],
+      ],
         function(err, result){
             res.send({helper:helper});
             res.end();
@@ -126,12 +129,13 @@ router.get('/gallery_detail/:title_url',function(req, res) {
     helper.card_double_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
-        function(call){
+function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,page){
                 helper.mobile=page;
@@ -188,12 +192,12 @@ router.get('/gallery_detail/:title_url',function(req, res) {
                 call();
             }
         },
-        function(call){
-            biz9.close_connect_db(function(error){
+  function(call){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
-    ],
+      ],
         function(err, result){
             res.send({helper:helper});
             res.end();

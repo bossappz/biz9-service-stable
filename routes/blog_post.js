@@ -15,8 +15,9 @@ router.get('/category_list/:page_current',function(req, res) {
     helper.popular_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -48,11 +49,16 @@ router.get('/category_list/:page_current',function(req, res) {
         },
         function(call){
             sql={};
-           	sort={date_create:-1};
+            sort={date_create:-1};
             page_current=helper.page_current;
             page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
             biz9.get_blog_postz(db,sql,sort,page_current,page_size,function(error,data_list,item_count,page_count){
                 helper.popular_list = data_list;
+                call();
+            });
+        },
+        function(call){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -72,8 +78,9 @@ router.get('/blog_post_list/:category/:page_current',function(req, res) {
     helper.blog_post_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -108,6 +115,11 @@ router.get('/blog_post_list/:category/:page_current',function(req, res) {
                 call();
             });
         },
+        function(call){
+            biz9.close_client_db(client_db,function(error){
+                call();
+            });
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -127,8 +139,9 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
     helper.card_double_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -188,6 +201,11 @@ router.get('/blog_post_detail/:title_url',function(req, res) {
             }else{
                 call();
             }
+        },
+        function(call){
+            biz9.close_client_db(client_db,function(error){
+                call();
+            });
         },
     ],
         function(err, result){

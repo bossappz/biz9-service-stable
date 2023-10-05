@@ -19,8 +19,9 @@ router.get('/home',function(req, res) {
     helper.card_buy_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -212,7 +213,7 @@ router.get('/home',function(req, res) {
             }
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -232,11 +233,13 @@ router.get('/home_edit',function(req, res) {
     helper.data_type_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
+
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,data){
@@ -268,7 +271,7 @@ router.get('/home_edit',function(req, res) {
             call();
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -287,11 +290,13 @@ router.get('/blank',function(req, res) {
     /*--default_end */
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
+
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,data){
@@ -308,7 +313,7 @@ router.get('/blank',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -328,11 +333,13 @@ router.get('/about',function(req, res) {
     helper.about = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
+
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,data){
@@ -356,7 +363,7 @@ router.get('/about',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -376,8 +383,9 @@ router.get('/contact',function(req, res) {
     helper.contact = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -404,7 +412,7 @@ router.get('/contact',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -424,8 +432,9 @@ router.get('/page/:title_url',function(req, res) {
     helper.page = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -453,7 +462,7 @@ router.get('/page/:title_url',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -469,8 +478,9 @@ router.get('/login_check', function(req, res, next) {
     helper.user = biz9.get_new_item(DT_USER,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -486,7 +496,7 @@ router.get('/login_check', function(req, res, next) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -504,11 +514,13 @@ router.get('/sql',function(req, res) {
     helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
+
         function(call){
             helper.item=biz9.get_test_item(DT_BLANK,0);
             biz9.update_item(db,DT_BLANK,helper.item,function(error,data) {
@@ -546,7 +558,7 @@ router.get('/sql',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -568,8 +580,9 @@ router.get('/setting',function(req, res) {
     helper.data_type_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -593,7 +606,7 @@ router.get('/setting',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -616,8 +629,9 @@ router.post('/setting_update',function(req, res) {
     helper.data_type_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -676,7 +690,7 @@ router.post('/setting_update',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -699,8 +713,9 @@ router.post('/profile_update',function(req, res) {
     helper.data_type_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -768,7 +783,7 @@ router.post('/profile_update',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },
@@ -786,8 +801,9 @@ router.post('/send_mail_message',function(req, res) {
     /*--default_end--*/
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -825,7 +841,7 @@ router.post('/send_mail_message',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         },

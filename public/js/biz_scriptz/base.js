@@ -57,7 +57,7 @@ $('#btn_forgotpassword').click(function(event){
             enctype: 'multipart/form-data',
             data: {email:email},
             success: function(data){
-                alert(data.helper.validation_message);
+                alert(data.helper.error);
             }
         });
         return false;

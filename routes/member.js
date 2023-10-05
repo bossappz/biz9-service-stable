@@ -14,8 +14,9 @@ router.get('/category_list/:page_current',function(req, res) {
     helper.category_list =[];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -46,10 +47,10 @@ router.get('/category_list/:page_current',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
-        }
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -66,8 +67,9 @@ router.get('/member_list/:category/:page_current',function(req, res) {
     helper.category_list =[];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -103,10 +105,10 @@ router.get('/member_list/:category/:page_current',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
-        }
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -124,8 +126,9 @@ router.get('/member_detail/:tbl_id',function(req, res) {
     helper.member = biz9.get_new_item(DT_MEMBER,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -164,10 +167,10 @@ router.get('/member_detail/:tbl_id',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
-        }
+        },
     ],
         function(err, result){
             res.send({helper:helper});

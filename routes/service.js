@@ -15,8 +15,9 @@ router.get('/category_list/:page_current',function(req, res) {
     helper.popular_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -56,7 +57,7 @@ router.get('/category_list/:page_current',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         }
@@ -76,8 +77,9 @@ router.get('/service_list/:category/:page_current',function(req, res) {
     helper.service_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -113,10 +115,10 @@ router.get('/service_list/:category/:page_current',function(req, res) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
-        }
+        },
     ],
         function(err, result){
             res.send({helper:helper});
@@ -136,8 +138,9 @@ router.get('/service_detail/:title_url',function(req, res) {
     helper.card_double_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -199,7 +202,7 @@ router.get('/service_detail/:title_url',function(req, res) {
             }
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         }

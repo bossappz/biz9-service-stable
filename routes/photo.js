@@ -14,8 +14,9 @@ router.get('/old_photo_list/:data_type/:tbl_id/:page_current',function(req, res)
     helper.photo_list = [];
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -52,8 +53,8 @@ router.get('/old_photo_list/:data_type/:tbl_id/:page_current',function(req, res)
                 call();
             });
         },
-   function(call){
-            biz9.close_connect_db(function(error){
+        function(call){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         }

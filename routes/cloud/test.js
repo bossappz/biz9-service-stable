@@ -11,8 +11,9 @@ router.get('/report', function(req, res, next) {
     helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
@@ -34,7 +35,7 @@ router.get('/report', function(req, res, next) {
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
         }
@@ -155,13 +156,14 @@ router.get('/uptime', function(req, res, next) {
     helper.item = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
-            biz9.get_connect_db(helper.app_title_id,function(error,_db){
-                db=_db;
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
                 call();
             });
         },
         function(call){
-            biz9.close_connect_db(function(error){
+            biz9.close_client_db(function(client_db,error){
                 call();
             });
         }

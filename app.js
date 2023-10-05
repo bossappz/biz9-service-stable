@@ -15,8 +15,8 @@ biz9_app_config=require("./biz9_app_config");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='5.4.1'
-APP_VERSION='2.7.6'
+BIZ9_SERVICE_VERSION='5.4.3'
+APP_VERSION='2.7.7'
 APP_PORT=biz9_app_config.APP_PORT;
 /* --- APP CONFIG END  --- */
 /* --- DATA_TYPE-START --- */
@@ -55,8 +55,8 @@ app_config={
     file_url:biz9_app_config.FILE_URL,
     biz_map:biz9_app_config.BIZ_MAP
 }
-//biz9=require("biz9-core")(app_config,data_config);
-biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
+biz9=require("biz9-core")(app_config,data_config);
+//biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- PAGE_SIZE_START --- */
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;

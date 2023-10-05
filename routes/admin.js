@@ -117,13 +117,14 @@ router.post('/update_system', function(req, res, next) {
 	//default = header, sub_note, paragrap
 	//item.photofilename=helper.photofilename_list[biz9.get_id(helper.photofilename_list.length-1)];
 	async.series([
-		function(call){
-			biz9.get_connect_db(helper.app_title_id,function(error,_db){
-				db=_db;
-				call();
-			});
-		},
-		function(call){
+	  function(call){
+            biz9.get_client_db(function(error,_client_db){
+                client_db=_client_db;
+                db = client_db.db(helper.app_title_id);
+                call();
+            });
+        },
+  function(call){
 			helper.user.first_name=biz9.get_id(99999) + "_first_name";
 			helper.user.last_name=biz9.get_id(99999) + "_last_name";
 			helper.user.customer_id=biz9.get_id(9999);

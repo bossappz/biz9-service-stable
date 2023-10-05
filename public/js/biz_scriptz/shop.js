@@ -108,8 +108,8 @@ $('#btn_pay_checkout').click( function() {
             dataType: 'json',
             data: {first_name:first_name,last_name:last_name,company:company,street_address:street_address,zip:zip,phone:phone,email:email,note:note,state:state},
             success: function(data) {
-                if(data.helper.validation_message){
-                    alert(data.helper.validation_message);
+                if(data.helper.error){
+                    alert(data.helper.error);
                 }else{
                     window.location=data.helper.checkout_url;
                 }
