@@ -163,10 +163,10 @@ router.get('/uptime', function(req, res, next) {
             });
         },
         function(call){
-            biz9.close_client_db(function(client_db,error){
+            biz9.close_client_db(client_db,function(error){
                 call();
             });
-        }
+        },
     ],
         function(err, result){
             res.send({helper:helper});
