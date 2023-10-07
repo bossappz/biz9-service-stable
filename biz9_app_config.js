@@ -1,23 +1,21 @@
 /* --- APP CONFIG START  --- */
 const APP_ID='19';
-const APP_TITLE_ID='mobile-september';
+const APP_TITLE_ID='';
 const APP_TITLE='BiZ9-Service';
 const APP_PORT="1901";
 const APP_CLOUD_BUCKET='bappz';
+/* --- APP CONFIG START  --- */
 /* --- ENV CONFIG END --- */
 /* --- ENV FILE START --- */
 const FILE_SAVE_PATH=__dirname+"/public/uploads/";//prod
-//const FILE_SAVE_PATH="~/www/projectz/200/website/public/uploads";//website_local
-//const FILE_URL="http://localhost:1902/uploads/"; //website_url
 //const FILE_URL="/uploads/"; //prod
 const FILE_URL="https://"+APP_CLOUD_BUCKET+".s3.amazonaws.com/" //aws_s3_url
-//FILE_URL="https://bossappz.com/uploads/" //web_prod_url
 /* --- ENV FILE END --- */
 /* --- BIZ9 CONFIG START --- */
 const BIZ_MAP=true;
 /* --- BIZ9 CONFIG END --- */
 /* --- ENV EMAILZ START --- */
-const EMAIL_SENDER="bossappz6@gmail.com";
+const EMAIL_SENDER="notifications@bossappz.com";
 const EMAIL_REPLY="notifications@bossappz.net";
 /* --- ENV EMAILZ START --- */
 /* --- MONGO START --- */
@@ -26,7 +24,7 @@ const MONGO_USERNAME_PASSWORD=''; // local = ''; remote = 'ban:1234567@'
 const MONGO_PORT="27019";
 const MONGO_SERVER_USER='admin';
 const MONGO_CONFIG_FILE='/etc/mongod.conf';
-const SSH_KEY_FILE='';
+const SSH_KEY_FILE="";
 /* --- MONGO END --- */
 /* --- REDIS START --- */
 const REDIS_URL="0.0.0.0";
@@ -35,12 +33,12 @@ const REDIS_PORT="27019";
 /* --- ENV AWS START --- */
 const AWS_S3_SAVE=true;
 const AWS_S3_BUCKET=APP_CLOUD_BUCKET;
-const AWS_KEY="AKIAWTPS5CXHLMIGE72B";
-const AWS_SECRET="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";
+const AWS_KEY="";
+const AWS_SECRET="";
 const AWS_REGION='us-east-2';
 /* --- ENV AWS END --- */
 /* --- BREVO-START --- */
-const BREVO_KEY='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';
+const BREVO_KEY="";
 const BREVO_FORM_SEND_SUBJECT ='Form Message Send';
 const BREVO_ORDER_SEND_TEMPLATE_ID='7';
 const BREVO_FORM_SEND_TEMPLATE_ID='10';
