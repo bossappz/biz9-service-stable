@@ -15,10 +15,35 @@ biz9_app_config=require("./biz9_app_config");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='5.5.3'
+BIZ9_SERVICE_VERSION='5.5.5'
 APP_VERSION='2.7.7'
 APP_PORT=biz9_app_config.APP_PORT;
 /* --- APP CONFIG END  --- */
+/* --- MONGO START --- */
+MONGO_IP=biz9_app_config.MONGO_IP;
+MONGO_PORT=biz9_app_config.MONGO_PORT;
+MONGO_URL=biz9_app_config.MONGO_URL;
+/* --- MONGO END --- */
+/* --- AWS START --- */
+AWS_S3_SAVE=biz9_app_config.AWS_S3_SAVE;
+AWS_S3_BUCKET=biz9_app_config.AWS_S3_BUCKET;
+AWS_KEY=biz9_app_config.AWS_KEY;
+AWS_SECRET=biz9_app_config.AWS_SECRET;
+AWS_REGION=biz9_app_config.AWS_REGION;
+/* --- AWS END --- */
+/* --- EMAILZ START --- */
+EMAIL_TO=biz9_app_config.EMAIL_TO;
+EMAIL_FROM=biz9_app_config.EMAIL_FROM;
+/* --- EMAILZ START --- */
+/* --- FILE START --- */
+FILE_SAVE_PATH=biz9_app_config.FILE_SAVE_PATH;
+FILE_URL=biz9_app_config.FILE_URL;
+/* --- FILE END --- */
+//-SEND_IN_BLUE-START
+SEND_IN_BLUE_KEY=biz9_app_config.SEND_IN_BLUE_KEY;
+SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID=biz9_app_config.SEND_IN_BLUE_ORDER_SEND_TEMPLATE_ID;
+SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID=biz9_app_config.SEND_IN_BLUE_FORM_SEND_TEMPLATE_ID;
+//-SEND_IN_BLUE-END
 /* --- DATA_TYPE-START --- */
 DT_USER="user_biz";
 DT_BLANK="blank_biz";
@@ -55,8 +80,8 @@ app_config={
     file_url:biz9_app_config.FILE_URL,
     biz_map:biz9_app_config.BIZ_MAP
 }
-//biz9=require("biz9-core")(app_config,data_config);
-biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
+biz9=require("biz9-core")(app_config,data_config);
+//biz9=require("/home/mama/www/doqbox/biz9/biz9-core/src/unstable")(app_config,data_config);
 /* --- BiZ9_CORE_CONFIG-END --- */
 /* --- PAGE_SIZE_START --- */
 PAGE_SIZE_CATEGORY_POPULAR_LIST=9;
