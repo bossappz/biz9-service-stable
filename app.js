@@ -16,7 +16,7 @@ ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
 BIZ9_SERVICE_VERSION='5.6.1'
-APP_VERSION='2.8.1'
+APP_VERSION='1.9.0'
 APP_PORT=biz9_app_config.APP_PORT;
 /* --- APP CONFIG END  --- */
 
