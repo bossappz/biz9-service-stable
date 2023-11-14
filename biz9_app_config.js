@@ -1,6 +1,6 @@
 /* --- APP CONFIG START  --- */
 const APP_ID='19';
-const APP_TITLE_ID='mobile-october';
+const APP_TITLE_ID='';
 const APP_TITLE='BiZ9-Service';
 const APP_PORT="1901";
 const APP_CLOUD_BUCKET='bappz';

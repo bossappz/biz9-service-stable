@@ -9,20 +9,25 @@ module.exports = function(){
         var error=null;
         async.series([
             function(call){
-                var defaultClient = brevo_lib.ApiClient.instance;
-                // Configure API key authorization: api-key
-                var apiKey = defaultClient.authentications['api-key'];
-                apiKey.apiKey =brevo_key;
-                var apiInstance = new brevo_lib.TransactionalEmailsApi();
-                call();
-                apiInstance.sendTransacEmail(brevo_obj).then(function(data) {
-                }, function(_error) {
-                    if(_error){
-                        error='brevo mail error '+ _error.response.error.text;
-                        biz9.o('brevo_send_mail_error',error);
+                try {
+                    var defaultClient = brevo_lib.ApiClient.instance;
+                    var apiKey = defaultClient.authentications['api-key'];
+                    apiKey.apiKey =brevo_key;
+                    var apiInstance = new brevo_lib.TransactionalEmailsApi();
+                    apiInstance.sendTransacEmail(brevo_obj).then(function(data) {
                         call();
-                    }
-                });
+                    }, function(_error) {
+                        if(_error){
+                            error='brevo mail error '+ _error.response.error.text;
+                            biz9.o('brevo_send_mail_error',error);
+                            call();
+                        }
+                    });
+                } catch (e) {
+                    error='brevo mail expection '+ e;
+                    console.log(error);
+                    call();
+                }
             },
         ],
             function(err, result){

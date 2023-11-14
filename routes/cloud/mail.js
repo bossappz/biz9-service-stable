@@ -26,7 +26,7 @@ router.post('/send_brevo_mail_message',function(req, res) {
             call();
         },
         function(call){
-            biz9.send_brevo_mail(biz9_app_config.BREVO_KEY,helper.brevo_obj,function(error,data) {
+            biz9.send_brevo_mail(BREVO_KEY,helper.brevo_obj,function(error,data) {
                 if(error){
                     helper.validation_message=error;
                 }
@@ -46,8 +46,8 @@ router.post('/send_brevo_mail_message',function(req, res) {
     set_biz_info=function(){
         info = biz9.get_new_item(DT_BLANK,0);
         info.business_name=biz9_app_config.APP_TITLE;
-        info.brevo_form_send_subject=biz9_app_config.BREVO_FORM_SEND_SUBJECT;
-        info.brevo_form_send_template_id=biz9_app_config.BREVO_FORM_SEND_TEMPLATE_ID;
+        info.brevo_form_send_subject=BREVO_FORM_SEND_SUBJECT;
+        info.brevo_form_send_template_id=BREVO_FORM_SEND_TEMPLATE_ID;
         info.brevo_sender=biz9_app_config.EMAIL_SENDER;
         info.brevo_reply=biz9_app_config.EMAIL_REPLY;
         return info;

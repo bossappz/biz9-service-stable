@@ -18,6 +18,7 @@ module.exports = function(app_config,data_config){
     exec = require('child_process').exec;
     MONGO_FULL_URL="mongodb://"+data_config.mongo_username_password+data_config.mongo_ip+":"+data_config.mongo_port+"?retryWrites=true&w=majority&maxIdleTimeMS=60000&connectTimeoutMS=150000&socketTimeoutMS=90000&maxPoolSize=900000&maxConnecting=10000";
     mongo_client = require('mongodb').MongoClient;
+    client_db = new mongo_client(MONGO_FULL_URL, {useNewUrlParser: true,useUnifiedTopology: true});
     data_mon = require('./dataz/lib/mongo_db.js')();
     cache_red = require('./dataz/lib/redis_cache.js')();
     appz = require('./appz/index.js')(app_config);

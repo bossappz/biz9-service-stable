@@ -105,7 +105,6 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity",func
                 helper.cart_item.cart_note=event_str;
             }
             biz9.update_item(db,DT_CART_ITEM,helper.cart_item,function(error,data) {
-                biz9.o('cart_item',data);
                 helper.cart_item=data;
                 call();
             });
@@ -114,7 +113,6 @@ router.post("/cart_add/:item_data_type/:item_tbl_id/:customer_id/:quantity",func
             sql={customer_id:helper.customer_id};
             biz9.get_cart(db,sql,function(error,data){
                 helper.cart=data;
-                biz9.o('get_cart',data);
                 call();
             });
         },

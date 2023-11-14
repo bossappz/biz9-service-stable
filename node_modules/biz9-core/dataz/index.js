@@ -6,12 +6,12 @@
  */
 module.exports = function(data_config){
     module.get_client_db=async function(callback){
-        var client_db = new mongo_client(MONGO_FULL_URL, {useNewUrlParser: true,useUnifiedTopology: true});
+        //var client_db = new mongo_client(MONGO_FULL_URL, {useNewUrlParser: true,useUnifiedTopology: true});
         var reset_cmd = "sudo mongod --fork --config "+data_config.mongo_config_file;
         var error=null;
         async function run() {
             try {
-                if(!isConnected(client_db)){
+                if(!dataz.db_connected(client_db)){
                     await client_db.connect();
                 }
             } catch (e) {
@@ -39,15 +39,28 @@ module.exports = function(data_config){
             }
         }
         run();
-        function isConnected(client_db) {
-            return !!client_db && !!client_db.topology && client_db.topology.isConnected()
-        }
+    }
+    module.db_connected=function(client_db){
+        return !!client_db && !!client_db.topology && !!client_db.topology.isConnected()
+    }
+    module.db_client_connected=function(client_db){
+        if(!db.client){
+            return false;
+        }else if(!db.client.topology){
+                 return false;
+        }else if(!db.client.topology){
+                 return false;
+        }else{
+                 return true;
+            }
+                //if(!db.client.topology){
+        //return !!db.client.topology.isConnected()&&!!db.client.topology&&!!db.client;
     }
     module.close_client_db=async function(client_db,callback){
         var error=null;
         async function run() {
             try {
-                if(isConnected(client_db)){
+                if(dataz.db_connected(client_db)){
                     await client_db.close();
                 }
             } catch (e) {
@@ -60,9 +73,6 @@ module.exports = function(data_config){
             }
         }
         run();
-        function isConnected(client_db) {
-            return !!client_db && !!client_db.topology && client_db.topology.isConnected()
-        }
     }
     module.update_list=function(db,data_item_list,callback){
         var error=null;

@@ -49,7 +49,7 @@ module.exports = function(app_config){
         return item;
     }
     get_new_review_biz_obj=function() {
-        return {rating_avg:'0',review_list:[]}
+        return {customer_rating_avg:'0',review_list:[]}
     }
     module.get_test_item = function(data_type,tbl_id){
         if(!tbl_id){
@@ -3267,7 +3267,7 @@ function set_biz_rating(comment_list){
         comment_count=0;
         rating=0;
         for(a=0;a<comment_list.length;a++){
-            rating = rating+parseInt(comment_list[a].rating);
+            rating = rating+parseInt(comment_list[a].customer_rating);
         }
         return parseFloat(rating / comment_list.length).toFixed(2);
     }else{
@@ -3309,13 +3309,13 @@ module.get_review_obj=function(db,item_tbl_id,callback){
         },
         function(call){
             if(review_obj.review_list.length>0){
-                rating_avg=0;
+                customer_rating_avg=0;
                 for(a=0;a<review_obj.review_list.length;a++){
-                    rating_avg=parseInt(rating_avg)+parseInt(review_obj.review_list[a].rating);
+                    customer_rating_avg=parseInt(customer_rating_avg)+parseInt(review_obj.review_list[a].customer_rating);
                 }
-                review_obj.rating_avg=parseFloat(rating_avg/review_obj.review_list.length).toFixed(2);
-                if(isNaN(review_obj.rating_avg)){
-                    review_obj.rating_avg=0;
+                review_obj.customer_rating_avg=parseFloat(customer_rating_avg/review_obj.review_list.length).toFixed(2);
+                if(isNaN(review_obj.customer_rating_avg)){
+                    review_obj.customer_rating_avg=0;
                 }
                 call();
             }else{

@@ -239,7 +239,6 @@ router.get('/home_edit',function(req, res) {
                 call();
             });
         },
-
         function(call){
             title_url='mobile';
             biz9.get_page(db,title_url,{},function(error,data){
