@@ -9,6 +9,7 @@ router.get('/ping', function(req, res, next) {
 router.post('/send_brevo_mail_message',function(req, res) {
     var helper = biz9.get_helper(req);
     helper.brevo_obj = biz9.get_new_item(DT_BLANK,0);
+    helper.info = biz9.get_new_item(DT_BLANK,0);
     async.series([
         function(call){
             biz9.get_client_db(function(error,_client_db){
@@ -18,9 +19,17 @@ router.post('/send_brevo_mail_message',function(req, res) {
             });
         },
         function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
+                call();
+            });
+        },
+        function(call){
             form_send={};
             customer=set_customer(helper);
-            biz_info = set_biz_info();
+            biz_info = set_biz_info(helper.info);
             mail_notification=set_mail_message_notification(biz_info,customer);
             helper.brevo_obj=set_mail_message(mail_notification,helper);
             call();
@@ -43,14 +52,14 @@ router.post('/send_brevo_mail_message',function(req, res) {
             res.send({helper:helper});
             res.end();
         });
-    set_biz_info=function(){
-        info = biz9.get_new_item(DT_BLANK,0);
-        info.business_name=biz9_app_config.APP_TITLE;
-        info.brevo_form_send_subject=BREVO_FORM_SEND_SUBJECT;
-        info.brevo_form_send_template_id=BREVO_FORM_SEND_TEMPLATE_ID;
-        info.brevo_sender=biz9_app_config.EMAIL_SENDER;
-        info.brevo_reply=biz9_app_config.EMAIL_REPLY;
-        return info;
+    set_biz_info=function(info){
+        info_r = biz9.get_new_item(DT_BLANK,0);
+        info_r.business_name=info.bussiness_name;
+        info_r.brevo_form_send_subject=info.brevo_form_send_subject;
+        info_r.brevo_form_send_template_id=info.brevo_form_send_template_id;
+        info_r.brevo_sender=info.email_sender;
+        info_r.brevo_reply=info.email_reply;
+        return info_r;
     }
     set_customer=function(item){
         customer = biz9.get_new_item(DT_BLANK,0);

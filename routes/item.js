@@ -281,7 +281,7 @@ router.post("/copy_item/:data_type/:tbl_id",function(req, res) {
             res.end();
         });
 });
-//9_sub_project_edit_list sub_project_edit_list
+//9_sub_item_edit_list sub_item_edit_list
 router.get('/sub_item_list/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id',function(req, res) {
     /*--default_start */
     var helper = biz9.get_helper(req);
@@ -295,6 +295,21 @@ router.get('/sub_item_list/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id',
             biz9.get_client_db(function(error,_client_db){
                 client_db=_client_db;
                 db = client_db.db(helper.app_title_id);
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
                 call();
             });
         },
@@ -352,6 +367,21 @@ router.get('/sub_item_detail/:data_type/:tbl_id/:parent_data_type/:parent_tbl_id
             biz9.get_client_db(function(error,_client_db){
                 client_db=_client_db;
                 db = client_db.db(helper.app_title_id);
+                call();
+            });
+        },
+        function(call){
+            title_url='mobile';
+            biz9.get_page(db,title_url,{},function(error,data){
+                helper.mobile=data;
+                call();
+            });
+        },
+        function(call){
+            sql = {title_url:'info'};
+            sort={};
+            biz9.get_sql(db,DT_ITEM,sql,sort,function(error,data_list) {
+                helper.info = data_list[0];
                 call();
             });
         },

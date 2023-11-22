@@ -72,25 +72,26 @@ router.post('/update_system', function(req, res, next) {
 	*/
 
 	helper.photofilename_list=[
-		  '208b9384-9879-4e0d-a326-2b83d8335fd7.png',
-  '4aa6d3e8-ed99-4095-925f-b29a3344239b.png',
-  '2222f57c-b464-4b85-b99c-3e5eabe34c57.png',
-  '19fb4f30-50a3-4014-9897-ef2abec17dae.png',
-  'fd2a9759-1b30-4591-95be-49003bb0de6f.png',
-  '8754ff9b-248a-47e2-bd26-6f81f91f6d76.png',
-  '1d8a13fb-0d7d-4164-bbff-f9a2502e34db.png',
-  '6b74b5ca-e0d0-4dda-ac8b-dbd21bccb85f.png',
-  '680b9a80-c0df-4f7f-8541-bfb43673c402.png',
-  '484d36b8-fc72-49c3-a869-ed0d0405078d.png',
-  '83f9c05f-4ad1-424a-af94-63660eaffe8b.png',
-  '2a654ee4-d864-487d-913e-2513b3b30d33.png',
-  '78812dba-8e5d-4ffb-ae51-5dba7ef10c86.png',
-  '6f6364e2-f3f5-46a1-b385-4712fc60a30f.png',
-  'a2b0a0ef-660d-4399-8e3c-d55d90d53afd.png',
-  '841e2f8e-0c3e-4fe2-8fc5-45c5c8994b44.png',
-  '186dab6b-6df0-4d50-96fa-9d73a6ecd84e.png',
-  '25d3179e-7de8-4dd4-bb6f-192dca3f1d89.png',
-  '5e349aed-75bb-4abe-9abb-87d5c7e21101.png'
+		  'd1779e4a-3542-4992-a64a-897a48e7ed2b.png',
+  '34c68bcd-9efa-44a1-b29a-251e4968b08d.png',
+  '1fbbea8c-0f79-4c8d-bdb5-a0666083afd3.png',
+  'a0dbdeb8-9e26-47c3-9823-ef86f6faca55.png',
+  'cf1b4306-b0dd-4eb2-b834-10c052ecfe7c.png',
+  '3b31f282-786b-493c-a4ee-4bd5d793d3f7.png',
+  'c0c1f9c2-de4a-4f7d-926b-3b722c008743.png',
+  '5b530060-3c2a-43bd-86cd-5300a090aafc.png',
+  'f685f17a-1d95-4874-ba88-8aabc5686add.png',
+  'cba9785e-78c5-49fa-b733-7fea48df9381.png',
+  'b0442538-e2a3-4893-91b8-6d1de24b2783.png',
+  '56067963-928e-4348-80e7-75a64c9b41a5.png',
+  'c5d3bfe2-6dbd-4961-a173-d4813b864737.png',
+  'e404cedb-e16b-4a98-b8cc-65d150a10999.png',
+  '7cb2b796-d054-4a41-a479-32e949d635b0.png',
+  '643c4ad2-e082-4e85-b834-2186bedb027f.png',
+  '2cdef18a-57fa-4908-a042-2950f788c413.png',
+  'b4fa2f35-4ccd-450b-9a11-cbf34c118c4d.png',
+  '734f7858-2ffe-4492-88c2-1d23d78bb204.png'
+
 	];//other
 	helper.photo_text_list=[
 "Accept yourself",
