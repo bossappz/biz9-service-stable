@@ -263,6 +263,7 @@ module.exports = function(){
         });
     }
     module.set_resize_photo_file=function(org_file,sizes,callback){
+        r_error=null;
         /*
         var sizes = [{
             path: file_path+'a' + new_filename,
@@ -275,17 +276,31 @@ module.exports = function(){
             xy: 100
         }];
         */
-        Promise.map(sizes, function(size) {
-        sharp(org_file)
-                .resize(size.xy)
-                .toFile(size.path,(error,info)=>{if(error){
-                }
+        async function run() {
+            try {
+                Promise.map(sizes, function(size) {
+                sharp(org_file)
+             .resize(size.xy)
+                .toFile(size.path,(error,info)=>{
+                    if(error){
+                        r_error=error;
+                        biz9.o('set_resize_photo_file',error);
+                    }
+                });
+                }).then(function(x){
             });
-        }).then(function(x){
-            callback();
-        });
+            } catch (e) {
+                if(e){
+                    r_error=error;
+                }
+            } finally {
+                callback(r_error);
+            }
+        }
+        run();
     }
     module.set_resize_square_photo_file=function(org_file,sizes,callback){
+        r_error=null;
         /*
         var sizes = [{
             path: file_path+'a' + new_filename,
@@ -298,14 +313,29 @@ module.exports = function(){
             xy: 100
         }];
         */
-        Promise.map(sizes, function(size) {
-        sharp(org_file)
+        async function run() {
+            try {
+                Promise.map(sizes, function(size) {
+                sharp(org_file)
                 .resize(size.xy, size.xy,{fit:sharp.fit.fill,quality:100})
                 .toFile(size.path,(error,info)=>{
+                    if(error){
+                        if(error){
+                            r_error=error;
+                        }
+                    }
+                });
+                }).then(function(x){
             });
-        }).then(function(x){
-            callback();
-        });
+            } catch (e) {
+                if(e){
+                    r_error=e;
+                }
+            } finally {
+                callback(r_error);
+            }
+        }
+        run();
     }
     module.set_photo_file=function(file_path,org_filename,new_filename,callback){
         sharp(file_path+org_filename)

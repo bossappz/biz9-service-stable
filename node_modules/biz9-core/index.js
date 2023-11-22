@@ -580,15 +580,15 @@ module.exports = function(app_config,data_config){
             });
     }
     module.set_resize_photo_file=function(new_size,file_path,org_filename,new_filename,callback){
-        utilityz.set_resize_photo_file(new_size,file_path,org_filename,new_filename,function(error,data)
+        utilityz.set_resize_photo_file(new_size,file_path,org_filename,new_filename,function(error)
             {
-                callback(error,data);
+                callback(error);
             });
     }
     module.set_resize_square_photo_file=function(org_file,sizes,callback){
-        utilityz.set_resize_square_photo_file(org_file,sizes,function(error,data)
+        utilityz.set_resize_square_photo_file(org_file,sizes,function(error)
             {
-                callback(error,data);
+                callback(error);
             });
     }
     module.get_file_buffer=function(file_path,filename,callback){
