@@ -94,7 +94,11 @@ router.get('/home',function(req, res) {
         function(call){
             if(helper.home.card_popular_visible=='true'){
                 sql = {};
-                sort={view_count:-1};
+                if(helper.home.card_popular_order=='recent'){
+                    sort={date_create:-1};
+                }else{
+                    sort={view_count:-1};
+                }
                 page_current=1;
                 page_size=PAGE_SIZE_CATEGORY_POPULAR_LIST;
                 if(helper.home.card_popular_data_type==DT_BLOG_POST){

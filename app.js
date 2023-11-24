@@ -15,8 +15,8 @@ biz9_app_config=require("./biz9_app_config");
 ENV=process.env.NODE_ENV;
 /*--- APP DEFAULT END ---*/
 /* --- APP CONFIG START  --- */
-BIZ9_SERVICE_VERSION='5.6.7';
-APP_VERSION='1.9.2'
+BIZ9_SERVICE_VERSION='5.7.0';
+APP_VERSION='1.9.3'
 APP_PORT=biz9_app_config.APP_PORT;
 /* --- APP CONFIG END  --- */
 
